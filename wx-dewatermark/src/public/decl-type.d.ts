@@ -46,5 +46,6 @@ export interface MineItemModel {
     line_shou: boolean;
     head_shou: boolean;
     share_shou: boolean;
+    radius_type: int;
 
 }

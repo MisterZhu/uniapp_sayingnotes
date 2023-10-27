@@ -35,7 +35,7 @@ onShareAppMessage(() => {
 
 <template>
   <view class="header" v-show="itemModel.head_shou"></view>
-  <view class="my-component" @click="handleClick()">
+  <view class="my-component" :class="{'rounded-top': itemModel.radius_type === 1, 'rounded-bottom': itemModel.radius_type === 2, 'rounded-all': itemModel.radius_type === 3}" @click="handleClick()">
     <button v-show="itemModel.share_shou" class="share-button" open-type="share"></button>
     <view class="my-component__left">
       <img class="down_icon" :src="itemModel.left_img" />
@@ -58,11 +58,28 @@ onShareAppMessage(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: $uni-color-fff;
   padding: 15px 15px 15px 20px;
+  margin-left: 15px;
+  margin-right: 15px;
   position: relative;
+  border-radius: 0; /* 默认情况下，不添加圆角 */
 
+  &.rounded-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  &.rounded-bottom {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &.rounded-all {
+    border-radius: 10px; /* 四个角都添加圆角 */
+  }
 }
+
 
 .my-component__left {
   display: flex;
@@ -122,7 +139,7 @@ onShareAppMessage(() => {
 .footer {
   margin: 0;
   height: 1px;
-  background-color: $uni-color-fff;
+  background-color: $uni-theme-bg-color;
 }
 
 .header {

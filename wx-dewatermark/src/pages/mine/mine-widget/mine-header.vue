@@ -80,11 +80,11 @@ onMounted(() => {
 
         </view>
         <view class="header__tip">剩余解析次数：{{ userInfo?.query_count }}</view>
-        <image class="header__background" src="/static/mine/mine_head_bg.jpg" mode="aspectFill"></image>
-        <view class="header__bottom">
+        <image class="header__background" src="/static/mine/mine_head_bg.png" mode="aspectFill"></image>
+        <!-- <view class="header__bottom">
             <image class="vip__icon" @click="copyHandle()" src="/static/mine/mine_vip-icon.png" />
             <text class="vip__title">您还不是会员</text>
-        </view>
+        </view> -->
     </view>
 </template>
 
@@ -105,7 +105,7 @@ onMounted(() => {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 250px;
+    height: 240px;
     object-fit: cover;
     z-index: 0;
 }
@@ -165,21 +165,21 @@ onMounted(() => {
 
 .header__username {
     font-size: 16px;
-    color: #eee;
+    color: #000;
     font-weight: bold;
     margin: 0;
 }
 
 .header__userid {
     font-size: 12px;
-    color: $uni-color-ccc;
+    color: $uni-color-000;
     font-weight: bold;
     margin: 0;
 }
 
 .header__tip {
     font-size: 12px;
-    color: $uni-color-ccc;
+    color: $uni-color-000;
     text-align: right;
     margin-right: 12px;
     flex: 1;

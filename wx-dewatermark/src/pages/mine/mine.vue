@@ -21,6 +21,7 @@ const itmeAry = <MineItemModel[]>[
         line_shou: true,
         head_shou: false,
         share_shou: false,
+        radius_type: 1,
     },
     {
         left_img: "/static/mine/mine_share.png",
@@ -30,6 +31,7 @@ const itmeAry = <MineItemModel[]>[
         line_shou: true,
         head_shou: false,
         share_shou: true,
+        radius_type: 0,
 
     },
     {
@@ -40,6 +42,7 @@ const itmeAry = <MineItemModel[]>[
         line_shou: false,
         head_shou: false,
         share_shou: false,
+        radius_type: 2,
 
     },
     {
@@ -50,7 +53,7 @@ const itmeAry = <MineItemModel[]>[
         line_shou: false,
         head_shou: true,
         share_shou: false,
-
+        radius_type: 3,
     },
 ]
 //用户信息模块
@@ -151,7 +154,7 @@ const handleItemClick = (itemModel: any) => {
 
 <style lang="scss" scoped>
 .container {
-    background-color: $uni-color-f8f;
+    background-color: $uni-color-f5f;
     height: 100vh;
 }
 
