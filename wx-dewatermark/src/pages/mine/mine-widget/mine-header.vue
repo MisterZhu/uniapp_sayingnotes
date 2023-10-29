@@ -1,14 +1,28 @@
 <script setup lang="ts">
-import type { UserInfoModel } from '@/public/decl-type';
+import type { MineItemModel, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onShow } from '@dcloudio/uni-app';
 import { onMounted, ref } from 'vue';
+import MineItem from './mine-item.vue';
 
 
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
 let safeTop = ref<string>('')
 let userInfo = ref<UserInfoModel>()
+
+const itmeAry = <MineItemModel[]>[
+    {
+        left_img: "/static/mine/mine_house.png",
+        left_title: "我的房屋",
+        right_img: "/static/mine/mine-next-999.png",
+        right_title: "未认证",
+        line_shou: true,
+        head_shou: false,
+        share_shou: false,
+        radius_type: 3,
+    },
+]
 
 const getUserIn = () => {
     var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
@@ -62,6 +76,31 @@ onMounted(() => {
     console.log("menu_height = " + menu_height.value);
 
 })
+const handleItemClick = (itemModel: any) => {
+    console.log('clicked item:', itemModel.left_title)
+    switch (itemModel.left_title) {
+        case '任务中心':
+            uni.navigateTo({
+                url: '/pages/mine/task-center'
+            })
+            break;
+        case '分享给好友':
+            //onShareAppMessage
+            break;
+        case '设置':
+            uni.navigateTo({
+                url: '/pages/mine/setting'
+            })
+            break;
+        case '帮助中心':
+            uni.navigateTo({
+                url: '/pages/mine/help-center'
+            })
+            break;
+        default:
+            break;
+    }
+}
 </script>
 
 <template>
@@ -79,13 +118,17 @@ onMounted(() => {
             </view>
 
         </view>
-        <view class="header__tip">剩余解析次数：{{ userInfo?.query_count }}</view>
+        <!-- <view class="header__tip">剩余解析次数：{{ userInfo?.query_count }}</view> -->
         <image class="header__background" src="/static/mine/mine_head_bg.png" mode="aspectFill"></image>
         <!-- <view class="header__bottom">
             <image class="vip__icon" @click="copyHandle()" src="/static/mine/mine_vip-icon.png" />
             <text class="vip__title">您还不是会员</text>
         </view> -->
+        <view class="group">
+            <MineItem :itemModel=itmeAry[0] @click="handleItemClick" />
+        </view>
     </view>
+    
 </template>
 
 <style lang="scss" scoped>
@@ -109,7 +152,16 @@ onMounted(() => {
     object-fit: cover;
     z-index: 0;
 }
-
+.group {
+    position: absolute; /* 绝对定位，相对于 header 的位置 */
+  bottom: 2px; /* 距离 header 底部的距离为 0 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 51px;
+  width: 100vw;
+}
+/* 让 MineItem 填满 .group 区域 */
 .header__bottom {
   position: absolute; /* 绝对定位，相对于 header 的位置 */
   bottom: 2px; /* 距离 header 底部的距离为 0 */
@@ -177,15 +229,15 @@ onMounted(() => {
     margin: 0;
 }
 
-.header__tip {
-    font-size: 12px;
-    color: $uni-color-000;
-    text-align: right;
-    margin-right: 12px;
-    flex: 1;
-    z-index: 10;
+// .header__tip {
+//     font-size: 12px;
+//     color: $uni-color-000;
+//     text-align: right;
+//     margin-right: 12px;
+//     flex: 1;
+//     z-index: 10;
 
-}
+// }
 
 .header__copy-icon {
     width: 25px;

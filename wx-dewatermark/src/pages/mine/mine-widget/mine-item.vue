@@ -64,6 +64,8 @@ onShareAppMessage(() => {
   margin-right: 15px;
   position: relative;
   border-radius: 0; /* 默认情况下，不添加圆角 */
+  width: calc(100vw - 60px);
+
 
   &.rounded-top {
     border-top-left-radius: 10px;
@@ -108,7 +110,7 @@ onShareAppMessage(() => {
 
 .left_title {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: normal;
   color: $uni-color-333;
   padding-left: 10px;
 
@@ -145,6 +147,8 @@ onShareAppMessage(() => {
 .header {
   margin: 0;
   height: 20px;
+  width: 100vw;
+
   background-color: $uni-color-f8f;
 }
 .share-button {

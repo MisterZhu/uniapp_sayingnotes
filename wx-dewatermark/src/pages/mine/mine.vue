@@ -14,17 +14,7 @@ let userInfo = ref<UserInfoModel>()
 
 const itmeAry = <MineItemModel[]>[
     {
-        left_img: "/static/mine/mine_task.png",
-        left_title: "任务中心",
-        right_img: "/static/mine/mine-next-999.png",
-        right_title: "免费领取解析次数",
-        line_shou: true,
-        head_shou: false,
-        share_shou: false,
-        radius_type: 1,
-    },
-    {
-        left_img: "/static/mine/mine_share.png",
+        left_img: "/static/mine/mine_share2.png",
         left_title: "分享给好友",
         right_img: "/static/mine/mine-next-999.png",
         right_title: "",
@@ -153,6 +143,9 @@ const handleItemClick = (itemModel: any) => {
 </template>
 
 <style lang="scss" scoped>
+.group {
+  margin-top: 20px; /* 在 group 元素上添加上边距 */
+}
 .container {
     background-color: $uni-color-f5f;
     height: 100vh;

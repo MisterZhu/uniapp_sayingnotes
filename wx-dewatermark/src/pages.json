@@ -11,9 +11,9 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "全站去水印",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor":"#4771f1",
-				"backgroundColor":"#F8F8F8"
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor":"#ffffff",
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -21,11 +21,11 @@
 			"path": "pages/history/search-history",
 			"style": {
 				"navigationBarTitleText": "解析记录",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor":"#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor":"#ffffff",
 				"enablePullDownRefresh": true,
 				"onReachBottonDistance": 150,
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -33,9 +33,9 @@
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor":"#4771f1",
+				"navigationBarBackgroundColor":"#ffffff",
 				"navigationStyle": "custom",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 
 			}
@@ -44,10 +44,10 @@
 			"path": "pages/index/analysis-result",
 			"style": {
 				"navigationBarTitleText": "视频解析",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -55,10 +55,10 @@
 			"path": "pages/mine/task-center",
 			"style": {
 				"navigationBarTitleText": "任务中心",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -66,10 +66,10 @@
 			"path": "pages/mine/setting",
 			"style": {
 				"navigationBarTitleText": "设置",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -77,10 +77,10 @@
 			"path": "pages/mine/help-center",
 			"style": {
 				"navigationBarTitleText": "帮助中心",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -88,10 +88,10 @@
 			"path": "pages/mine/set-pages/user-privacy",
 			"style": {
 				"navigationBarTitleText": "隐私政策",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -99,10 +99,10 @@
 			"path": "pages/mine/set-pages/user-protocol",
 			"style": {
 				"navigationBarTitleText": "用户协议",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		},
@@ -110,10 +110,10 @@
 			"path": "pages/mine/set-pages/user-feedback",
 			"style": {
 				"navigationBarTitleText": "建议与反馈",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#4771f1",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",
-				"backgroundColor":"#F8F8F8"
+				"backgroundColor":"#F5F5F5"
 
 			}
 		}
@@ -121,12 +121,12 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#4771f1",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#F5F5F5"
 	},
 	"tabBar": {
 		"color": "#7A7E83",
-		"selectedColor": "#4771f1",
+		"selectedColor": "#ffffff",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
