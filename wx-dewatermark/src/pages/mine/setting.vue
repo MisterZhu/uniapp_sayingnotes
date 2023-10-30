@@ -19,6 +19,8 @@ const itmeAry = <MineItemModel[]>[
         line_shou: true,
         head_shou: false,
         share_shou: false,
+        radius_type: 1,
+
     },
     {
         left_img: "/static/mine/mine_agreement.png",
@@ -28,6 +30,7 @@ const itmeAry = <MineItemModel[]>[
         line_shou: true,
         head_shou: false,
         share_shou: false,
+        radius_type: 2,
 
     },
     // {
@@ -48,6 +51,8 @@ const itmeAry = <MineItemModel[]>[
         line_shou: false,
         head_shou: true,
         share_shou: false,
+        radius_type: 3,
+
 
     },
 ]
@@ -117,5 +122,8 @@ const handleItemClick = (itemModel: any) => {
 .container {
     background-color: $uni-color-f8f;
     height: 100vh;
+}
+.group{
+    padding-top: 15px;
 }
 </style>

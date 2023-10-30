@@ -25,6 +25,8 @@ const itmeAry = ref<MineItemModel[]>([
     line_shou: true,
     head_shou: false,
     share_shou: false,
+    radius_type: 3,
+
   },
   {
     left_img: "/static/mine/mine-up-999.png",
@@ -34,6 +36,7 @@ const itmeAry = ref<MineItemModel[]>([
     line_shou: true,
     head_shou: false,
     share_shou: false,
+    radius_type: 3,
 
   },
 ])
@@ -59,6 +62,7 @@ const handleContact = (event: any) => {
 .container {
   background-color: $uni-color-f8f;
   height: 100vh;
+  padding-top: 5px;
 }
 
 .server-btn {

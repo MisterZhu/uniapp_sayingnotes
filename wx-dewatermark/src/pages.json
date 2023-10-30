@@ -63,6 +63,28 @@
 			}
 		},
 		{
+			"path": "pages/mine/house/my-house",
+			"style": {
+				"navigationBarTitleText": "我的房屋",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
+			"path": "pages/mine/house/certifi-house",
+			"style": {
+				"navigationBarTitleText": "新增房屋",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/mine/setting",
 			"style": {
 				"navigationBarTitleText": "设置",
@@ -84,6 +106,7 @@
 
 			}
 		},
+		
 		{
 			"path": "pages/mine/set-pages/user-privacy",
 			"style": {

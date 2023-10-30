@@ -34,8 +34,8 @@ const getUserIn = () => {
     }
 }
 onShow(() => {
-  console.log("mine-header Show");
-  getUserIn()
+    console.log("mine-header Show");
+    getUserIn()
 });
 async function requestUserInfoWithCode(code: string) {
     const res: any = await RequestApi.UserLogin({ "code": code })
@@ -79,22 +79,9 @@ onMounted(() => {
 const handleItemClick = (itemModel: any) => {
     console.log('clicked item:', itemModel.left_title)
     switch (itemModel.left_title) {
-        case '任务中心':
+        case '我的房屋':
             uni.navigateTo({
-                url: '/pages/mine/task-center'
-            })
-            break;
-        case '分享给好友':
-            //onShareAppMessage
-            break;
-        case '设置':
-            uni.navigateTo({
-                url: '/pages/mine/setting'
-            })
-            break;
-        case '帮助中心':
-            uni.navigateTo({
-                url: '/pages/mine/help-center'
+                url: '/pages/mine/house/my-house'
             })
             break;
         default:
@@ -107,13 +94,16 @@ const handleItemClick = (itemModel: any) => {
     <view class="header">
         <view class="header__left">
             <image class="header__avatar" src="/static/mine/mine_head_icon.png" />
-            <image class="vip_head_icon" src="/static/mine/mine_vip_icon10.png" />
+            <!-- <image class="vip_head_icon" src="/static/mine/mine_authen1.png" /> -->
 
             <view class="header__info">
                 <text class="header__username">{{ userInfo?.username }}</text>
                 <view class="header__userid-wrapper">
                     <text class="header__userid">ID: {{ userInfo?.user_id }}</text>
-                    <image class="header__copy-icon" @click="copyHandle()" src="/static/mine/mine_head_copy.png" />
+                    <!-- <image class="header__copy-icon" @click="copyHandle()" src="/static/mine/mine_head_copy.png" /> -->
+                    <view class="clickable-area" @click="copyHandle">
+                        <image class="header__copy-icon" src="/static/mine/mine_head_copy.png" />
+                    </view>
                 </view>
             </view>
 
@@ -128,7 +118,6 @@ const handleItemClick = (itemModel: any) => {
             <MineItem :itemModel=itmeAry[0] @click="handleItemClick" />
         </view>
     </view>
-    
 </template>
 
 <style lang="scss" scoped>
@@ -139,7 +128,8 @@ const handleItemClick = (itemModel: any) => {
     height: 250px;
     padding: 0px;
     //   background: url('https://diancan-1252107261.cos.accelerate.myqcloud.com/yiliao/nav-yiyu.png') center center / cover no-repeat;
-    position: relative; /* 添加 position 属性，使得 header__bottom 为绝对定位 */
+    position: relative;
+    /* 添加 position 属性，使得 header__bottom 为绝对定位 */
 
 }
 
@@ -152,41 +142,50 @@ const handleItemClick = (itemModel: any) => {
     object-fit: cover;
     z-index: 0;
 }
+
 .group {
-    position: absolute; /* 绝对定位，相对于 header 的位置 */
-  bottom: 2px; /* 距离 header 底部的距离为 0 */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 51px;
-  width: 100vw;
+    position: absolute;
+    /* 绝对定位，相对于 header 的位置 */
+    bottom: 2px;
+    /* 距离 header 底部的距离为 0 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 51px;
+    width: 100vw;
 }
+
 /* 让 MineItem 填满 .group 区域 */
 .header__bottom {
-  position: absolute; /* 绝对定位，相对于 header 的位置 */
-  bottom: 2px; /* 距离 header 底部的距离为 0 */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 55px;
-  width: 90vw;
-  margin-left: 5vw;
-//   background-color: #ffffff; /* 背景色为白色，方便查看效果 */
-  background-image: url("https://qiniu.aimissu.top/images/mine_vip_bg.png");
-  background-size: cover;
+    position: absolute;
+    /* 绝对定位，相对于 header 的位置 */
+    bottom: 2px;
+    /* 距离 header 底部的距离为 0 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 55px;
+    width: 90vw;
+    margin-left: 5vw;
+    //   background-color: #ffffff; /* 背景色为白色，方便查看效果 */
+    background-image: url("https://qiniu.aimissu.top/images/mine_vip_bg.png");
+    background-size: cover;
 }
+
 .vip_head_icon {
     position: absolute;
-    top: 140px;
+    top: 138px;
     left: 52px;
     height: 20px;
     width: 20px;
-  }
+}
+
 .vip__icon {
     width: 34px;
     height: 20px;
     margin-left: 15px;
 }
+
 .vip__title {
     font-size: 14px;
     color: #f5ce32;
@@ -194,6 +193,7 @@ const handleItemClick = (itemModel: any) => {
     // font-weight: bold;
 
 }
+
 .header__left {
     display: flex;
     align-items: center;
@@ -206,7 +206,7 @@ const handleItemClick = (itemModel: any) => {
     height: 50px;
     margin-right: 10px;
     margin-left: 20px;
-    // border-radius: 50%;
+    border-radius: 50%;
 }
 
 .header__info {
@@ -238,16 +238,26 @@ const handleItemClick = (itemModel: any) => {
 //     z-index: 10;
 
 // }
+.clickable-area {
+    width: 25px;
+    /* 定义一个足够大的宽度 */
+    height: 25px;
+    /* 定义一个足够大的高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 5px;
+
+}
 
 .header__copy-icon {
-    width: 25px;
-    height: 25px;
-    margin-left: 5px;
+    width: 20px;
+    height: 20px;
 }
 
 .header__userid-wrapper {
     display: flex;
     align-items: center;
     margin-top: 4px;
-}
-</style>
+}</style>
