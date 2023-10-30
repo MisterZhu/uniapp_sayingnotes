@@ -53,7 +53,7 @@ onPullDownRefresh(() => {
 });
 const handleItemClick = (itemModel: any) => {
   uni.navigateTo({
-    url: '/pages/mine/house/certifi-house'
+    url: '/pages/mine/house/select-community'
   })
 }
 // 触底的事件

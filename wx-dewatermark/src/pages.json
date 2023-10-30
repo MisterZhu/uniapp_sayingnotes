@@ -85,6 +85,17 @@
 			}
 		},
 		{
+			"path": "pages/mine/house/select-community",
+			"style": {
+				"navigationBarTitleText": "选择社区",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/mine/setting",
 			"style": {
 				"navigationBarTitleText": "设置",
