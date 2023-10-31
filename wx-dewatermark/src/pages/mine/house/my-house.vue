@@ -128,22 +128,9 @@ watch(
   background-color: $uni-color-f5f;
 }
 
-// .button-container {
-//   margin-top: 115px;
-//   margin-left: 15%;
-//   width: 70%;
-//   height: 35px;
-//   line-height: 35px;
-//   text-align: center;
-//   color: black;
-//   background-color: orange;
-//   border-radius: 5px;
-//   font-size: 14px;
-
-// }
 .button-container {
   position: absolute;
-  bottom: 40px;
+  bottom: 50px;
   left: 50px;
   right: 50px;
   display: flex;
@@ -152,12 +139,15 @@ watch(
 }
 
 .custom-button {
-  height: 54px;
-  background-color: $uni-theme-btn-color;
+  height: 40px;
+  background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
   color: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
-  line-height: 54px;
+  line-height: 40px;
   width: 100%;
+  font-size: 16px;
+
   cursor: pointer;
-}</style>
+}
+</style>
