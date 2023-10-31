@@ -63,11 +63,11 @@ const handleSubmit = async () => {
         <view class="label-container">
             <view class="left-section">
                 <view class="house-label">房屋</view>
-                <text class="component-title">标题</text>
+                <text class="component-title">瀚宇天悦湾2号院</text>
             </view>
             <view class="house-right">认证中</view>
         </view>
-        <text class="component-text">内容</text>
+        <text class="component-text">2号楼1单元27层2702室</text>
         <view class="divider"></view>
 
     </view>

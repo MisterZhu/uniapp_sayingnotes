@@ -25,8 +25,8 @@ const toggleSelection = () => {
     <view class="custom-component" @click="toggleSelection">
         <view class="selection-button" :class="{ selected: isSelected }"></view>
         <view class="content">
-            <text class="component-title">标题</text>
-            <text class="component-text">内容</text>
+            <text class="component-title">瀚宇天悦湾2号院</text>
+            <text class="component-text">荥阳市兴华路与龙岗南路交叉口西北侧</text>
         </view>
     </view>
     <view class="divider"></view>
