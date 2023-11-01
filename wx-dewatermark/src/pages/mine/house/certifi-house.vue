@@ -1,14 +1,17 @@
 <template>
   <view class="container">
+    <view class="result-box">
+					<text>社区：瀚宇天悦湾2号院</text>
+				</view>
     <uni-card is-full :is-shadow="false">
-      <text class="uni-h6">请选择正确的房号、并上传购房合同（房号页面）照片或者联系管理员（微信：MisterZhu2021），私下发证明信息，证明是该小区业主身份</text>
+      <text class="uni-h6">请选择正确的房号、并上传购房合同（房号页面）照片或其他证明信息证明是该小区业主，也可联系客服（我的->帮助中心->联系客服）说明情况</text>
     </uni-card>
     <uni-section title="房屋信息" sub-title="请选择你购房合同中对应的房号" type="line" padding style="height: calc(100vh - 100px);">
       <uni-data-picker placeholder="请选择房号" popup-title="请选择房屋信息" :localdata="classes" v-model="selectedClass"
         @change="onchange" @nodeclick="onnodeclick" @popupopened="onpopupopened"
         @popupclosed="onpopupclosed"></uni-data-picker>
     </uni-section>
-    <uni-section title="上传图片" sub-title="请上传合同(房号页面)照片或其他能证明你是业主身份的照片并在微信群@管理员" type="line" padding
+    <uni-section title="上传图片" sub-title="请上传合同(房号页面)照片或其他能证明你是业主身份的照片" type="line" padding
       style="height: calc(100vh - 100px);">
       <view class="example-body">
         <uni-file-picker limit="1" title=""></uni-file-picker>
@@ -37,9 +40,12 @@ const classes = ref<Array<any>>([]); // 用于存储本地JSON数据
 const phoneNum = ref(''); // 存储选择的班级
 
 const handleItemClick = (itemModel: any) => {
-  uni.navigateTo({
-    url: '/pages/mine/house/select-community'
-  })
+  // uni.navigateTo({
+  //   url: '/pages/mine/house/select-community'
+  // })
+  uni.switchTab({
+	url: '/pages/mine/mine'
+});
 }
 // 异步加载本地JSON数据
 onMounted(() => {
@@ -66,6 +72,13 @@ const onchange = (e: any) => {
 </script>
   
 <style lang="scss" scoped>
+
+.result-box {
+		text-align: start;
+		padding: 10px 15px;
+		font-size: 14px;
+    font-weight: 400;
+	}
 .example-body {
   padding: 10px;
   padding-top: 0;

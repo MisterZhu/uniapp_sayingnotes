@@ -87,6 +87,8 @@ const handleSubmit = async () => {
     justify-content: space-between; /* 将左右两侧分开 */
     align-items: center; /* 垂直居中对齐 */
     width: 100%;
+    margin-top: 5px;
+
 }
 
 .left-section {
@@ -98,9 +100,9 @@ const handleSubmit = async () => {
     border: 1px solid $uni-theme-btn-color; /* 1px边框，颜色为橙色 */
     border-radius: 4px; /* 圆角为10px */
     background: transparent; /* 背景为透明 */
-    padding: 2px 5px; /* 控制文本的内边距，使其有空间 */
-    margin-top:10px; /* 上方间距 */
-    margin-bottom: 5px; /* 下方间距 */
+    padding: 0px 5px; /* 控制文本的内边距，使其有空间 */
+    margin-top:12px; /* 上方间距 */
+    margin-bottom: 8px; /* 下方间距 */
     font-weight: normal; /* 文本加粗 */
     color: $uni-theme-btn-color; /* 文本颜色为白色 */
     font-size: 12px;
@@ -108,11 +110,11 @@ const handleSubmit = async () => {
 .house-right {
     border-radius: 4px; /* 圆角为10px */
     background: rgba(255, 166, 0, 0.1); /* 背景为透明 */
-    padding: 2px 5px; /* 控制文本的内边距，使其有空间 */
+    padding: 4px 5px; /* 控制文本的内边距，使其有空间 */
     font-weight: normal; /* 文本加粗 */
     color: $uni-theme-btn-color; /* 文本颜色为白色 */
-    font-size: 12px;
-
+    font-size: 14px;
+margin-top: 2px;
 }
 .component-title {
     margin-left: 8px;
@@ -121,7 +123,12 @@ const handleSubmit = async () => {
 
 
 .component-text {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 2px;
+
+    color: $uni-color-666; /* 文本颜色为白色 */
+    font-size: 14px;
+
     /* component-title 和 component-text 之间的间隔 */
 }
 
@@ -130,7 +137,7 @@ const handleSubmit = async () => {
     /* 横向分割线 */
     height: 1px;
     /* 分割线的高度 */
-    background-color: #fff;
+    background-color: #eee;
     /* 分割线的颜色 */
     margin-top: 5px;
     /* 分割线与上方元素的间隔 */

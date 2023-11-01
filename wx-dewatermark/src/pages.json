@@ -11,8 +11,8 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "全站去水印",
-				"navigationBarTextStyle": "black",
 				"navigationBarBackgroundColor":"#ffffff",
+				"navigationStyle": "custom",
 				"backgroundColor":"#F5F5F5"
 
 			}
@@ -168,12 +168,8 @@
 			"iconPath": "static/tab/tab_home_1.png",
 			"selectedIconPath": "static/tab/tab_home_2.png",
 			"text": "首页"
-		}, {
-			"pagePath": "pages/history/search-history",
-			"iconPath": "static/tab/tab_history_1.png",
-			"selectedIconPath": "static/tab/tab_history_2.png",
-			"text": "解析记录"
-		}, {
+		}, 
+		 {
 			"pagePath": "pages/mine/mine",
 			"iconPath": "static/tab/tab_mine_1.png",
 			"selectedIconPath": "static/tab/tab_mine_2.png",
