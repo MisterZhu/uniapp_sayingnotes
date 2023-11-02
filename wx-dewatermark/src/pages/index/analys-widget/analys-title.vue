@@ -67,20 +67,20 @@ const saveHandle = async () => {
 .btn-container {
   background-color: white;
   position: relative;
-  border-radius: 5px;
+  border-radius: 10rpx;
 }
 
 .save-btn {
   display: flex;
   justify-content: center;
-  height: 40px;
-  line-height: 40px;
+  height: 80rpx;
+  line-height: 80rpx;
   /* 等于按钮高度 */
   background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
   color: $uni-color-fff;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-right: 12px;
-  margin-left: 12px;
+  font-size: 32rpx;
+  border-radius: 10rpx;
+  margin-right: 24rpx;
+  margin-left: 24rpx;
 }
 </style>

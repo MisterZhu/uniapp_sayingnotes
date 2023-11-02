@@ -82,40 +82,60 @@ const handleSubmit = async () => {
     justify-content: center;
     align-items: flex-start;
 }
+
 .label-container {
     display: flex;
-    justify-content: space-between; /* 将左右两侧分开 */
-    align-items: center; /* 垂直居中对齐 */
+    justify-content: space-between;
+    /* 将左右两侧分开 */
+    align-items: center;
+    /* 垂直居中对齐 */
     width: 100%;
     margin-top: 5px;
 
 }
 
 .left-section {
-    display: flex; /* 让 "房屋" 和标题在同一行 */
-    align-items: center; /* 垂直居中对齐 "房屋" 和标题 */
+    display: flex;
+    /* 让 "房屋" 和标题在同一行 */
+    align-items: center;
+    /* 垂直居中对齐 "房屋" 和标题 */
 }
 
 .house-label {
-    border: 1px solid $uni-theme-btn-color; /* 1px边框，颜色为橙色 */
-    border-radius: 4px; /* 圆角为10px */
-    background: transparent; /* 背景为透明 */
-    padding: 0px 5px; /* 控制文本的内边距，使其有空间 */
-    margin-top:12px; /* 上方间距 */
-    margin-bottom: 8px; /* 下方间距 */
-    font-weight: normal; /* 文本加粗 */
-    color: $uni-theme-btn-color; /* 文本颜色为白色 */
+    border: 1px solid $uni-theme-btn-color;
+    /* 1px边框，颜色为橙色 */
+    border-radius: 4px;
+    /* 圆角为10px */
+    background: transparent;
+    /* 背景为透明 */
+    padding: 0px 5px;
+    /* 控制文本的内边距，使其有空间 */
+    margin-top: 12px;
+    /* 上方间距 */
+    margin-bottom: 8px;
+    /* 下方间距 */
+    font-weight: normal;
+    /* 文本加粗 */
+    color: $uni-theme-btn-color;
+    /* 文本颜色为白色 */
     font-size: 12px;
 }
+
 .house-right {
-    border-radius: 4px; /* 圆角为10px */
-    background: rgba(255, 166, 0, 0.1); /* 背景为透明 */
-    padding: 4px 5px; /* 控制文本的内边距，使其有空间 */
-    font-weight: normal; /* 文本加粗 */
-    color: $uni-theme-btn-color; /* 文本颜色为白色 */
+    border-radius: 4px;
+    /* 圆角为10px */
+    background: rgba(255, 166, 0, 0.1);
+    /* 背景为透明 */
+    padding: 4px 5px;
+    /* 控制文本的内边距，使其有空间 */
+    font-weight: normal;
+    /* 文本加粗 */
+    color: $uni-theme-btn-color;
+    /* 文本颜色为白色 */
     font-size: 14px;
-margin-top: 2px;
+    margin-top: 2px;
 }
+
 .component-title {
     margin-left: 8px;
     margin-top: 5px;
@@ -126,7 +146,8 @@ margin-top: 2px;
     margin-bottom: 5px;
     margin-top: 2px;
 
-    color: $uni-color-666; /* 文本颜色为白色 */
+    color: $uni-color-666;
+    /* 文本颜色为白色 */
     font-size: 14px;
 
     /* component-title 和 component-text 之间的间隔 */
