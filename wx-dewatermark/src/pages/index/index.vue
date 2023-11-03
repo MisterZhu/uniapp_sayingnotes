@@ -98,13 +98,16 @@ const changeAction = (e: any) => {
   // let {
   //   index
   // } = e.detail
-  const index = e.detail.index;
+  // const index = e.detail.index;
 
-  console.log(index);
+  // console.log(index);
 
-  uni.showToast({
-    title: `点击第个宫格`,
-    icon: 'none'
+  // uni.showToast({
+  //   title: `点击第个宫格`,
+  //   icon: 'none'
+  // })
+  uni.navigateTo({
+    url: '/pages/index/parking/parking-page'
   })
 
 }
@@ -163,7 +166,7 @@ onMounted(() => {
   <!-- 下拉菜单 -->
   <view class="xuanze" :style="{ '--top': top + 'px' }" @click="selectIsXiala">
     <view class="text-container">
-      <text>{{ optionIndex }}</text>
+      <text class="text-title">{{ optionIndex }}</text>
     </view>
     <!-- <uni-icons :type="isXiala === 2 ? 'bottom' : 'top'" size="20"></uni-icons> -->
     <image src="/static/home/home_switch_icon.png"></image>
@@ -234,12 +237,14 @@ onMounted(() => {
   align-items: center;
   // justify-content: space-between;
 }
-.xuanze image{
+
+.xuanze image {
   width: 35rpx;
   height: 35rpx;
   object-fit: cover;
   padding-left: 8rpx;
 }
+
 .text-container {
   // max-width: 220rpx; /* 设置最大宽度 */
   white-space: nowrap;
@@ -248,11 +253,11 @@ onMounted(() => {
   /* 隐藏溢出的内容 */
   // text-overflow: ellipsis; /* 显示省略号 */
   // text-overflow: clip; /* 默认值）：文本溢出时，将被修剪并丢失，不显示省略号 */
-
 }
 
 .xuanze text {
-  color: #000000;
+  color: #111;
+  font-weight: 400;
   /* 文本颜色 */
 }
 
@@ -271,10 +276,12 @@ onMounted(() => {
   height: 460rpx;
   /* 设置固定高度 */
   width: 300rpx;
-  background-color: #eeeeee;
+  background-color: #f8f8f8;
   box-sizing: border-box;
   overflow-y: scroll;
   /* 启用垂直滚动条 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+
 }
 
 .xiala-hang {
@@ -282,9 +289,9 @@ onMounted(() => {
   width: 100%;
   border-bottom: 1px solid #ccc;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10rpx 0;
+  // align-items: center;
+  justify-content: left;
+  padding: 15rpx 20rpx;
 }
 
 .xiala-hang:last-child {
@@ -319,4 +326,5 @@ onMounted(() => {
   to {
     height: 0;
   }
-}</style>
+}
+</style>

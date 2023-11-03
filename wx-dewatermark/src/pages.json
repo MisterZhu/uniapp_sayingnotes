@@ -18,6 +18,17 @@
 			}
 		},
 		{
+			"path": "pages/index/parking/parking-page",
+			"style": {
+				"navigationBarTitleText": "车位出租",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/history/search-history",
 			"style": {
 				"navigationBarTitleText": "解析记录",
