@@ -1,29 +1,31 @@
 
 
 <script setup lang="ts">
-import type { Analysis } from '@/public/decl-type';
+import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
-// import historyItem from '@/pages/history/history-widget/history-item.vue';
-import historyItem from '@/pages/history/history-widget/history-item.vue';
+import historyItem from '@/pages/index/parking/parking-widget/widget/part-item.vue';
 
 const props = defineProps({
   coverSrc: String
 });
 // let analyAry = ref([] as Analysis[])
 let analyAry = reactive({
-  data: [] as Analysis[]
+  data: [] as ParkItem[]
 })
 const size = 10
 let page = 0
 // MARK: 解析记录
 async function requestAnalyList(callback: () => void) {
+  console.log('----------222--------');
+
   try {
     const res: any = await RequestApi.AnalyHistory({ "page": page, "size": size })
     if (typeof callback === 'function') {
       callback();
     }
+
     if (res.code === 200) {
       if (page === 0) {
         analyAry.data = res.data
@@ -51,7 +53,7 @@ onPullDownRefresh(() => {
   console.log('下拉刷新的事件');
   // 1. 重置关键数据
   page = 0
-  analyAry.data = [] as Analysis[]
+  analyAry.data = [] as ParkItem[]
   // 2. 重新发起请求
   requestAnalyList(() => uni.stopPullDownRefresh())
 });

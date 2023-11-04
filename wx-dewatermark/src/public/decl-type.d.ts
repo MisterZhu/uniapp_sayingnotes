@@ -2,15 +2,20 @@
 
 
 export interface ParkItem {
+    id: int;
+    create_userid:string;
     title: string;
-    bigFile: false;
+    type: Int;
+    state: Int;
     cover: string;
-    down:  string;
-    download_image: string;
-    images: string;
-    url: string;
-    video:string;
+    price_str:  string;
+    in_maintenance: boolean;
+    negotiable: boolean;
+    lease: string;
+    create_time:string;
+    update_time:string;
     origin_url:string;
+
 }
 // 首页第一项数据：数据解析
 export interface Analysis {

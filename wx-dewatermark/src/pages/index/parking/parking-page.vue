@@ -6,7 +6,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref, watch } from 'vue'
 
 import ParkLessor from "./parking-widget/park-lessor.vue";
-import ParkLender from "./parking-widget/park-lender.vue";
+import ParkLender from "./parking-widget/park-renter.vue";
 
 let analyModel = ref<Analysis | null>(null)
 let items2 = ['出租', '求租']
@@ -118,38 +118,15 @@ const photosToShow = computed(() => {
   /* #endif */
   justify-content: center;
   align-items: center;
-  padding-top: 80rpx; /* 添加额外的上内边距来避免被遮挡 */
-  height: 600rpx;
+  padding-top: 100rpx; /* 添加额外的上内边距来避免被遮挡 */
   text-align: center;
   background-color: #F5F5F5;
 
 }
 
-// .uni-common-mt {
-//   padding: 5px 110px;
-//   position: fixed;
+// .video-container {
+//   margin: 16rpx;
 // }
 
-// .content {
-//   /* #ifndef APP-NVUE */
-//   // display: flex;
-//   /* #endif */
-//   justify-content: center;
-//   align-items: center;
-//   height: 300px;
-//   text-align: center;
-// }
 
-.uni-padding-wrap {
-  padding: 10rpx 140rpx 30rpx 140rpx;
-}
-
-.video-container {
-  margin: 16rpx;
-}
-
-.video-container .my-video {
-  height: 400rpx;
-  border-radius: 10rpx;
-}
 </style>

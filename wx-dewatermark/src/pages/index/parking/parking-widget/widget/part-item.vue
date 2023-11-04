@@ -1,7 +1,6 @@
   
 <script setup lang="ts">
 import type { ParkItem } from '@/public/decl-type';
-import { RequestApi } from '@/public/request';
 import type { PropType } from 'vue';
 
 
@@ -12,119 +11,90 @@ const props = defineProps({
   },
 });
 
-const copyHandle = async () => {
 
-  uni.setClipboardData({
-    // @ts-ignore
-    data: props.analyModel.origin_url,
-    success() {
-      uni.showToast({
-        title: '复制成功'
-      })
-    }
-  })
-}
-// MARK: 解析链接
-async function requestAnalysisUrl(url: string) {
-  try {
-    const res: any = await RequestApi.HomeAnalysis({ "url": url })
-    console.log("res = " + res)
-    if (res.code === 200) {
-      // analyModel = res.data
-      // 跳转到二级页面并传递参数
-      uni.navigateTo({
-        url: '/pages/index/analysis-result?analyModel=' + encodeURIComponent(JSON.stringify(res.data))
-      })
-    } else {
-      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
-    }
-  } catch (error) {
-    console.error(error)
-    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
-  }
-}
-
-const handleSubmit = async () => {
-  if (props.analyModel.cover != '') {
-    const str = props.analyModel.cover
-    if (str.includes('http://') || str.includes('https://')) {
-      requestAnalysisUrl(str ?? '')
-    } else {
-      uni.showToast({ title: '输入的链接格式不正确', icon: 'none', duration: 2000 })
-    }
-  } else {
-    uni.showToast({ title: '请输入要解析的链接', icon: 'none', duration: 2000 })
-  }
-}
 </script>
 
 <template>
-  <view class="custom-component">
-    <!-- 组件最外层包裹的view，设置边距和圆角 -->
-    <view class="component-wrapper">
-      <view class="component-header">
-        <!-- 文本标签，用来展示内容 -->
-        <text class="component-text">{{ analyModel.cover }}</text>
+  <view class="component-wrapper">
+    <view class="left-custom-view">
+      <image class="left-image" src="/static/home/home_head_bg.png" mode="aspectFill"></image>
+    </view>
+    <view class="right-custom-view">
+      <view class="top-content">
+        <text class="left-text">2号楼车负一层车位便宜出租</text>
+        <view class="right-custom-view-image">
+          <image class="right-image" src="/static/home/home_renter_icon.png" mode="aspectFill"></image>
+        </view>
       </view>
-      <view class="component-footer">
-        <!-- 两个按钮，右对齐 -->
-        <view class="copy-btn" @click="copyHandle()">复制链接</view>
-        <view class="component-button" @click="handleSubmit()">重新解析</view>
+      <view class="bottom-content">
+        <!-- 下侧内容 -->
       </view>
     </view>
   </view>
 </template>
-  
+
 <style lang="scss" scoped>
-/* 组件最外层包裹的view的样式 */
 .component-wrapper {
-  margin: 12px 8px 10px 8px;
+  margin: 20rpx 24rpx;
+  height: 240rpx;
   border-radius: 5px;
-  box-shadow: 0px 0px 3px $uni-color-ccc;
   background-color: $uni-color-fff;
   overflow: hidden;
-}
-
-/* 组件头部样式，包括文本标签 */
-.component-header {
-  padding: 12px;
-}
-
-/* 文本标签样式 */
-.component-text {
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* 组件底部样式，包括两个按钮 */
-.component-footer {
   display: flex;
-  justify-content: flex-end;
-  padding: 8px;
+  align-items: center;
+}
+.left-custom-view {
+  width: 240rpx;
+  height: 240rpx;
+}
+.left-image {
+  width: 200rpx;
+  height: 200rpx;
+  margin: 20rpx;
+  border-radius: 16rpx;
 }
 
-/* 按钮样式 */
-.component-button {
-  margin-left: 8px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  color: $uni-color-fff;
-  // background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
-  background-color: $uni-color-theme;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.copy-btn {
-  margin-left: 8px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  background-color: $uni-color-f8f;
-  color: $uni-color-333;
-  font-size: 14px;
-  border: 1px solid $uni-color-ccc;
-  cursor: pointer;
+.right-custom-view {
+  // flex: 1;
+  width: calc(100vw - 288rpx);
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
 }
-</style>
+
+.top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // padding-top: 10px;
+}
+
+.left-text {
+  flex: 1;
+  /* 自动占用剩余空间 */
+  font-size: 16px;
+  color: #333333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 设置最大显示行数 */
+  -webkit-box-orient: vertical;
+}
+.right-custom-view-image{
+  width: 66rpx;
+  height: 66rpx;
+  margin: 10px;
+}
+.right-image {
+  width: 33px;
+  height: 33px;
+}
+
+.bottom-content {
+  /* 根据需要设置样式 */
+}</style>
   

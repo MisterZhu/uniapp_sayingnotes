@@ -29,6 +29,8 @@ function request(
             },
             success:(res:any) => {
                 const data = res.data
+                console.log("后台返回的数据: " + JSON.stringify(data));
+
                 if (data.code == 200) {
                     resolve(data)
                 }else if (data.code == 401) {
