@@ -42,7 +42,7 @@ const list = [
     type: "warning"
   }
 ]
-const isXiala = ref(2)
+const isXiala = ref(false)
 const option = [
   { lable: 2, value: "天悦湾2号院" },
   { lable: 3, value: "天悦湾3号院" },
@@ -98,27 +98,22 @@ const changeAction = (e: any) => {
   // let {
   //   index
   // } = e.detail
-  // const index = e.detail.index;
+  const index = e.detail.index;
 
-  // console.log(index);
+  console.log(index);
 
-  // uni.showToast({
-  //   title: `点击第个宫格`,
-  //   icon: 'none'
-  // })
+  uni.showToast({
+    title: `点击第${index}个宫格`,
+    icon: 'none'
+  })
   uni.navigateTo({
     url: '/pages/index/parking/parking-page'
   })
 
 }
 const selectIsXiala = (e: any) => {
-  if (isXiala.value == 0) {
-    isXiala.value = 1
-  } else if (isXiala.value == 1) {
-    isXiala.value = 2
-  } else if (isXiala.value == 2) {
-    isXiala.value = 1
-  }
+  isXiala.value = !isXiala.value
+  console.log(`dianji :`, isXiala.value);
 
 }
 const xuanzeMoban = (_label: any, _value: any) => {
@@ -127,13 +122,15 @@ const xuanzeMoban = (_label: any, _value: any) => {
     icon: 'none'
   })
   optionIndex.value = _value
+  isXiala.value = false
+
 }
 
 onMounted(() => {
   hidePasteBtn.value = !!inputValue.value
 
-  let menu_but = uni.getStorageSync('MenuButton')
-  top.value = menu_but.top
+  let menu_but = uni.getStorageSync('SafeAreaInsetTop')
+  top.value = menu_but + 4;
 
   // top.value = uni.getStorageSync('SafeAreaInsetTop')
   console.log(`onMounted:`, top.value);
@@ -143,16 +140,36 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- 下拉菜单 -->
+  <view class="xuanze" :style="{ '--top': top + 'px' }">
+    <view class="text-container" @click="selectIsXiala">
+      <view class="centered-content">
+        <text class="text-title">{{ optionIndex }}</text>
+        <image class="xuanze-image" src="/static/home/home_switch_icon.png"></image>
+      </view>
+    </view>
+
+    <view class="xiala" v-show="isXiala">
+      <view class="xiala-xuan" :class="[isXiala == true ? 'open' : 'close']">
+        <view class="xiala-hang" v-for="(item, index) in option" :key="index"
+          @click="xuanzeMoban(item.lable, item.value)">
+          <text>{{ item.value }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
   <!-- 轮播图 -->
-  <swiper :style="{ height: '220px' }" autoplay="true" interval="5000" circular="true" indicator-dots="true"
-    indicator-color="#ffffff" indicator-active-color="#FF6C00">
-    <swiper-item v-for="(image, index) in images" :key="index">
-      <image :src="image" class="full-width-image"></image>
-    </swiper-item>
-  </swiper>
+  <view class="swiper-container">
+    <swiper class="custom-swiper" autoplay="true" interval="5000" circular="true" indicator-dots="true"
+      indicator-color="#ffffff" indicator-active-color="#FF6C00">
+      <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
+        <image :src="image" class="full-width-image"></image>
+      </swiper-item>
+    </swiper>
+  </view>
   <!-- 金刚区 -->
   <view class="diamond">
-    <view class="grid-container">
+    <view class="card-wrapper">
       <uni-grid :show-border="false" :column="4" :highlight="true" @change="changeAction">
         <uni-grid-item v-for="(item, index) in list" :index="index" :key="index" clickable>
           <view class="grid-item-box" style="background-color: #fff;">
@@ -163,29 +180,31 @@ onMounted(() => {
       </uni-grid>
     </view>
   </view>
-  <!-- 下拉菜单 -->
-  <view class="xuanze" :style="{ '--top': top + 'px' }" @click="selectIsXiala">
-    <view class="text-container">
-      <text class="text-title">{{ optionIndex }}</text>
-    </view>
-    <!-- <uni-icons :type="isXiala === 2 ? 'bottom' : 'top'" size="20"></uni-icons> -->
-    <image src="/static/home/home_switch_icon.png"></image>
-
-    <view class="xiala" v-if="isXiala">
-      <view class="xiala-xuan" :class="[isXiala == 1 ? 'open' : '', isXiala == 2 ? 'close' : '']">
-        <view class="xiala-hang" v-for="(item, index) in option" :key="index"
-          @click="xuanzeMoban(item.lable, item.value)">
-          <text>{{ item.value }}</text>
-        </view>
-      </view>
-    </view>
-  </view>
 </template>
 
 <style lang="scss" scoped>
+.swiper-container {
+  margin-top: 90px;
+  /* 上下左右各 20px 的边距 */
+  margin-left: 12px;
+  /* 上下左右各 20px 的边距 */
+  margin-right: 12px;
+  /* 上下左右各 20px 的边距 */
+}
+
+.custom-swiper {
+  border-radius: 16rpx;
+  /* 为 swiper 添加圆角，可根据需求调整半径值 */
+}
+
+.rounded-swiper-item {
+  border-radius: 16rpx;
+  /* 为 swiper 添加圆角，可根据需求调整半径值 */
+}
+
 .grid-item-box image {
-  width: 50rpx;
-  height: 50rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .text {
@@ -194,15 +213,23 @@ onMounted(() => {
 }
 
 .diamond {
-  margin-top: 20rpx;
+  margin: 22rpx;
+  border-radius: 16px;
+  /* 设置合适的半径值以实现圆角效果 */
 
 }
 
-.grid-container {
-  width: calc(100% - 40rpx);
-  /* 设置宽度为屏幕宽度减去 40rpx */
-  margin: 0 20rpx;
+.card-wrapper {
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  /* 为 swiper 添加圆角，可根据需求调整半径值 */
+  /* 设置合适的半径值以实现圆角效果 */
+  overflow: hidden;
+  /* 隐藏卡片内容溢出部分 */
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* 可添加阴影效果以增强卡片外观 */
 }
+
 
 .grid-item-box {
   flex: 1;
@@ -226,8 +253,7 @@ onMounted(() => {
   top: var(--top);
   left: 16rpx;
   // width: 200rpx;
-  // max-width: 240rpx; /* 设置最大宽度 */
-  height: 60rpx;
+  height: 64rpx;
   border-radius: 30rpx;
   background-color: rgba(255, 255, 255, 0.4);
   border: 1px solid #ddd;
@@ -236,13 +262,15 @@ onMounted(() => {
   display: flex;
   align-items: center;
   // justify-content: space-between;
+  z-index: 999;
 }
 
-.xuanze image {
+.xuanze-image {
   width: 35rpx;
   height: 35rpx;
   object-fit: cover;
   padding-left: 8rpx;
+
 }
 
 .text-container {
@@ -255,6 +283,14 @@ onMounted(() => {
   // text-overflow: clip; /* 默认值）：文本溢出时，将被修剪并丢失，不显示省略号 */
 }
 
+.centered-content {
+  display: flex;
+  align-items: center;
+  /* 垂直居中对齐 */
+  justify-content: center;
+  /* 水平居中对齐 */
+}
+
 .xuanze text {
   color: #111;
   font-weight: 400;
@@ -263,16 +299,17 @@ onMounted(() => {
 
 .xiala {
   position: absolute;
-  bottom: -240rpx;
+  bottom: -470rpx;
   left: 0;
-  height: 230rpx;
-  width: 200rpx;
+  height: 460rpx;
+  width: 300rpx;
+  z-index: 999;
+
 }
 
 .xiala-xuan {
   border-radius: 10rpx;
   /* 设置四个角的半径为10px */
-
   height: 460rpx;
   /* 设置固定高度 */
   width: 300rpx;
@@ -281,6 +318,7 @@ onMounted(() => {
   overflow-y: scroll;
   /* 启用垂直滚动条 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  z-index: 999;
 
 }
 
@@ -326,5 +364,4 @@ onMounted(() => {
   to {
     height: 0;
   }
-}
-</style>
+}</style>

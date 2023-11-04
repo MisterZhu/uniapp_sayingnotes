@@ -91,10 +91,9 @@ function getUserInfo() {
 }
 
 onMounted(() => {
-    let menu_but = uni.getStorageSync('MenuButton')
-    menu_top.value = menu_but.top + 'px'
-    menu_height.value = menu_but.height + 'px'
-    let SafeAreaInsetTop = uni.getStorageSync('SafeAreaInsetTop')
+    let menu_but = uni.getStorageSync('SafeAreaInsetTop')
+    menu_top.value = (menu_but + 44) + 'px'
+    menu_height.value = '32px'
     safeTop.value = '0px'
     // console.log("SafeAreaInsetTop = " + SafeAreaInsetTop);
 

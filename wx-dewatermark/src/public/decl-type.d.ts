@@ -1,6 +1,17 @@
 //-------------------类型声明文件：d.ts文件--------------------
 
 
+export interface ParkItem {
+    title: string;
+    bigFile: false;
+    cover: string;
+    down:  string;
+    download_image: string;
+    images: string;
+    url: string;
+    video:string;
+    origin_url:string;
+}
 // 首页第一项数据：数据解析
 export interface Analysis {
     title: string;

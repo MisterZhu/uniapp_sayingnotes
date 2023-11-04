@@ -5,8 +5,7 @@ import type { UserInfoModel, MineItemModel } from '@/public/decl-type';
 import MineItem from './mine-widget/mine-item.vue';
 import { onShow } from '@dcloudio/uni-app';
 
-let menu_top = ref<string>('')
-let menu_height = ref<string>('')
+
 let safeTop = ref<string>('')
 let userInfo = ref<UserInfoModel>()
 
@@ -73,12 +72,8 @@ onShow(() => {
 });
 
 onMounted(() => {
-    let menu_but = uni.getStorageSync('MenuButton')
-    menu_top.value = menu_but.top + 'px'
-    menu_height.value = menu_but.height + 'px'
-    let SafeAreaInsetTop = uni.getStorageSync('SafeAreaInsetTop')
+
     safeTop.value = '0px'
-    // console.log("SafeAreaInsetTop = " + SafeAreaInsetTop);
 
 })
 
