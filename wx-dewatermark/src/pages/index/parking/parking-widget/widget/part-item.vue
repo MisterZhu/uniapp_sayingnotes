@@ -11,23 +11,33 @@ const props = defineProps({
   },
 });
 
+const richTextContent = '<div style="color: red;"><span style="font-weight: 500; font-size: 20px;">2000</span><span style="font-size: 14px;"> 元/年</span></div>';
 
 </script>
 
 <template>
   <view class="component-wrapper">
     <view class="left-custom-view">
-      <image class="left-image" src="/static/home/home_head_bg.png" mode="aspectFill"></image>
+      <image class="left-image" src="/static/home/home_parking_head1.jpg" mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">
-        <text class="left-text">2号楼车负一层车位便宜出租</text>
+        <text class="left-text">2号楼车负一层车位便宜出租短裤家居服健康就开始打飞机时发动机空间</text>
         <view class="right-custom-view-image">
           <image class="right-image" src="/static/home/home_renter_icon.png" mode="aspectFill"></image>
         </view>
       </view>
       <view class="bottom-content">
         <!-- 下侧内容 -->
+        <view class="custom-view">
+          <rich-text :nodes="richTextContent"></rich-text>
+        </view>
+        <view class="custom-view">
+          <text class="left-text1">含管理费</text>
+          <text class="left-text2">可小刀</text>
+          <text class="left-text3">年租</text>
+          <text class="right-text">2023-10-30</text>
+        </view>
       </view>
     </view>
   </view>
@@ -43,10 +53,12 @@ const props = defineProps({
   display: flex;
   align-items: center;
 }
+
 .left-custom-view {
   width: 240rpx;
   height: 240rpx;
 }
+
 .left-image {
   width: 200rpx;
   height: 200rpx;
@@ -71,30 +83,122 @@ const props = defineProps({
   // padding-top: 10px;
 }
 
+// .left-text {
+//   flex: 1;
+//   /* 自动占用剩余空间 */
+//   font-size: 12px;
+//   color: #333333;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   -webkit-line-clamp: 2;
+//   /* 设置最大显示行数 */
+//   -webkit-box-orient: vertical;
+//   word-break: break-all; /* 可以让文本根据需要自动换行 */
+
+// }
 .left-text {
-  flex: 1;
-  /* 自动占用剩余空间 */
+  // 显示两行，超过的省略号
   font-size: 16px;
   color: #333333;
-  white-space: nowrap;
+  display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
+  word-wrap: break-word;
+  white-space: normal !important;
   -webkit-line-clamp: 2;
-  /* 设置最大显示行数 */
   -webkit-box-orient: vertical;
 }
-.right-custom-view-image{
+
+.right-custom-view-image {
   width: 66rpx;
   height: 66rpx;
-  margin: 10px;
+  margin: 5px 10px 10px 10px;
 }
+
 .right-image {
   width: 33px;
   height: 33px;
 }
 
+// .bottom-content {
+//   display: flex;
+//   // flex-direction: column-reverse;
+//   /* 垂直反向排列 */
+//   margin-bottom: 10px;
+// }
 .bottom-content {
-  /* 根据需要设置样式 */
-}</style>
+  display: flex;
+  // justify-content: flex-start; /* 将子元素靠右对齐 */
+  align-items: flex-start;
+  /* 将子元素靠下对齐 */
+  flex-direction: column;
+  /* 设置子元素从上到下排列 */
+  margin-bottom: 0px;
+}
+
+
+.custom-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  width: calc(100vw - 288rpx);
+
+}
+
+.left-text1 {
+  /* 样式设置，如字体大小、颜色等 */
+  color: #5CC289;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(92, 194, 137, 0.2);
+  /* 背景色，透明度 0.2 */
+  border-radius: 3px;
+  /* 圆角 5px */
+  padding: 2px 3px;
+  /* 内边距 5px */
+}
+
+.left-text2 {
+  /* 样式设置，如字体大小、颜色等 */
+  color: #5CC289;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(92, 194, 137, 0.2);
+  /* 背景色，透明度 0.2 */
+  border-radius: 3px;
+  /* 圆角 5px */
+  padding: 2px 3px;
+  /* 内边距 5px */
+  margin-left: 5px;
+}
+
+.left-text3 {
+  /* 样式设置，如字体大小、颜色等 */
+  color: #999999;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(153, 153, 153, 0.2);
+  /* 背景色，透明度 0.2 */
+  border-radius: 3px;
+  /* 圆角 5px */
+  padding: 2px 3px;
+  /* 内边距 5px */
+  margin-left: 5px;
+
+}
+
+.right-text {
+  flex: 1;
+
+  /* 样式设置，如字体大小、颜色等 */
+  color: #475467;
+  font-size: 12px;
+  margin-right: 10px;
+  text-align: right;
+  /* 文本右对齐 */
+
+}
+</style>
   

@@ -26,7 +26,50 @@ let styles = [{
   text: '文字'
 }
 ]
+const horizontal = 'right';
+const vertical = 'bottom';
+const direction = 'vertical';
 
+const pattern = {
+  color: '#7A7E83',
+  backgroundColor: '#fff',
+  selectedColor: '#007AFF',
+  buttonColor: '#007AFF',
+  iconColor: '#fff'
+};
+const content = [{
+  iconPath: '/static/home/home_lessor_icon1.png',
+  selectedIconPath: '/static/home/home_lessor_icon1.png',
+  text: '出租',
+  active: false
+},
+{
+  iconPath: '/static/home/home_renter_icon1.png',
+  selectedIconPath: '/static/home/home_renter_icon1.png',
+  text: '求租',
+  active: false
+}
+]
+const selectItem = (e: any) => {
+  const index = e.index;
+
+  console.log(`dianji :`, index);
+  uni.showToast({
+    title: `点击第${index}个宫格`,
+    icon: 'none'
+  })
+  // uni.showModal({
+  //   title: '提示',
+  //   content: `您${content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
+  //   success: function (res) {
+  //     if (res.confirm) {
+  //       console.log('用户点击确定')
+  //     } else if (res.cancel) {
+  //       console.log('用户点击取消')
+  //     }
+  //   }
+  // })
+}
 //接收参数
 onLoad(options => {
   // @ts-ignore
@@ -80,6 +123,8 @@ const photosToShow = computed(() => {
       </view>
     </view>
   </view>
+  <uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction"
+    @trigger="selectItem"></uni-fab>
 </template>
 <style lang="scss">
 // .uni-common-mt {
@@ -118,7 +163,8 @@ const photosToShow = computed(() => {
   /* #endif */
   justify-content: center;
   align-items: center;
-  padding-top: 100rpx; /* 添加额外的上内边距来避免被遮挡 */
+  padding-top: 100rpx;
+  /* 添加额外的上内边距来避免被遮挡 */
   text-align: center;
   background-color: #F5F5F5;
 
@@ -127,6 +173,4 @@ const photosToShow = computed(() => {
 // .video-container {
 //   margin: 16rpx;
 // }
-
-
 </style>
