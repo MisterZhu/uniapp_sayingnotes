@@ -29,6 +29,28 @@
 			}
 		},
 		{
+			"path": "pages/index/parking/publish-lease",
+			"style": {
+				"navigationBarTitleText": "发布出租",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
+			"path": "pages/index/parking/publish-require",
+			"style": {
+				"navigationBarTitleText": "发布需求",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/history/search-history",
 			"style": {
 				"navigationBarTitleText": "解析记录",
