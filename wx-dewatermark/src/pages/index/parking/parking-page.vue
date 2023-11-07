@@ -67,18 +67,12 @@ const selectItem = (e: any) => {
       url: '/pages/index/parking/publish-require'
     })
   }
-
-  // uni.showModal({
-  //   title: '提示',
-  //   content: `您${content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
-  //   success: function (res) {
-  //     if (res.confirm) {
-  //       console.log('用户点击确定')
-  //     } else if (res.cancel) {
-  //       console.log('用户点击取消')
-  //     }
-  //   }
-  // })
+}
+const fabClick = () => {
+  uni.showToast({
+    title: '点击了悬浮按钮',
+    icon: 'none'
+  })
 }
 //接收参数
 onLoad(options => {
@@ -134,7 +128,7 @@ const photosToShow = computed(() => {
     </view>
   </view>
   <uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction"
-    @trigger="selectItem"></uni-fab>
+    @trigger="selectItem" @fabClick="fabClick"></uni-fab>
 </template>
 <style lang="scss">
 // .uni-common-mt {

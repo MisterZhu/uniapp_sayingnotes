@@ -1,319 +1,216 @@
 <template>
-	<view class="container">
-		<uni-card :is-shadow="false" is-full>
-			<text class="uni-h6">uni-forms 组件一般由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据。</text>
-		</uni-card>
-		<uni-section title="基本用法" type="line">
-			<view class="example">
-				<!-- 基础用法，不包含校验规则 -->
-				<uni-forms ref="baseForm" :modelValue="baseFormData">
-					<uni-forms-item label="姓名" required>
-						<uni-easyinput v-model="baseFormData.name" placeholder="请输入姓名" />
-					</uni-forms-item>
-					<uni-forms-item label="年龄" required>
-						<uni-easyinput v-model="baseFormData.age" placeholder="请输入年龄" />
-					</uni-forms-item>
-					<uni-forms-item label="性别" required>
-						<uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
-					</uni-forms-item>
-					<uni-forms-item label="兴趣爱好" required>
-						<uni-data-checkbox v-model="baseFormData.hobby" multiple :localdata="hobbys" />
-					</uni-forms-item>
-					<uni-forms-item label="自我介绍">
-						<uni-easyinput type="textarea" v-model="baseFormData.introduction" placeholder="请输入自我介绍" />
-					</uni-forms-item>
-					<uni-forms-item label="日期时间">
-						<uni-datetime-picker type="datetime" return-type="timestamp" v-model="baseFormData.datetimesingle"/>
-					</uni-forms-item>
-				</uni-forms>
-			</view>
-		</uni-section>
-
-		<uni-section title="对齐方式" type="line">
-			<view class="example">
-				<view class="segmented-control">
-					<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="button">
-					</uni-segmented-control>
-				</view>
-				<!-- 展示不同的排列方式 -->
-				<uni-forms ref="baseForm" :modelValue="alignmentFormData" :label-position="alignment">
-					<uni-forms-item label="姓名" required>
-						<uni-easyinput v-model="baseFormData.name" placeholder="请输入姓名" />
-					</uni-forms-item>
-					<uni-forms-item label="年龄" required>
-						<uni-easyinput v-model="baseFormData.age" placeholder="请输入年龄" />
-					</uni-forms-item>
-				</uni-forms>
-			</view>
-		</uni-section>
-
-		<uni-section title="表单校验" type="line">
-			<view class="example">
-				<!-- 基础表单校验 -->
-				<uni-forms ref="valiForm" :rules="rules" :modelValue="valiFormData">
-					<uni-forms-item label="姓名" required name="name">
-						<uni-easyinput v-model="valiFormData.name" placeholder="请输入姓名" />
-					</uni-forms-item>
-					<uni-forms-item label="年龄" required name="age">
-						<uni-easyinput v-model="valiFormData.age" placeholder="请输入年龄" />
-					</uni-forms-item>
-					<uni-forms-item label="自我介绍" name="introduction">
-						<uni-easyinput type="textarea" v-model="valiFormData.introduction" placeholder="请输入自我介绍" />
-					</uni-forms-item>
-				</uni-forms>
-				<button type="primary" @click="submit('valiForm')">提交</button>
-			</view>
-		</uni-section>
-
-		<uni-section title="自定义校验规则" type="line">
-			<view class="example">
-				<!-- 自定义表单校验 -->
-				<uni-forms ref="customForm" :rules="customRules" :modelValue="customFormData">
-					<uni-forms-item label="姓名" required name="name">
-						<uni-easyinput v-model="customFormData.name" placeholder="请输入姓名" />
-					</uni-forms-item>
-					<uni-forms-item label="年龄" required name="age">
-						<uni-easyinput v-model="customFormData.age" placeholder="请输入年龄" />
-					</uni-forms-item>
-					<uni-forms-item label="兴趣爱好" required name="hobby">
-						<uni-data-checkbox v-model="customFormData.hobby" multiple :localdata="hobbys" />
-					</uni-forms-item>
-				</uni-forms>
-				<button type="primary" @click="submit('customForm')">提交</button>
-			</view>
-		</uni-section>
-
-
-		<uni-section title="动态表单" type="line">
-			<view class="example">
-				<!-- 动态表单校验 -->
-				<uni-forms ref="dynamicForm" :rules="dynamicRules" :modelValue="dynamicFormData">
-					<uni-forms-item label="邮箱" required name="email">
-						<uni-easyinput v-model="dynamicFormData.email" placeholder="请输入姓名" />
-					</uni-forms-item>
-					<uni-forms-item v-for="(item,index) in dynamicLists" :key="item.id" :label="item.label+' '+index"
-						required :rules="item.rules" :name="'domains[' + item.id + ']'">
-						<view class="form-item">
-							<uni-easyinput v-model="dynamicFormData.domains[item.id]" placeholder="请输入域名" />
-							<button class="button" size="mini" type="default" @click="del(item.id)">删除</button>
-						</view>
-					</uni-forms-item>
-				</uni-forms>
-				<view class="button-group">
-					<button type="primary" size="mini" @click="add">新增域名</button>
-					<button type="primary" size="mini" @click="submit('dynamicForm')">提交</button>
-				</view>
-			</view>
-		</uni-section>
-	</view>
-</template>
-
-
-<script>
-	export default {
-		data() {
-			return {
-				// 基础表单数据
-				baseFormData: {
-					name: '',
-					age: '',
-					introduction: '',
-					sex: 2,
-					hobby: [5],
-					datetimesingle: 1627529992399
-				},
-				// 表单数据
-				alignmentFormData: {
-					name: '',
-					age: '',
-				},
-				// 单选数据源
-				sexs: [{
-					text: '男',
-					value: 0
-				}, {
-					text: '女',
-					value: 1
-				}, {
-					text: '保密',
-					value: 2
-				}],
-				// 多选数据源
-				hobbys: [{
-					text: '跑步',
-					value: 0
-				}, {
-					text: '游泳',
-					value: 1
-				}, {
-					text: '绘画',
-					value: 2
-				}, {
-					text: '足球',
-					value: 3
-				}, {
-					text: '篮球',
-					value: 4
-				}, {
-					text: '其他',
-					value: 5
-				}],
-				// 分段器数据
-				current: 0,
-				items: ['左对齐', '顶部对齐'],
-				// 校验表单数据
-				valiFormData: {
-					name: '',
-					age: '',
-					introduction: '',
-				},
-				// 校验规则
-				rules: {
-					name: {
-						rules: [{
-							required: true,
-							errorMessage: '姓名不能为空'
-						}]
-					},
-					age: {
-						rules: [{
-							required: true,
-							errorMessage: '年龄不能为空'
-						}, {
-							format: 'number',
-							errorMessage: '年龄只能输入数字'
-						}]
-					}
-				},
-				// 自定义表单数据
-				customFormData: {
-					name: '',
-					age: '',
-					hobby: []
-				},
-				// 自定义表单校验规则
-				customRules: {
-					name: {
-						rules: [{
-							required: true,
-							errorMessage: '姓名不能为空'
-						}]
-					},
-					age: {
-						rules: [{
-							required: true,
-							errorMessage: '年龄不能为空'
-						}]
-					},
-					hobby: {
-						rules: [{
-								format: 'array'
-							},
-							{
-								validateFunction: function(rule, value, data, callback) {
-									if (value.length < 2) {
-										callback('请至少勾选两个兴趣爱好')
-									}
-									return true
-								}
-							}
-						]
-					}
-
-				},
-				dynamicFormData: {
-					email: '',
-					domains: {}
-				},
-				dynamicLists: [],
-				dynamicRules: {
-					email: {
-						rules: [{
-							required: true,
-							errorMessage: '域名不能为空'
-						}, {
-							format: 'email',
-							errorMessage: '域名格式错误'
-						}]
-					}
-				}
-			}
-		},
-		computed: {
-			// 处理表单排列切换
-			alignment() {
-				if (this.current === 0) return 'left'
-				if (this.current === 1) return 'top'
-				return 'left'
-			}
-		},
-		onLoad() {},
-		onReady() {
-			// 设置自定义表单校验规则，必须在节点渲染完毕后执行
-			this.$refs.customForm.setRules(this.customRules)
-		},
-		methods: {
-			onClickItem(e) {
-				console.log(e);
-				this.current = e.currentIndex
-			},
-			add() {
-				this.dynamicLists.push({
-					label: '域名',
-					rules: [{
-						'required': true,
-						errorMessage: '域名项必填'
-					}],
-					id: Date.now()
-				})
-			},
-			del(id) {
-				let index = this.dynamicLists.findIndex(v => v.id === id)
-				this.dynamicLists.splice(index, 1)
-			},
-			submit(ref) {
-				this.$refs[ref].validate().then(res => {
-					console.log('success', res);
-					uni.showToast({
-						title: `校验通过`
-					})
-				}).catch(err => {
-					console.log('err', err);
-				})
-			},
-		}
-	}
-</script>
-
-
-
-
-<style lang="scss">
-.example {
-  padding: 15px;
-  background-color: #fff;
-}
-
-.segmented-control {
-  margin-bottom: 15px;
-}
-
-.button-group {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.form-item {
-  display: flex;
-  align-items: center;
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  height: 35px;
-  margin-left: 10px;
-}
-</style>
-
+    <view class="container">
+      <uni-card :is-shadow="false" is-full>
+        <view class="example-body">
+          <text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
+        </view>
+      </uni-card>
+      <uni-card :is-shadow="false">
+        <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.introduction"
+          placeholder="请输入车位详细介绍（例如：车位在几号楼下哪个区）" />
+        <view>
+          <uni-file-picker limit="1" title=""></uni-file-picker>
+        </view>
+      </uni-card>
+      <view class="example">
+        <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
+  
+          <uni-forms-item label="租金" required>
+            <uni-data-select v-model="seleIndex" :localdata="range" @change="onchange" :clear="false"
+              placeholder="请选择"></uni-data-select>
+          </uni-forms-item>
+  
+          <uni-forms-item label="手机号" required>
+            <uni-easyinput v-model="baseFormData.name" placeholder="请输入联系方式" />
+          </uni-forms-item>
+  
+          <uni-forms-item label="微信号">
+            <uni-easyinput v-model="baseFormData.name" placeholder="（选填项）可让租客加微信联系" />
+          </uni-forms-item>
+  
+          <uni-forms-item label="是否包含理费" required>
+            <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
+          </uni-forms-item>
+  
+          <uni-forms-item label="能否还价" required>
+            <uni-data-checkbox v-model="baseFormData.hobby" :localdata="hobbys" />
+          </uni-forms-item>
+  
+        </uni-forms>
+      </view>
+    </view>
+    <button class="server-btn" @click="handleItemClick">发布</button>
+    <view class="divider"></view>
+  </template>
+  
+  
+  <script setup lang="ts">
+  import { onLoad } from '@dcloudio/uni-app';
+  import { computed, ref } from 'vue';
+  
+  // 基础表单数据
+  let baseFormData = {
+    name: '',
+    age: '',
+    introduction: '',
+    sex: 2,
+    hobby: [5],
+    datetimesingle: 1627529992399
+  };
+  
+  // 单选数据源
+  let sexs = [{
+    text: '包含',
+    value: 0
+  }, {
+    text: '不包含',
+    value: 1
+  }, {
+    text: '可协商',
+    value: 2
+  }];
+  // 多选数据源
+  let hobbys = [{
+    text: '可协商',
+    value: 0
+  }, {
+    text: '一口价',
+    value: 1
+  }];
+  const seleIndex = ref(null);
+  const range = [
+    { value: 0, text: "600元/年" },
+    { value: 1, text: "700元/年" },
+    { value: 2, text: "800元/年" },
+    { value: 2, text: "900元/年" },
+    { value: 2, text: "1000元/年" },
+    { value: 2, text: "1100元/年" },
+    { value: 2, text: "1200元/年" },
+    { value: 2, text: "1300元/年" },
+    { value: 2, text: "1400元/年" },
+    { value: 2, text: "1500元/年" },
+    { value: 2, text: "1600元/年" },
+    { value: 2, text: "1700元/年" },
+    { value: 2, text: "1800元/年" },
+    { value: 2, text: "1900元/年" },
+    { value: 2, text: "2000元/年" },
+    { value: 2, text: "2100元/年" },
+    { value: 2, text: "2200元/年" },
+    { value: 2, text: "2300元/年" },
+    { value: 2, text: "2400元/年" },
+    { value: 2, text: "2500元/年" },
+    { value: 2, text: "2600元/年" },
+    { value: 2, text: "2700元/年" },
+    { value: 2, text: "2800元/年" },
+    { value: 2, text: "2900元/年" },
+    { value: 2, text: "3000元/年" },
+  
+  ];
+  
+  const dynamicLists: any[] = [];
+  let dynamicRules = {
+    email: {
+      rules: [{
+        required: true,
+        errorMessage: '域名不能为空'
+      }, {
+        format: 'email',
+        errorMessage: '域名格式错误'
+      }]
+    }
+  };
+  onLoad(options => {
+    // @ts-ignore
+  
+  
+  });
+  const handleItemClick = (itemModel: any) => {
+  
+  
+  }
+  
+  const onchange = (e: any) => {
+    seleIndex.value = e;
+    console.log("e:", e);
+  };
+  </script>
+  
+  
+  
+  
+  <style lang="scss">
+  .example-body{
+    margin: 0px 10px;
+  }
+  /* 设置 uni-easyinput 的字体大小 */
+  .uni-easyinput {
+    font-size: 24px;
+    color: red;
+  }
+  
+  .uni-h6 {
+    font-size: 14px;
+    color: #FF6C00;
+  
+  }
+  
+  .divider {
+    width: 100%;
+    /* 横向分割线 */
+    height: 50px;
+    /* 分割线的高度 */
+    background-color: transparent;
+    /* 分割线的颜色 */
+    margin-top: 0px;
+    /* 分割线与上方元素的间隔 */
+  }
+  
+  .server-btn {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    line-height: 40px;
+    /* 等于按钮高度 */
+    background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
+    color: $uni-color-fff;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 22px;
+    margin-left: 22px;
+    margin-top: 32px;
+  }
+  
+  .custom-margin {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .example {
+    padding: 15px;
+    background-color: #fff;
+  }
+  
+  .segmented-control {
+    margin-bottom: 12px;
+  }
+  
+  .button-group {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .form-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .button {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    margin-left: 12px;
+  }
+  </style>
+  
+  

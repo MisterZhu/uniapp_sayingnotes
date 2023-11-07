@@ -1,12 +1,14 @@
 <template>
   <view class="container">
     <uni-card :is-shadow="false" is-full>
-			<text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
-		</uni-card>
+      <view class="example-body">
+        <text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
+      </view>
+    </uni-card>
     <uni-card :is-shadow="false">
       <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.introduction"
         placeholder="请输入车位详细介绍（例如：车位在几号楼下哪个区）" />
-      <view class="example-body">
+      <view>
         <uni-file-picker limit="1" title=""></uni-file-picker>
       </view>
     </uni-card>
@@ -14,14 +16,15 @@
       <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
 
         <uni-forms-item label="租金" required>
-          <uni-data-select v-model="value" :localdata="range" @change="onchange" :clear="false"  placeholder="请选择" ></uni-data-select>
+          <uni-data-select v-model="seleIndex" :localdata="range" @change="onchange" :clear="false"
+            placeholder="请选择"></uni-data-select>
         </uni-forms-item>
 
         <uni-forms-item label="手机号" required>
           <uni-easyinput v-model="baseFormData.name" placeholder="请输入联系方式" />
         </uni-forms-item>
 
-        <uni-forms-item label="微信号" >
+        <uni-forms-item label="微信号">
           <uni-easyinput v-model="baseFormData.name" placeholder="（选填项）可让租客加微信联系" />
         </uni-forms-item>
 
@@ -38,7 +41,6 @@
   </view>
   <button class="server-btn" @click="handleItemClick">发布</button>
   <view class="divider"></view>
-
 </template>
 
 
@@ -75,7 +77,7 @@ let hobbys = [{
   text: '一口价',
   value: 1
 }];
-const value = 10;
+const seleIndex = ref(null);
 const range = [
   { value: 0, text: "600元/年" },
   { value: 1, text: "700元/年" },
@@ -126,16 +128,32 @@ const handleItemClick = (itemModel: any) => {
 
 
 }
-const onchange = (e: any) => {
-  console.log('change');
-};
 
+const onchange = (e: any) => {
+  seleIndex.value = e;
+  console.log("e:", e);
+};
 </script>
 
 
 
 
 <style lang="scss">
+.example-body{
+  margin: 0px 10px;
+}
+/* 设置 uni-easyinput 的字体大小 */
+.uni-easyinput {
+  font-size: 24px;
+  color: red;
+}
+
+.uni-h6 {
+  font-size: 14px;
+  color: #FF6C00;
+
+}
+
 .divider {
   width: 100%;
   /* 横向分割线 */
@@ -146,6 +164,7 @@ const onchange = (e: any) => {
   margin-top: 0px;
   /* 分割线与上方元素的间隔 */
 }
+
 .server-btn {
   display: flex;
   justify-content: center;
@@ -160,9 +179,10 @@ const onchange = (e: any) => {
   margin-left: 22px;
   margin-top: 32px;
 }
+
 .custom-margin {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .example {
@@ -171,11 +191,11 @@ const onchange = (e: any) => {
 }
 
 .segmented-control {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .button-group {
-  margin-top: 15px;
+  margin-top: 12px;
   display: flex;
   justify-content: space-around;
 }
@@ -189,7 +209,7 @@ const onchange = (e: any) => {
   display: flex;
   align-items: center;
   height: 35px;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 </style>
 
