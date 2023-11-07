@@ -58,16 +58,16 @@ const selectItem = (e: any) => {
     title: `点击第${index}个宫格`,
     icon: 'none'
   })
-   if(index == 0 ){
+  if (index == 0) {
     uni.navigateTo({
-    url: '/pages/index/parking/publish-lease'
-  })
-   }else{
+      url: '/pages/index/parking/publish-lease'
+    })
+  } else {
     uni.navigateTo({
-    url: '/pages/index/parking/publish-require'
-  })
-   }
- 
+      url: '/pages/index/parking/publish-require'
+    })
+  }
+
   // uni.showModal({
   //   title: '提示',
   //   content: `您${content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
