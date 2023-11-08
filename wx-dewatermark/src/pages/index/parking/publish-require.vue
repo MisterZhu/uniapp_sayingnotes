@@ -13,7 +13,7 @@
       <view class="example">
         <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
   
-          <uni-forms-item label="租金预算" required>
+          <uni-forms-item label="车位租金预算" required>
             <uni-data-select v-model="seleIndex" :localdata="range" @change="onchange" :clear="false"
               placeholder="请选择"></uni-data-select>
           </uni-forms-item>
