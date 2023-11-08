@@ -7,34 +7,30 @@
       </uni-card>
       <uni-card :is-shadow="false">
         <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.introduction"
-          placeholder="请输入车位详细介绍（例如：车位在几号楼下哪个区）" />
-        <view>
-          <uni-file-picker limit="1" title=""></uni-file-picker>
-        </view>
+          placeholder="请简单描述自己的需求（例如：需要几号楼下哪个区的车位）" />
+        
       </uni-card>
       <view class="example">
         <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
   
-          <uni-forms-item label="租金" required>
+          <uni-forms-item label="租金预算" required>
             <uni-data-select v-model="seleIndex" :localdata="range" @change="onchange" :clear="false"
               placeholder="请选择"></uni-data-select>
           </uni-forms-item>
-  
+
+          <uni-forms-item label="是否含管理费" required>
+            <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
+          </uni-forms-item>
+
           <uni-forms-item label="手机号" required>
             <uni-easyinput v-model="baseFormData.name" placeholder="请输入联系方式" />
           </uni-forms-item>
   
           <uni-forms-item label="微信号">
-            <uni-easyinput v-model="baseFormData.name" placeholder="（选填项）可让租客加微信联系" />
+            <uni-easyinput v-model="baseFormData.name" placeholder="（选填项）可让出租车位的邻居加微信联系" />
           </uni-forms-item>
   
-          <uni-forms-item label="是否包含理费" required>
-            <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
-          </uni-forms-item>
-  
-          <uni-forms-item label="能否还价" required>
-            <uni-data-checkbox v-model="baseFormData.hobby" :localdata="hobbys" />
-          </uni-forms-item>
+
   
         </uni-forms>
       </view>
@@ -65,9 +61,6 @@
   }, {
     text: '不包含',
     value: 1
-  }, {
-    text: '可协商',
-    value: 2
   }];
   // 多选数据源
   let hobbys = [{

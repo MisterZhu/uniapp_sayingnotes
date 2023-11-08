@@ -19,21 +19,19 @@
           <uni-data-select v-model="seleIndex" :localdata="range" @change="onchange" :clear="false"
             placeholder="请选择"></uni-data-select>
         </uni-forms-item>
+        <uni-forms-item label="是否包含理费" required>
+          <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
+        </uni-forms-item>
 
+        <uni-forms-item label="价格能否协商" required>
+          <uni-data-checkbox v-model="baseFormData.hobby" :localdata="hobbys" />
+        </uni-forms-item>
         <uni-forms-item label="手机号" required>
           <uni-easyinput v-model="baseFormData.name" placeholder="请输入联系方式" />
         </uni-forms-item>
 
         <uni-forms-item label="微信号">
           <uni-easyinput v-model="baseFormData.name" placeholder="（选填项）可让租客加微信联系" />
-        </uni-forms-item>
-
-        <uni-forms-item label="是否包含理费" required>
-          <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" />
-        </uni-forms-item>
-
-        <uni-forms-item label="能否还价" required>
-          <uni-data-checkbox v-model="baseFormData.hobby" :localdata="hobbys" />
         </uni-forms-item>
 
       </uni-forms>
@@ -65,9 +63,6 @@ let sexs = [{
 }, {
   text: '不包含',
   value: 1
-}, {
-  text: '可协商',
-  value: 2
 }];
 // 多选数据源
 let hobbys = [{
