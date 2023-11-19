@@ -11,32 +11,60 @@ const props = defineProps({
   },
 });
 
-const richTextContent = '<div style="color: red;"><span style="font-weight: 500; font-size: 20px;">2000</span><span style="font-size: 14px;"> 元/年</span></div>';
+const generateRichTextContent = (annualRent: string) => {
+  // 从 annualRent 中分离数字和单位
+  const matchResult = annualRent.match(/(\d+)([^\d]+)/);
+  if (matchResult) {
+    const [amount, unit] = matchResult.slice(1);
 
+    // 使用分隔后的数据构建 richTextContent
+    return `<div style="color: red;"><span style="font-weight: 500; font-size: 20px;">${amount}</span><span style="font-size: 14px;">${unit}</span></div>`;
+  } else {
+    // 如果没有匹配结果，可以选择返回默认值或者空字符串
+    return '';
+  }
+};
+// 转译日期格式
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}.${month}.${day}`;
+}
 </script>
 
 <template>
   <view class="component-wrapper">
     <view class="left-custom-view">
-      <image class="left-image" src="/static/home/home_parking_head1.jpg" mode="aspectFill"></image>
+      <image class="left-image" :src="analyModel.img_url" mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">
-        <text class="left-text">2号楼车负一层车位便宜出租短裤家居服健康就开始打飞机时发动机空间</text>
+        <text class="left-text">{{ props.analyModel.title }}</text>
         <view class="right-custom-view-image">
-          <image class="right-image" src="/static/home/home_renter_icon.png" mode="aspectFill"></image>
+          <image class="right-image"
+            :src="analyModel.posts_type === 0 ? '/static/home/home_lessor_icon.png' : '/static/home/home_renter_icon.png'"
+            mode="aspectFill"></image>
         </view>
       </view>
       <view class="bottom-content">
         <!-- 下侧内容 -->
         <view class="custom-view">
-          <rich-text :nodes="richTextContent"></rich-text>
+          <rich-text :nodes="generateRichTextContent(analyModel.annual_rent)"></rich-text>
         </view>
         <view class="custom-view">
-          <text class="left-text1">含管理费</text>
-          <text class="left-text2">可小刀</text>
+          <!-- 根据 in_maintenance 显示文本 -->
+          <text v-if="analyModel.in_maintenance" class="left-text1">含管理费</text>
+
+          <!-- 根据 negotiable 显示文本 -->
+          <text v-if="analyModel.negotiable" class="left-text2">可小刀</text>
+
+          <!-- 固定显示的文本 -->
           <text class="left-text3">年租</text>
-          <text class="right-text">2023-10-30</text>
+
+          <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
+          <text class="right-text">{{ formatDate(analyModel.CreatedAt) }}</text>
         </view>
       </view>
     </view>

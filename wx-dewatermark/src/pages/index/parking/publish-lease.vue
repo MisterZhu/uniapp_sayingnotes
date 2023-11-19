@@ -9,7 +9,8 @@
       <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.introduction"
         placeholder="请输入车位详细介绍（例如：车位在几号楼下哪个区）" />
       <view>
-        <uni-file-picker limit="1" title=""></uni-file-picker>
+        <uni-file-picker v-model="imageValue" file-mediatype="image" mode="grid" file-extname="png,jpg" :limit="1"
+          @progress="progress" @success="success" @fail="fail" @select="select" />
       </view>
     </uni-card>
     <view class="example">
@@ -43,6 +44,7 @@
 
 
 <script setup lang="ts">
+import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 
@@ -73,6 +75,11 @@ let hobbys = [{
   value: 1
 }];
 const seleIndex = ref(null);
+let imageValue = ref('');
+const QiniuData = {    //这里是直接绑定data的值
+  key: "", //图片名字处理
+  token: "", //七牛云token
+}
 const range = [
   { value: 0, text: "600元/年" },
   { value: 1, text: "700元/年" },
@@ -99,24 +106,33 @@ const range = [
   { value: 2, text: "2800元/年" },
   { value: 2, text: "2900元/年" },
   { value: 2, text: "3000元/年" },
-
 ];
 
 const dynamicLists: any[] = [];
-let dynamicRules = {
-  email: {
-    rules: [{
-      required: true,
-      errorMessage: '域名不能为空'
-    }, {
-      format: 'email',
-      errorMessage: '域名格式错误'
-    }]
+// MARK: 解析记录
+async function getUpToken(callback: () => void) {
+  try {
+    const res: any = await RequestApi.QiniuToken(null)
+    if (typeof callback === 'function') {
+      callback();
+    }
+    if (res.code === 200) {
+      const token = res.data
+      console.log(token)
+      QiniuData.token = token
+    } else {
+      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+    }
+  } catch (error) {
+    callback && callback()
+    console.error(error)
+    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
-};
+}
+
+getUpToken(() => { })
 onLoad(options => {
   // @ts-ignore
-
 
 });
 const handleItemClick = (itemModel: any) => {
@@ -128,15 +144,54 @@ const onchange = (e: any) => {
   seleIndex.value = e;
   console.log("e:", e);
 };
+// 获取上传状态
+const select = (e: any) => {
+  console.log('选择文件：', e)
+  const filePath = e.tempFilePaths[0];
+  const fileName = e.tempFiles[0].name;
+  console.log('文件名称：', fileName);
+  QiniuData.key = `images/upload_pic_${new Date().getTime()}_${fileName}`;
+  // 在这里执行上传逻辑，将 fileName 作为参数传递给上传函数
+  uploadFile(filePath, fileName);
+}
+// 上传文件的函数，接收文件路径和文件名作为参数
+const uploadFile = (filePath: string, fileName: string) => {
+  uni.uploadFile({
+    url: 'https://upload.qiniup.com/',
+    filePath: filePath,
+    name: 'file',
+    formData: {
+      'token': QiniuData.token,  
+      'key': QiniuData.key  // 使用获取的文件名作为 key
+    },
+    success: (uploadFileRes) => {
+      console.log(uploadFileRes);
+      imageValue.value = 'https://qiniu.aimissu.top/' + QiniuData.key;
+    }
+  });
+}
+// 获取上传进度
+const progress = (e: any) => {
+  console.log('上传进度：', e)
+}
+// 上传成功
+const success = (e: any) => {
+  console.log('上传成功')
+}
+// 上传失败
+const fail = (e: any) => {
+  console.log('上传失败：', e)
+}
 </script>
 
 
 
 
 <style lang="scss">
-.example-body{
+.example-body {
   margin: 0px 10px;
 }
+
 /* 设置 uni-easyinput 的字体大小 */
 .uni-easyinput {
   font-size: 24px;

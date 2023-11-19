@@ -2,21 +2,22 @@
 
 
 export interface ParkItem {
-    id: int;
-    create_userid:string;
-    title: string;
-    type: Int;
-    state: Int;
-    cover: string;
-    price_str:  string;
+    ID: number;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: string;
     in_maintenance: boolean;
     negotiable: boolean;
-    lease: string;
-    create_time:string;
-    update_time:string;
-    origin_url:string;
-
-}
+    state: number;
+    posts_type: number;
+    user_id: string;
+    telephone: string;
+    wei_xin: string;
+    title: string;
+    img_url: string;
+    annual_rent: string;
+  }
+  
 // 首页第一项数据：数据解析
 export interface Analysis {
     title: string;

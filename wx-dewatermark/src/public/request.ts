@@ -1,6 +1,8 @@
 //请求地址
-const baseUrl = 'https://aimissu.top/api/v2'
-// const baseUrl = 'http://127.0.0.1:8080/api/v2'
+// const baseUrl = 'https://aimissu.top/api/v2'
+const baseUrl = 'http://127.0.0.1:8080/api/v3'
+const loadQiniuUrl = 'https://qiniu.aimissu.top/'
+const updateQiniuUrl = 'https://upload.qiniup.com'
 
 //獲取token
 function getToken():string{
@@ -25,7 +27,7 @@ function request(
             data,
             header:{
                 Authorization:getToken(),
-                'Content-Type': 'application/x-www-form-urlencoded' // 设置请求参数格式为表单数据格式
+                'Content-Type': 'application/json' // 设置请求参数格式为表单数据格式
             },
             success:(res:any) => {
                 const data = res.data
@@ -102,6 +104,42 @@ const RequestApi = {
     UserLogin:(data:any)=>request('/user/login','POST',data),
     HomeAnalysis:(data:any)=>request('/user/analysis','POST',data),
     AnalyHistory:(data:any)=>request('/user/analysisRecord','POST',data),
-    SignIn:(data:any)=>request('/user/signIn','POST',data)
+    SignIn:(data:any)=>request('/user/signIn','POST',data),
+    /*------------------------  v3 天悦湾车位API  ------------------------------*/
+    //帖子列表
+    PostsList:(data:any)=>request('/user/park_posts_list','POST',data),
+    //发布帖子
+    AddPosts:(data:any)=>request('/user/add_park_posts','POST',data),
+    //编辑帖子
+    EditPosts:(data:any)=>request('/user/edit_park_posts','POST',data),
+    //删除帖子
+    DetPosts:(data:any)=>request('/user/delete_park_posts','POST',data),
+
+    /*------------------------  v3 小区相关API  ------------------------------*/
+    //小区列表
+    CommunityList:(data:any)=>request('/community/get','POST',data),
+    //发布小区
+    AddCommunity:(data:any)=>request('/community/add','POST',data),
+    //编辑小区
+    EditCommunity:(data:any)=>request('/community/edit','POST',data),
+    //删除小区
+    DetCommunity:(data:any)=>request('/community/det','POST',data),
+
+    /*------------------------  v3 业主认证API  ------------------------------*/
+    //申请认证列表
+    ApplyList:(data:any)=>request('/user/apply_list','POST',data),
+    //发布认证
+    AddApply:(data:any)=>request('/user/owner_apply','POST',data),
+    //编辑认证
+    EditApply:(data:any)=>request('/user/check_apply','POST',data),
+    //删除认证
+    DetApply:(data:any)=>request('/user/delete_apply','POST',data),
+
+    /*------------------------  v3 图片相关API  ------------------------------*/
+    //获取七牛token接口
+    QiniuToken:(data:any)=>request('/qiniu/token','GET',data),
+    //七牛云删除文件
+    QiniuRemoveFile:(data:any)=>request('/qiniu/remove_file','POST',data),
+
 }
 export {RequestApi};

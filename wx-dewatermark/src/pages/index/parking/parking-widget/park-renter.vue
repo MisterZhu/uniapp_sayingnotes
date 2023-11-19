@@ -15,14 +15,14 @@ const props = defineProps({
 let analyAry = reactive({
   data: [] as ParkItem[]
 })
-const size = 3
+const size = 10
 let page = 0
 // MARK: 解析记录
-async function requestAnalyList(callback: () => void) {
+async function requestPostsList(callback: () => void) {
   console.log('----------111--------');
 
   try {
-    const res: any = await RequestApi.AnalyHistory({ "page": page, "size": size })
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 1 })
     if (typeof callback === 'function') {
       callback();
     }
@@ -47,7 +47,7 @@ async function requestAnalyList(callback: () => void) {
   }
 }
 
-requestAnalyList(() => { })
+requestPostsList(() => { })
 
 // 下拉刷新的事件
 onPullDownRefresh(() => {
@@ -56,7 +56,7 @@ onPullDownRefresh(() => {
   page = 0
   analyAry.data = [] as ParkItem[]
   // 2. 重新发起请求
-  requestAnalyList(() => uni.stopPullDownRefresh())
+  requestPostsList(() => uni.stopPullDownRefresh())
 });
 const handleItemClick = (itemModel: any) => {
   uni.navigateTo({
@@ -91,7 +91,7 @@ watch(
     <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无解析记录~</text>
+    <text class="center-text">暂无求租信息~</text>
   </view>
 </template>
 
