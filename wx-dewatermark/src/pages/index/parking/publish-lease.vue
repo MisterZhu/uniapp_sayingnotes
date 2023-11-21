@@ -9,23 +9,23 @@
       <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.title"
         placeholder="请输入车位详细介绍（例如：车位在几号楼下哪个区）" />
       <view>
-        <uni-file-picker v-model="imageValue.valueOf" file-mediatype="image" mode="grid" file-extname="png,jpg" :limit="1"
-          @progress="progress" @success="success" @fail="fail" @select="select" />
+        <uni-file-picker file-mediatype="image" mode="grid" file-extname="png,jpg" :limit="1" @progress="progress"
+          @success="success" @fail="fail" @select="select" />
       </view>
     </uni-card>
     <view class="example">
       <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
 
         <uni-forms-item label="租金" required>
-          <uni-data-select v-model="baseFormData.annual_rent" :localdata="seleAry3" @change="onchange" :clear="false"
+          <uni-data-select v-model="aryIndex3" :localdata="seleAry3" @change="rentChange" :clear="false"
             placeholder="请选择"></uni-data-select>
         </uni-forms-item>
         <uni-forms-item label="是否包含理费" required>
-          <uni-data-checkbox v-model="baseFormData.in_maintenance" :localdata="seleAry1" />
+          <uni-data-checkbox v-model="aryIndex1" :localdata="seleAry1" @change="maintenanceChange" />
         </uni-forms-item>
 
         <uni-forms-item label="价格能否协商" required>
-          <uni-data-checkbox v-model="baseFormData.negotiable" :localdata="seleAry2" />
+          <uni-data-checkbox v-model="aryIndex2" :localdata="seleAry2" @change="negotiableChange" />
         </uni-forms-item>
         <uni-forms-item label="手机号" required>
           <uni-easyinput v-model="baseFormData.telephone" placeholder="请输入联系方式" />
@@ -44,6 +44,7 @@
 
 
 <script setup lang="ts">
+import type { UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
@@ -54,10 +55,10 @@ let baseFormData = {
   title: '', // 
   telephone: '', // 联系方式，对应后端的 Telephone
   wei_xin: '', // 微信号
-  in_maintenance: false, // 是否在维护中，对应后端的 InMaintenance
-  negotiable: false, // 价格是否可协商，对应后端的 Negotiable
-  annual_rent: '', // 租金，对应后端的 AnnualRent
-  img_url: '',
+  // in_maintenance: false, // 是否在维护中，对应后端的 InMaintenance
+  // negotiable: false, // 价格是否可协商，对应后端的 Negotiable
+  // annual_rent: '', // 租金，对应后端的 AnnualRent
+  // img_url: '',
   // 其他字段根据后端模型添加
 };
 
@@ -78,7 +79,14 @@ let seleAry2 = [{
   text: '一口价',
   value: 1
 }];
-const seleIndex = ref(null);
+
+const aryIndex1 = ref();
+const aryIndex2 = ref();
+const aryIndex3 = ref();
+let aryText1 = ref('');
+const aryText2 = ref('');
+const aryText3 = ref('');
+
 let imageValue = ref('');
 const QiniuData = {    //这里是直接绑定data的值
   key: "", //图片名字处理
@@ -111,6 +119,7 @@ const seleAry3 = [
   { value: 2, text: "2900元/年" },
   { value: 2, text: "3000元/年" },
 ];
+let userInfo = ref<UserInfoModel>()
 
 const dynamicLists: any[] = [];
 // MARK: 解析记录
@@ -133,7 +142,13 @@ async function getUpToken(callback: () => void) {
     uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
 }
-
+const getLocalUserInfo = () => {
+  var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+  console.log("userInfo = " + `${uInfo}`)
+  if (uInfo) {
+    userInfo.value = uInfo;
+  }
+}
 getUpToken(() => { })
 onLoad(options => {
   // @ts-ignore
@@ -148,17 +163,43 @@ const handleItemClick = (itemModel: any) => {
     });
     return;
   }
-  if (!baseFormData.telephone ) {
+  // if (!imageValue.value) {
+  //   uni.showToast({
+  //     title: '请上传图片',
+  //     icon: 'none',
+  //     duration: 2000,
+  //   });
+  //   return;
+  // }
+
+  if (!aryText3.value) {
     uni.showToast({
-      title: '请填写手机号',
+      title: '请选择租金',
       icon: 'none',
       duration: 2000,
     });
     return;
   }
-  if (!baseFormData.annual_rent ) {
+  if (!aryText1.value) {
     uni.showToast({
-      title: '请选择租金',
+      title: '请选择是否包含管理费',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
+  if (!aryText2.value) {
+    uni.showToast({
+      title: '请选择是否可协商',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
+
+  if (!baseFormData.telephone) {
+    uni.showToast({
+      title: '请填写手机号',
       icon: 'none',
       duration: 2000,
     });
@@ -174,17 +215,24 @@ async function publishLeasePosts() {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
       wei_xin: baseFormData.wei_xin,
-      in_maintenance: baseFormData.in_maintenance,
-      negotiable: baseFormData.negotiable,
+      in_maintenance: !!aryIndex1,
+      negotiable: !!aryIndex2,
       posts_type: 0, // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
-      annual_rent: baseFormData.annual_rent,
+      annual_rent: aryText3.value,
+      img_url: imageValue.value,
+      user_id: userInfo.value?.user_id ?? '',
       // Add other fields based on your data structure
     };
     const res: any = await RequestApi.AddPosts(requestData)
-  
+
     if (res.code === 200) {
-     
+      console.log("rentChange e:------");
+
+      uni.$emit('isRefresh', 1)
+      uni.navigateBack({
+        delta: 1, // 返回的页面数，1 表示返回上一页
+      });
     } else {
       uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
     }
@@ -193,9 +241,35 @@ async function publishLeasePosts() {
     uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
 }
-const onchange = (e: any) => {
-  seleIndex.value = e;
-  console.log("e:", e);
+const rentChange = (e: any) => {
+  // aryIndex3.value = e.detail.value;
+  console.log("rentChange e:", e);
+  console.log("aryIndex3.value:", aryIndex3.value);
+  seleAry3.forEach((item) => {
+    if (item.value === aryIndex3.value) {
+      aryText3.value = item.text;
+    }
+  });
+};
+const maintenanceChange = (e: any) => {
+  // aryIndex1.value = e.detail.value;
+  console.log("maintenanceChange e:", e);
+  console.log("aryIndex1.value:", aryIndex1.value);
+  seleAry1.forEach((item) => {
+    if (item.value === aryIndex1.value) {
+      aryText1.value = item.text;
+    }
+  });
+};
+const negotiableChange = (e: any) => {
+  // aryIndex2.value = e.detail.value;
+  console.log("negotiableChange e:", e);
+  console.log("aryIndex2.value:", aryIndex2.value);
+  seleAry2.forEach((item) => {
+    if (item.value === aryIndex2.value) {
+      aryText2.value = item.text;
+    }
+  });
 };
 // 获取上传状态
 const select = (e: any) => {
@@ -214,7 +288,7 @@ const uploadFile = (filePath: string, fileName: string) => {
     filePath: filePath,
     name: 'file',
     formData: {
-      'token': QiniuData.token,  
+      'token': QiniuData.token,
       'key': QiniuData.key  // 使用获取的文件名作为 key
     },
     success: (uploadFileRes) => {

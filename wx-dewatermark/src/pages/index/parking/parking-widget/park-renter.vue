@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
-import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
+import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import historyItem from '@/pages/index/parking/parking-widget/widget/part-item.vue';
@@ -77,6 +77,16 @@ const handleItemClick = (itemModel: any) => {
 //   },
 //   { immediate: true }
 // );
+//接收参数
+onShow(() => {
+  let that = this
+  // 移除之前的事件监听器
+  uni.$off('isRefresh');
+  uni.$on('isRefresh', function (data) {
+    console.log('2监听到事件来自返回的参数：' + data);
+    // TODO 下面执行刷新的方法
+  })
+});
 watch(
   () => props.coverSrc,
   (newValue) => {

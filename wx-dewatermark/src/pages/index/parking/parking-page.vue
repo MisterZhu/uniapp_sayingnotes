@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import type { Analysis } from '@/public/decl-type';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShow } from '@dcloudio/uni-app';
 import { computed, ref, watch } from 'vue'
 
 import ParkLessor from "./parking-widget/park-lessor.vue";
@@ -74,6 +74,15 @@ const fabClick = () => {
     icon: 'none'
   })
 }
+onShow(() => {
+  let that = this
+  // 移除之前的事件监听器
+  uni.$off('isRefresh');
+  uni.$on('isRefresh', function (data) {
+    console.log('1监听到事件来自返回的参数：' + data);
+    // TODO 下面执行刷新的方法
+  })
+});
 //接收参数
 onLoad(options => {
   // @ts-ignore
