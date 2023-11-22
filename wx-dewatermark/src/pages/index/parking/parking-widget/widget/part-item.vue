@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import type { ParkItem } from '@/public/decl-type';
 import type { PropType } from 'vue';
+import { common_url } from '@/public/common';
 
 
 const props = defineProps({
@@ -37,14 +38,14 @@ const formatDate = (dateString: string) => {
 <template>
   <view class="component-wrapper">
     <view class="left-custom-view">
-      <image class="left-image" :src="analyModel.img_url" mode="aspectFill"></image>
+      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : common_url.home_parking_head" mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">
         <text class="left-text">{{ props.analyModel.title }}</text>
         <view class="right-custom-view-image">
           <image class="right-image"
-            :src="analyModel.posts_type === 0 ? '/static/home/home_lessor_icon.png' : '/static/home/home_renter_icon.png'"
+            :src="analyModel.posts_type === 1 ? common_url.home_renter_icon5 : common_url.home_lessor_icon5"
             mode="aspectFill"></image>
         </view>
       </view>
@@ -135,6 +136,8 @@ const formatDate = (dateString: string) => {
   white-space: normal !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+    /* 添加左对齐样式 */
+    text-align: left;
 }
 
 .right-custom-view-image {

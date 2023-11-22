@@ -22,7 +22,7 @@ async function requestPostsList(callback: () => void) {
   console.log('----------111--------');
 
   try {
-    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 1 })
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 2 })
     if (typeof callback === 'function') {
       callback();
     }
@@ -81,10 +81,17 @@ const handleItemClick = (itemModel: any) => {
 onShow(() => {
   let that = this
   // 移除之前的事件监听器
-  uni.$off('isRefresh');
-  uni.$on('isRefresh', function (data) {
+  uni.$off('isRenterRefresh');
+  uni.$on('isRenterRefresh', function (data) {
     console.log('2监听到事件来自返回的参数：' + data);
     // TODO 下面执行刷新的方法
+    if (data === 1){
+      console.log('2 requestPostsList' + data);
+
+      requestPostsList(() => {
+        // TODO 下面执行刷新的方法
+      });
+    }
   })
 });
 watch(

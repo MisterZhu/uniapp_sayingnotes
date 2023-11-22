@@ -53,11 +53,11 @@ const content = [{
 const selectItem = (e: any) => {
   const index = e.index;
 
-  console.log(`dianji :`, index);
-  uni.showToast({
-    title: `点击第${index}个宫格`,
-    icon: 'none'
-  })
+  // console.log(`dianji :`, index);
+  // uni.showToast({
+  //   title: `点击第${index}个宫格`,
+  //   icon: 'none'
+  // })
   if (index == 0) {
     uni.navigateTo({
       url: '/pages/index/parking/publish-lease'
@@ -69,16 +69,16 @@ const selectItem = (e: any) => {
   }
 }
 const fabClick = () => {
-  uni.showToast({
-    title: '点击了悬浮按钮',
-    icon: 'none'
-  })
+  // uni.showToast({
+  //   title: '点击了悬浮按钮',
+  //   icon: 'none'
+  // })
 }
 onShow(() => {
   let that = this
   // 移除之前的事件监听器
-  uni.$off('isRefresh');
-  uni.$on('isRefresh', function (data) {
+  uni.$off('isPageRefresh');
+  uni.$on('isPageRefresh', function (data) {
     console.log('1监听到事件来自返回的参数：' + data);
     // TODO 下面执行刷新的方法
   })
@@ -86,8 +86,8 @@ onShow(() => {
 //接收参数
 onLoad(options => {
   // @ts-ignore
-  analyModel.value = JSON.parse(decodeURIComponent(options.analyModel as string)) as Analysis
-  console.log(`analysis onLoad: ${analyModel.value.title}`);
+  // analyModel.value = JSON.parse(decodeURIComponent(options.analyModel as string)) as Analysis
+  // console.log(`analysis onLoad: ${analyModel.value.title}`);
 
 });
 watch(

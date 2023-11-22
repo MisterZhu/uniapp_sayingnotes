@@ -93,36 +93,37 @@ const QiniuData = {    //这里是直接绑定data的值
   token: "", //七牛云token
 }
 const seleAry3 = [
+  { value: 25, text: "600元/年" },
   { value: 0, text: "600元/年" },
   { value: 1, text: "700元/年" },
   { value: 2, text: "800元/年" },
-  { value: 2, text: "900元/年" },
-  { value: 2, text: "1000元/年" },
-  { value: 2, text: "1100元/年" },
-  { value: 2, text: "1200元/年" },
-  { value: 2, text: "1300元/年" },
-  { value: 2, text: "1400元/年" },
-  { value: 2, text: "1500元/年" },
-  { value: 2, text: "1600元/年" },
-  { value: 2, text: "1700元/年" },
-  { value: 2, text: "1800元/年" },
-  { value: 2, text: "1900元/年" },
-  { value: 2, text: "2000元/年" },
-  { value: 2, text: "2100元/年" },
-  { value: 2, text: "2200元/年" },
-  { value: 2, text: "2300元/年" },
-  { value: 2, text: "2400元/年" },
-  { value: 2, text: "2500元/年" },
-  { value: 2, text: "2600元/年" },
-  { value: 2, text: "2700元/年" },
-  { value: 2, text: "2800元/年" },
-  { value: 2, text: "2900元/年" },
-  { value: 2, text: "3000元/年" },
+  { value: 3, text: "900元/年" },
+  { value: 4, text: "1000元/年" },
+  { value: 5, text: "1100元/年" },
+  { value: 6, text: "1200元/年" },
+  { value: 7, text: "1300元/年" },
+  { value: 8, text: "1400元/年" },
+  { value: 9, text: "1500元/年" },
+  { value: 10, text: "1600元/年" },
+  { value: 11, text: "1700元/年" },
+  { value: 12, text: "1800元/年" },
+  { value: 13, text: "1900元/年" },
+  { value: 14, text: "2000元/年" },
+  { value: 15, text: "2100元/年" },
+  { value: 16, text: "2200元/年" },
+  { value: 17, text: "2300元/年" },
+  { value: 18, text: "2400元/年" },
+  { value: 19, text: "2500元/年" },
+  { value: 20, text: "2600元/年" },
+  { value: 21, text: "2700元/年" },
+  { value: 22, text: "2800元/年" },
+  { value: 23, text: "2900元/年" },
+  { value: 24, text: "3000元/年" },
 ];
 let userInfo = ref<UserInfoModel>()
 
 const dynamicLists: any[] = [];
-// MARK: 解析记录
+
 async function getUpToken(callback: () => void) {
   try {
     const res: any = await RequestApi.QiniuToken(null)
@@ -152,7 +153,7 @@ const getLocalUserInfo = () => {
 getUpToken(() => { })
 onLoad(options => {
   // @ts-ignore
-
+  getLocalUserInfo();
 });
 const handleItemClick = (itemModel: any) => {
   if (!baseFormData.title) {
@@ -172,7 +173,7 @@ const handleItemClick = (itemModel: any) => {
   //   return;
   // }
 
-  if (!aryText3.value) {
+  if (!aryIndex3.value) {
     uni.showToast({
       title: '请选择租金',
       icon: 'none',
@@ -180,6 +181,15 @@ const handleItemClick = (itemModel: any) => {
     });
     return;
   }
+  console.log("aryIndex3.value:", aryIndex3.value);
+  console.log("aryText3.value:", aryText3.value);
+  seleAry3.forEach((item) => {
+    if (item.value === aryIndex3.value) {
+      aryText3.value = item.text;
+    }
+  });
+  console.log("aryText3.value:", aryText3.value);
+
   if (!aryText1.value) {
     uni.showToast({
       title: '请选择是否包含管理费',
@@ -217,7 +227,7 @@ async function publishLeasePosts() {
       wei_xin: baseFormData.wei_xin,
       in_maintenance: !!aryIndex1,
       negotiable: !!aryIndex2,
-      posts_type: 0, // Modify this based on your data structure
+      posts_type: 1, // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
       annual_rent: aryText3.value,
       img_url: imageValue.value,
@@ -227,9 +237,7 @@ async function publishLeasePosts() {
     const res: any = await RequestApi.AddPosts(requestData)
 
     if (res.code === 200) {
-      console.log("rentChange e:------");
-
-      uni.$emit('isRefresh', 1)
+      uni.$emit('isLessorRefresh', 1)
       uni.navigateBack({
         delta: 1, // 返回的页面数，1 表示返回上一页
       });
@@ -242,14 +250,11 @@ async function publishLeasePosts() {
   }
 }
 const rentChange = (e: any) => {
-  // aryIndex3.value = e.detail.value;
+  // aryIndex3.value = e;
   console.log("rentChange e:", e);
   console.log("aryIndex3.value:", aryIndex3.value);
-  seleAry3.forEach((item) => {
-    if (item.value === aryIndex3.value) {
-      aryText3.value = item.text;
-    }
-  });
+  console.log("aryText3.value:", aryText3.value);
+
 };
 const maintenanceChange = (e: any) => {
   // aryIndex1.value = e.detail.value;
