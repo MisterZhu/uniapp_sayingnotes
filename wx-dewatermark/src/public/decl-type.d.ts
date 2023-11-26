@@ -1,6 +1,34 @@
 //-------------------类型声明文件：d.ts文件--------------------
 
+// 社区数据模型
+export interface CommunityItem {
+    ID: number;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: string;
+    user_id: string;
+    address: string;
+    img_url: string;
+    name: string;
+    detail_name: string;
+    selectState: boolean;
+  }
 
+// 认证申请数据模型
+export interface ApplyItem {
+    ID: number;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: string;
+    state: number;
+    telephone: string;
+    user_id: string;
+    img_url: string;
+    room: string;
+    community: string;
+  }
+
+// 帖子数据模型
 export interface ParkItem {
     ID: number;
     CreatedAt: string;
@@ -43,9 +71,10 @@ export interface UserInfoModel {
     updated_at: string;
     user_id: string;
     username: string;
-    sigin_count: int;
-    sigin_reward: int;
-    sigin_time: string;
+    state: int;
+    default_community: string;
+    default_room: string;
+
 }
 
 // 多选数据模型

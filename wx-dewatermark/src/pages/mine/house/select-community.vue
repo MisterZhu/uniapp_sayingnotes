@@ -1,7 +1,7 @@
 
 
 <script setup lang="ts">
-import type { Analysis } from '@/public/decl-type';
+import type { Analysis, CommunityItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
@@ -9,15 +9,34 @@ import communityItem from "./house-widget/community-item.vue";
 
 // let analyAry = ref([] as Analysis[])
 let analyAry = reactive({
-  data: [] as Analysis[]
+  data: [] as CommunityItem[]
 })
 const size = 20
 let page = 0
+
+// const handleItemClicked = (data: { isSelected: boolean; analyModel: CommunityItem }) => {
+//   console.log('Item clicked:', data);
+//   // 处理子组件点击事件的逻辑
+//   uni.navigateTo({
+//     url: '/pages/mine/house/certifi-house'
+//   })
+// };
+
+const handleItemClicked = (index: number) => {
+  console.log(`Item clicked at index ${index}`);
+  analyAry.data.forEach((item, i) => {
+    item.selectState = i === index;
+  });
+  // Your logic here
+  uni.navigateTo({
+    url: '/pages/mine/house/certifi-house'
+  })
+};
 // MARK: 解析记录
 async function requestAnalyList(callback: () => void) {
   try {
-    const res: any = await RequestApi.AnalyHistory({ "page": page, "size": size })
-    if (typeof callback==='function'){
+    const res: any = await RequestApi.CommunityList({ "page": page, "size": size })
+    if (typeof callback === 'function') {
       callback();
     }
     if (res.code === 200) {
@@ -28,7 +47,7 @@ async function requestAnalyList(callback: () => void) {
       } else {
         console.log('>0')
 
-        analyAry.data = [...analyAry.data,...res.data]
+        analyAry.data = [...analyAry.data, ...res.data]
       }
     } else {
       uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
@@ -40,14 +59,14 @@ async function requestAnalyList(callback: () => void) {
   }
 }
 
-requestAnalyList(() => {})
+requestAnalyList(() => { })
 
 // 下拉刷新的事件
 onPullDownRefresh(() => {
   console.log('下拉刷新的事件');
   // 1. 重置关键数据
   page = 0
-  analyAry.data = [] as Analysis[]
+  analyAry.data = [] as CommunityItem[]
   // 2. 重新发起请求
   requestAnalyList(() => uni.stopPullDownRefresh())
 });
@@ -56,7 +75,7 @@ onPullDownRefresh(() => {
 onReachBottom(() => {
   console.log('触底的事件');
   page++
-  requestAnalyList(() => {})
+  requestAnalyList(() => { })
 });
 watch(
   () => analyAry,
@@ -70,7 +89,9 @@ watch(
 
 <template>
   <view v-show="analyAry.data.length > 0" class="history_item">
-    <communityItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></communityItem>
+    <communityItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"
+    @item-click="handleItemClicked(index)"
+      ></communityItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
     <text class="center-text">暂无解析记录~</text>
@@ -85,5 +106,4 @@ watch(
   transform: translate(-50%, -50%);
   color: $uni-color-666;
 }
-
 </style>

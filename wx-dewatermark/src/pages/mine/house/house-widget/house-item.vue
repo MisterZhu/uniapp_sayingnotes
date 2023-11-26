@@ -1,13 +1,13 @@
   
 <script setup lang="ts">
-import type { Analysis } from '@/public/decl-type';
+import type { ApplyItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import type { PropType } from 'vue';
 
 
 const props = defineProps({
     analyModel: {
-        type: Object as PropType<Analysis>,
+        type: Object as PropType<ApplyItem>,
         required: true,
     },
 });
@@ -45,8 +45,8 @@ async function requestAnalysisUrl(url: string) {
 }
 
 const handleSubmit = async () => {
-    if (props.analyModel.origin_url != '') {
-        const str = props.analyModel.origin_url
+    if (props.analyModel.img_url != '') {
+        const str = props.analyModel.img_url
         if (str.includes('http://') || str.includes('https://')) {
             requestAnalysisUrl(str ?? '')
         } else {
@@ -63,11 +63,14 @@ const handleSubmit = async () => {
         <view class="label-container">
             <view class="left-section">
                 <view class="house-label">房屋</view>
-                <text class="component-title">瀚宇天悦湾2号院</text>
+                <text class="component-title">{{props.analyModel.community}}</text>
             </view>
-            <view class="house-right">认证中</view>
+            <view class="house-right">
+                <text v-if="props.analyModel.state === 1">认证中</text>
+                <text v-else-if="props.analyModel.state === 2">已认证</text>
+            </view>
         </view>
-        <text class="component-text">2号楼1单元27层2702室</text>
+        <text class="component-text">{{props.analyModel.room}}</text>
         <view class="divider"></view>
 
     </view>

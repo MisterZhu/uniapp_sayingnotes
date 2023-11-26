@@ -1,32 +1,29 @@
   
 <script setup lang="ts">
-import type { Analysis } from '@/public/decl-type';
-import { RequestApi } from '@/public/request';
-import { ref, type PropType } from 'vue';
-const isSelected = ref(false);
+import type { CommunityItem } from '@/public/decl-type';
+import type { PropType } from '@vue/runtime-core';
 
+const emit = defineEmits();
 
 const props = defineProps({
     analyModel: {
-        type: Object as PropType<Analysis>,
+        type: Object as PropType<CommunityItem>,
         required: true,
     },
 });
 const toggleSelection = () => {
-    isSelected.value = !isSelected.value;
-    uni.navigateTo({
-    url: '/pages/mine/house/certifi-house'
-  })
-}
+  // 触发自定义事件，传递选中状态和当前项的数据
+  emit('item-click', { analyModel: props.analyModel });
+};
 
 </script>
 
 <template>
     <view class="custom-component" @click="toggleSelection">
-        <view class="selection-button" :class="{ selected: isSelected }"></view>
+        <view class="selection-button" :class="{ selected: props.analyModel.selectState }"></view>
         <view class="content">
-            <text class="component-title">瀚宇天悦湾2号院</text>
-            <text class="component-text">荥阳市兴华路与龙岗南路交叉口西北侧</text>
+            <text class="component-title">{{props.analyModel.detail_name}}</text>
+            <text class="component-text">{{props.analyModel.address}}</text>
         </view>
     </view>
     <view class="divider"></view>

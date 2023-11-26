@@ -29,6 +29,15 @@ const getUserIn = () => {
     console.log("userInfo = " + `${uInfo}`)
     if (uInfo) {
         userInfo.value = uInfo;
+        var item = itmeAry[0];
+
+        if (userInfo.value?.state == 1) {
+            item.right_title = '已认证';
+            itmeAry[0] = item;
+        } else {
+            item.right_title = '未认证';
+            itmeAry[0] = item;
+        }
     } else {
         getUserInfo()
     }
@@ -260,4 +269,5 @@ const handleItemClick = (itemModel: any) => {
     display: flex;
     align-items: center;
     margin-top: 4px;
-}</style>
+}
+</style>

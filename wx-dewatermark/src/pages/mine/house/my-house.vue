@@ -1,34 +1,37 @@
 
 
 <script setup lang="ts">
-import type { Analysis } from '@/public/decl-type';
+import type { Analysis, ApplyItem, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import houseItem from "./house-widget/house-item.vue";
 // let analyAry = ref([] as Analysis[])
-let analyAry = reactive({
-  data: [] as Analysis[]
+let applyAry = reactive({
+  data: [] as ApplyItem[]
 })
 const size = 3
 let page = 0
+let userInfo = ref<UserInfoModel>()
+
 // MARK: 解析记录
-async function requestAnalyList(callback: () => void) {
+async function requestApplyList(callback: () => void) {
+
   try {
-    const res: any = await RequestApi.AnalyHistory({ "page": page, "size": size })
+    const res: any = await RequestApi.ApplyList({ "page": page, "size": size, 'user_id':userInfo.value?.user_id })
     if (typeof callback === 'function') {
       callback();
     }
     if (res.code === 200) {
       if (page === 0) {
-        analyAry.data = res.data
+        applyAry.data = res.data
         console.log('0')
 
       } else {
         console.log('>0')
 
-        analyAry.data = [...analyAry.data, ...res.data]
+        applyAry.data = [...applyAry.data, ...res.data]
       }
     } else {
       uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
@@ -39,17 +42,25 @@ async function requestAnalyList(callback: () => void) {
     uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
 }
+const getLocalUserInfo = () => {
+    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+    console.log("userInfo = " + `${uInfo}`)
+    if (uInfo) {
+        userInfo.value = uInfo;
+        requestApplyList(() => { })
 
-requestAnalyList(() => { })
+    }
+}
+getLocalUserInfo()
 
 // 下拉刷新的事件
 onPullDownRefresh(() => {
   console.log('下拉刷新的事件');
   // 1. 重置关键数据
   page = 0
-  analyAry.data = [] as Analysis[]
+  applyAry.data = [] as ApplyItem[]
   // 2. 重新发起请求
-  requestAnalyList(() => uni.stopPullDownRefresh())
+  requestApplyList(() => uni.stopPullDownRefresh())
 });
 const handleItemClick = (itemModel: any) => {
   uni.navigateTo({
@@ -63,9 +74,9 @@ const handleItemClick = (itemModel: any) => {
 //   requestAnalyList(() => { })
 // });
 watch(
-  () => analyAry,
+  () => applyAry,
   (newValue) => {
-    analyAry = newValue
+    applyAry = newValue
     console.log(`history watch images: ${newValue}`);
   },
   { immediate: true }
@@ -77,12 +88,12 @@ watch(
     <view class="divider"></view>
 
     <view class="list-page">
-      <view v-show="analyAry.data.length > 0" class="history_item">
-        <houseItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></houseItem>
+      <view v-show="applyAry.data.length > 0" class="history_item">
+        <houseItem v-for="(item, index) in applyAry.data" :key="index" :analy-model="item"></houseItem>
       </view>
     </view>
-    <view v-show="analyAry.data.length <= 0" class="history_item">
-      <text class="center-text">暂无解析记录~</text>
+    <view v-show="applyAry.data.length <= 0" class="history_item">
+      <text class="center-text">暂无房屋申请记录~</text>
     </view>
     <!-- 添加按钮 -->
     <view class="button-container">
