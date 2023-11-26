@@ -14,23 +14,19 @@ let analyAry = reactive({
 const size = 20
 let page = 0
 
-// const handleItemClicked = (data: { isSelected: boolean; analyModel: CommunityItem }) => {
-//   console.log('Item clicked:', data);
-//   // 处理子组件点击事件的逻辑
-//   uni.navigateTo({
-//     url: '/pages/mine/house/certifi-house'
-//   })
-// };
-
 const handleItemClicked = (index: number) => {
   console.log(`Item clicked at index ${index}`);
   analyAry.data.forEach((item, i) => {
     item.selectState = i === index;
   });
+  var model = analyAry.data[index];
   // Your logic here
+  // uni.navigateTo({
+  //   url: '/pages/mine/house/certifi-house'
+  // })
   uni.navigateTo({
-    url: '/pages/mine/house/certifi-house'
-  })
+    url: `/pages/mine/house/certifi-house?communityModel=${encodeURIComponent(JSON.stringify(model))}`
+  });
 };
 // MARK: 解析记录
 async function requestAnalyList(callback: () => void) {
