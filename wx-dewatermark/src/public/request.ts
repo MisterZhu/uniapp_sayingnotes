@@ -72,7 +72,7 @@ function requestNoLoading(
             data,
             header:{
                 Authorization:getToken(),
-                'Content-Type': 'application/x-www-form-urlencoded' // 设置请求参数格式为表单数据格式
+                'Content-Type': 'application/json' // 设置请求参数格式为表单数据格式
             },
             success:(res:any) => {
                 const data = res.data
@@ -101,7 +101,7 @@ function requestNoLoading(
 }
 //接口
 const RequestApi = {
-    UserLogin:(data:any)=>request('/user/login','POST',data),
+    UserLogin:(data:any)=>requestNoLoading('/user/login','POST',data),
     HomeAnalysis:(data:any)=>request('/user/analysis','POST',data),
     AnalyHistory:(data:any)=>request('/user/analysisRecord','POST',data),
     SignIn:(data:any)=>request('/user/signIn','POST',data),
