@@ -11,32 +11,38 @@ let menu_height = ref<string>('')
 let safeTop = ref<string>('')
 let userInfo = ref<UserInfoModel>()
 
-const itmeAry = <MineItemModel[]>[
-    {
-        left_img: "/static/mine/mine_house.png",
-        left_title: "我的房屋",
-        right_img: "/static/mine/mine-next-999.png",
-        right_title: "未认证",
-        line_shou: true,
-        head_shou: false,
-        share_shou: false,
-        radius_type: 3,
-    },
-]
+const itmeAry = ref<MineItemModel[]>([
+  {
+    left_img: "/static/mine/mine_house.png",
+    left_title: "我的房屋",
+    right_img: "/static/mine/mine-next-999.png",
+    right_title: "未认证",
+    line_shou: true,
+    head_shou: false,
+    share_shou: false,
+    radius_type: 3,
+  },
+]);
 
 const getUserIn = () => {
     var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
     console.log("userInfo = " + `${uInfo}`)
     if (uInfo) {
         userInfo.value = uInfo;
-        var item = itmeAry[0];
+        var item = itmeAry.value[0];
 
-        if (userInfo.value?.state == 1) {
-            item.right_title = '已认证';
-            itmeAry[0] = item;
-        } else {
+        if (userInfo.value?.state == 0) {
             item.right_title = '未认证';
-            itmeAry[0] = item;
+            itmeAry.value[0] = item;
+        } else if (userInfo.value?.state == 1) {
+            item.right_title = '认证中';
+            itmeAry.value[0] = item;
+        } else if (userInfo.value?.state == 2) {
+            item.right_title = '已认证';
+            itmeAry.value[0] = item;
+        } else if (userInfo.value?.state == 3) {
+            item.right_title = '认证失败';
+            itmeAry.value[0] = item;
         }
     } else {
         getUserInfo()
@@ -53,6 +59,21 @@ async function requestUserInfoWithCode(code: string) {
     uni.setStorageSync('local_token', res.token)
     uni.setStorageSync('local_user_info', JSON.stringify(res.data));
     userInfo.value = res.data;
+    var item = itmeAry.value[0];
+
+    if (userInfo.value?.state == 0) {
+        item.right_title = '未认证';
+        itmeAry.value[0] = item;
+    } else if (userInfo.value?.state == 1) {
+        item.right_title = '认证中';
+        itmeAry.value[0] = item;
+    } else if (userInfo.value?.state == 2) {
+        item.right_title = '已认证';
+        itmeAry.value[0] = item;
+    } else if (userInfo.value?.state == 3) {
+        item.right_title = '认证失败';
+        itmeAry.value[0] = item;
+    }
 }
 
 //获取openid

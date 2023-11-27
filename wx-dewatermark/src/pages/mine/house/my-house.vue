@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import type { Analysis, ApplyItem, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
-import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
+import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import houseItem from "./house-widget/house-item.vue";
@@ -14,6 +14,23 @@ let applyAry = reactive({
 const size = 3
 let page = 0
 let userInfo = ref<UserInfoModel>()
+
+//接收参数
+onShow(() => {
+  let that = this
+  // 移除之前的事件监听器
+  uni.$off('isMyHouseRefresh');
+  uni.$on('isMyHouseRefresh', function (data) {
+    console.log('3监听到事件来自返回的参数：' + data);
+    if (data === 1){
+      console.log('3 requestPostsList' + data);
+      requestApplyList(() => {
+        // TODO 下面执行刷新的方法
+      });
+    }
+    // TODO 下面执行刷新的方法
+  })
+});
 
 // MARK: 解析记录
 async function requestApplyList(callback: () => void) {

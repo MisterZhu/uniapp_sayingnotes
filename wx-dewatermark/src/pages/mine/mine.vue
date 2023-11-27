@@ -48,16 +48,6 @@ const itmeAry = <MineItemModel[]>[
 ]
 //用户信息模块
 
-const getLocalUserInfo = () => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    console.log("userInfo = " + `${uInfo}`)
-    if (uInfo) {
-        userInfo.value = uInfo;
-    } else {
-        getUserInfo()
-    }
-}
-getLocalUserInfo()
 
 async function requestUserInfoWithCode(code: string) {
     const res: any = await RequestApi.UserLogin({ "code": code })
@@ -69,6 +59,7 @@ async function requestUserInfoWithCode(code: string) {
 }
 onShow(() => {
     console.log("mine Show");
+    getUserInfo()
 });
 onShareAppMessage(() => {
     const open_id = userInfo.value?.open_id ?? ''; // 获取userInfo的id
