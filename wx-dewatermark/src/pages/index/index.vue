@@ -18,29 +18,30 @@ const inviter_openid = ref<string>('')
 const images = ["/static/home/home_head_bg.png", "/static/home/home_head_bg.png", "/static/home/home_head_bg.png"]
 const list = [
   {
-    url: '/static/home/home_carport_icon4.png',
+    url: '/static/home/home_carport_icon6.png',
     text: '车位出租',
     badge: '1',
     type: "success"
   },
   {
-    url: '/static/home/home_carport_icon.png',
+    url: '/static/home/home_carport_icon5.png',
     text: '车位买卖',
-    badge: '99',
+    badge: '2',
     type: "warning"
   },
   {
-    url: '/static/home/home_carport_icon.png',
-    text: '房屋出租',
-    badge: '99',
-    type: "warning"
-  },
-  {
-    url: '/static/home/home_carport_icon3.png',
-    text: '房屋买卖',
-    badge: '99',
+    url: '/static/home/home_sale_icon1.png',
+    text: '卖闲置',
+    badge: '3',
     type: "warning"
   }
+  // ,
+  // {
+  //   url: '/static/home/home_carport_icon3.png',
+  //   text: '房屋买卖',
+  //   badge: '4',
+  //   type: "warning"
+  // }
 ]
 const isXiala = ref(false)
 const option = [
@@ -203,8 +204,8 @@ onMounted(() => {
 }
 
 .grid-item-box image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 70rpx;
+  height: 70rpx;
 }
 
 .text {
