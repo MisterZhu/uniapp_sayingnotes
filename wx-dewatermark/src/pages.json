@@ -29,6 +29,17 @@
 			}
 		},
 		{
+			"path": "pages/index/parking/parking-detail-page",
+			"style": {
+				"navigationBarTitleText": "帖子详情",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/index/parking/publish-lease",
 			"style": {
 				"navigationBarTitleText": "发布出租",

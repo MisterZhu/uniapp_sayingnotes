@@ -60,15 +60,15 @@ onPullDownRefresh(() => {
 });
 const handleItemClick = (itemModel: any) => {
   uni.navigateTo({
-    url: '/pages/mine/house/select-community'
+    url: '/pages/index/parking/parking-page'
   })
 }
 // 触底的事件
-// onReachBottom(() => {
-//   console.log('触底的事件');
-//   page++
-//   requestAnalyList(() => { })
-// });
+onReachBottom(() => {
+  console.log('触底的事件');
+  page++
+  requestPostsList(() => { })
+});
 // watch(
 //   () => analyAry,
 //   (newValue) => {

@@ -11,7 +11,15 @@ const props = defineProps({
     required: true,
   },
 });
+const handleItemClick = () => {
+  // Emit the custom 'itemClick' event and pass 'analyModel' as payload
+  console.log(`Item clicked: ${props.analyModel}`);
 
+  // Assuming 'uni' is a valid object that can call 'navigateTo'
+  uni.navigateTo({
+    url: '/pages/index/parking/parking-detail-page',
+  });
+};
 const generateRichTextContent = (annualRent: string) => {
   // 从 annualRent 中分离数字和单位
   const matchResult = annualRent.match(/(\d+)([^\d]+)/);
@@ -36,9 +44,10 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <view class="component-wrapper">
+  <view class="component-wrapper" @click="handleItemClick">
     <view class="left-custom-view">
-      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : common_url.home_parking_head" mode="aspectFill"></image>
+      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : common_url.home_parking_head"
+        mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">
@@ -136,8 +145,8 @@ const formatDate = (dateString: string) => {
   white-space: normal !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-    /* 添加左对齐样式 */
-    text-align: left;
+  /* 添加左对齐样式 */
+  text-align: left;
 }
 
 .right-custom-view-image {

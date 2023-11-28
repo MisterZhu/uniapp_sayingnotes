@@ -75,16 +75,19 @@ onPullDownRefresh(() => {
   requestPostsList(() => uni.stopPullDownRefresh())
 });
 const handleItemClick = (itemModel: any) => {
+  console.log(`Item clicked: ${itemModel}`);
+
+  // Assuming 'uni' is a valid object that can call 'navigateTo'
   uni.navigateTo({
-    url: '/pages/mine/house/select-community'
-  })
-}
+    url: '/pages/index/parking/parking-page',
+  });
+};
 // 触底的事件
-// onReachBottom(() => {
-//   console.log('触底的事件');
-//   page++
-//   requestAnalyList(() => { })
-// });
+onReachBottom(() => {
+  console.log('触底的事件');
+  page++
+  requestPostsList(() => { })
+});
 watch(
   () => props.coverSrc,
   (newValue) => {
@@ -96,7 +99,11 @@ watch(
 
 <template>
   <view v-show="analyAry.data.length > 0" class="history_item">
-    <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
+    <historyItem 
+    v-for="(item, index) in analyAry.data" 
+    :key="index" 
+    :analy-model="item"       
+></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
     <text class="center-text">暂无出租信息~</text>
