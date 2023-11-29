@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { ParkItem } from '@/public/decl-type';
 import type { PropType } from 'vue';
-import { common_url } from '@/public/common';
+import { common_url , timeDis} from '@/public/common';
 
 
 const props = defineProps({
@@ -16,8 +16,11 @@ const handleItemClick = () => {
   console.log(`Item clicked: ${props.analyModel}`);
 
   // Assuming 'uni' is a valid object that can call 'navigateTo'
+  // uni.navigateTo({
+  //   url: '/pages/index/parking/parking-detail-page',
+  // });
   uni.navigateTo({
-    url: '/pages/index/parking/parking-detail-page',
+    url: `/pages/index/parking/parking-detail-page?parkModel=${encodeURIComponent(JSON.stringify(props.analyModel))}`
   });
 };
 const generateRichTextContent = (annualRent: string) => {
@@ -33,14 +36,6 @@ const generateRichTextContent = (annualRent: string) => {
     return '';
   }
 };
-// 转译日期格式
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${year}.${month}.${day}`;
-}
 </script>
 
 <template>
@@ -74,7 +69,7 @@ const formatDate = (dateString: string) => {
           <text class="left-text3">年租</text>
 
           <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
-          <text class="right-text">{{ formatDate(analyModel.CreatedAt) }}</text>
+          <text class="right-text">{{ timeDis.formatDate(analyModel.CreatedAt) }}</text>
         </view>
       </view>
     </view>

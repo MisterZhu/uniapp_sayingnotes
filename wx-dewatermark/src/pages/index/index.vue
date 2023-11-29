@@ -1,17 +1,18 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
-import type { Analysis, UserInfoModel } from '@/public/decl-type';
+import type { Analysis, CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
+// import cusPicker from '@/common/cus-picker.vue';
+import cusPicker from '@/pages/common/cus-picker.vue';
 
 const top = ref(0);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 let userInfo = ref<UserInfoModel>()
-let analyModel = ref<Analysis>()
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
@@ -43,17 +44,20 @@ const list = [
   //   type: "warning"
   // }
 ]
+let communityAry = reactive<CommunityItem[]>([]);
+
+const size = 100
+let page = 0
 const isXiala = ref(false)
-const option = [
-  { lable: 2, value: "天悦湾2号院" },
-  { lable: 3, value: "天悦湾3号院" },
-  { lable: 1, value: "天悦湾1号院" },
-  { lable: 5, value: "天悦湾5号院" },
-  { lable: 6, value: "天悦湾6号院" },
-  { lable: 7, value: "天悦湾7号院" },
-  { lable: 8, value: "天悦湾8号院" },
-]
+const isNeedSelect = ref(false)
+
 const optionIndex = ref<string>('天悦湾2号院')
+
+const indicatorStyle = `height: 68rpx;`
+
+// 数据
+const industryIndex = ref(-1);
+const popup = ref(null);
 
 // MARK: 注册&获取用户信息
 async function requestUserInfoWithCode(code: string) {
@@ -63,6 +67,7 @@ async function requestUserInfoWithCode(code: string) {
   uni.setStorageSync('local_token', res.token)
   uni.setStorageSync('local_user_info', JSON.stringify(res.data));
   userInfo.value = res.data
+  requestAnalyList(() => { })
 }
 const getLocalUserInfo = () => {
   var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
@@ -71,7 +76,54 @@ const getLocalUserInfo = () => {
     userInfo.value = uInfo;
   }
 }
+// MARK: 社区列表
+async function requestAnalyList(callback: () => void) {
+  try {
+    const res: any = await RequestApi.CommunityList({ "page": page, "size": size })
+    if (typeof callback === 'function') {
+      callback();
+    }
+    if (res.code === 200) {
+      communityAry = res.data
+      console.log('0')
+      const foundCommunity = communityAry.find((community) => community.ID === userInfo?.value?.default_community_id);
 
+      if (foundCommunity) {
+        // 如果找到匹配的社区，设置 optionIndex 为社区的 name
+        optionIndex.value = foundCommunity.name;
+        isNeedSelect.value = false;
+      } else {
+        // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
+        // showSelectionDialog();
+
+        // showPicker();
+        isNeedSelect.value = true;
+          // @ts-ignore
+          popup.value.open('bottom');
+      }
+    } else {
+      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+    }
+  } catch (error) {
+    callback && callback()
+    console.error(error)
+    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
+  }
+}
+// 手动触发 Picker
+const showPicker = () => {
+  const pickerOptions = {
+    title: '产业方向',
+    itemList: communityAry.map(item => item.name),
+    success: (res: { tapIndex: number | undefined; }) => {
+      if (res && res.tapIndex !== undefined) {
+        industryIndex.value = res.tapIndex;
+      }
+    },
+  };
+
+  uni.showActionSheet(pickerOptions);
+};
 //获取openid
 function getUserInfo() {
   uni.login({
@@ -94,7 +146,21 @@ onLoad(options => {
     inviter_openid.value = options.open_id
   }
 });
-
+// 弹出选择框的函数
+function showSelectionDialog() {
+  // 在这里实现弹出选择框的逻辑，可以使用 uni.showToast 或者其他组件
+  uni.showModal({
+    title: '选择社区',
+    content: '请选择您的社区',
+    success: function (res) {
+      if (res.confirm) {
+        // 用户点击确定按钮，处理相应的逻辑
+      } else if (res.cancel) {
+        // 用户点击取消按钮，处理相应的逻辑
+      }
+    }
+  });
+}
 const changeAction = (e: any) => {
   // let {
   //   index
@@ -137,10 +203,50 @@ onMounted(() => {
   console.log(`onMounted:`, top.value);
 
 })
+const pickerCancel = () => {
+  // 处理选择器关闭逻辑
+  // @ts-ignore
+  popup.value.close();
+};
 
+const pickerConfirm = (selectedCommunityName: any) => {
+  // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
+  // @ts-ignore
+  popup.value.close();
+
+};
+
+const bindChange = (e: any) => {
+  // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
+  console.log(`e:`, e);
+
+	optionIndex.value = communityAry[e.target.value].name;
+
+};
+// 产业方向选择改变
+const bindIndustryDirectionPickerChange = (e: any) => {
+  // 可以在这里添加其他逻辑
+};
 </script>
 
 <template>
+  <!-- 使用 MyPicker 组件，并通过 communityAry 属性传递数据 -->
+  <!-- <cus-picker v-if="isNeedSelect" :communityAry="communityAry" @close="handlePickerClose" @confirm="handlePickerConfirm" /> -->
+  <uni-popup ref="popup" type="bottom" style="z-index: 9999999;">
+    <div class="popup-view">
+      <div class="popup-view-header">
+        <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div>
+        <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div>
+      </div>
+      <picker-view v-if="isNeedSelect" :indicator-style="indicatorStyle" :value="communityAry.length" @change="bindChange"
+        class="picker-view">
+        <picker-view-column>
+          <view class="item" v-for="(item, index) in communityAry" :key="index">{{ item.name }}</view>
+        </picker-view-column>
+      </picker-view>
+    </div>
+  </uni-popup>
+
   <!-- 下拉菜单 -->
   <view class="xuanze" :style="{ '--top': top + 'px' }">
     <view class="text-container" @click="selectIsXiala">
@@ -152,9 +258,9 @@ onMounted(() => {
 
     <view class="xiala" v-show="isXiala">
       <view class="xiala-xuan" :class="[isXiala == true ? 'open' : 'close']">
-        <view class="xiala-hang" v-for="(item, index) in option" :key="index"
-          @click="xuanzeMoban(item.lable, item.value)">
-          <text>{{ item.value }}</text>
+        <view class="xiala-hang" v-for="(item, index) in communityAry" :key="index"
+          @click="xuanzeMoban(item.ID, item?.name ?? '')">
+          <text>{{ item?.name ?? '' }}</text>
         </view>
       </view>
     </view>
@@ -365,4 +471,49 @@ onMounted(() => {
   to {
     height: 0;
   }
-}</style>
+}
+
+.popup-view {
+	background-color: #FFFFFF;
+	.popup-view-header {
+		text-align: center;
+		width: 100%;
+		height: 90rpx;
+		background-color: #fff;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid #F5F5F5;
+		div {
+			max-width: 50%;
+			height: 100%;
+			box-sizing: border-box;
+			padding: 0 28rpx;
+			font-size: 34rpx;
+			line-height: 90rpx;
+			&:first-child {
+				color: #888888;
+			}
+			&:last-child {
+				color: #007aff;
+			}
+		}
+	}
+	.picker-view {
+		width: 100%;
+		height: 476rpx;
+		margin-top: 20rpx;
+		.item {
+			height: 68rpx !important;
+			line-height: 68rpx;
+			text-align: center;
+			color: #000;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			cursor: pointer;
+		}
+	}
+}
+
+</style>

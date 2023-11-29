@@ -11,7 +11,7 @@ import communityItem from "./house-widget/community-item.vue";
 let analyAry = reactive({
   data: [] as CommunityItem[]
 })
-const size = 20
+const size = 100 
 let page = 0
 
 const handleItemClicked = (index: number) => {
@@ -28,7 +28,7 @@ const handleItemClicked = (index: number) => {
     url: `/pages/mine/house/certifi-house?communityModel=${encodeURIComponent(JSON.stringify(model))}`
   });
 };
-// MARK: 解析记录
+// MARK: 社区列表
 async function requestAnalyList(callback: () => void) {
   try {
     const res: any = await RequestApi.CommunityList({ "page": page, "size": size })

@@ -3,46 +3,21 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
-import type { Analysis, UserInfoModel } from '@/public/decl-type';
+import type { ParkItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
+import { timeDis } from '@/public/common';
 
 const top = ref(0);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 let userInfo = ref<UserInfoModel>()
-let analyModel = ref<Analysis>()
+    let parkModel = ref<ParkItem | null>(null)
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
 const images = ["/static/home/home_head_bg.png", "/static/home/home_head_bg.png", "/static/home/home_head_bg.png"]
-const list = [
-    {
-        url: '/static/home/home_carport_icon6.png',
-        text: '车位出租',
-        badge: '1',
-        type: "success"
-    },
-    {
-        url: '/static/home/home_carport_icon5.png',
-        text: '车位买卖',
-        badge: '2',
-        type: "warning"
-    },
-    {
-        url: '/static/home/home_sale_icon1.png',
-        text: '卖闲置',
-        badge: '3',
-        type: "warning"
-    }
-    // ,
-    // {
-    //   url: '/static/home/home_carport_icon3.png',
-    //   text: '房屋买卖',
-    //   badge: '4',
-    //   type: "warning"
-    // }
-]
+
 const isXiala = ref(false)
 const jiage = ref("1000元/年")
 
@@ -79,13 +54,13 @@ onShow(() => {
     console.log("App Show");
     getLocalUserInfo()
 });
-//接收参数
+// 接收参数
 onLoad(options => {
-    if (options) {
-        // 处理逻辑
-        console.log(`index onLoad:`, options);
-        inviter_openid.value = options.open_id
-    }
+  // @ts-ignore
+  parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
+  console.log(`parkModel onLoad: ${parkModel.value?.title}`);
+  getLocalUserInfo();
+
 });
 
 const changeAction = (e: any) => {
@@ -172,7 +147,7 @@ const handleSubmit = async () => {
     </view>
     <!-- 介绍 -->
     <view class="text-container">
-        <text class="left-text">2号院地下车位便宜出租了！</text>
+        <text class="left-text">{{parkModel?.title}}</text>
     </view>
     <!-- 价格 -->
     <view class="text-container1">
@@ -181,16 +156,16 @@ const handleSubmit = async () => {
     <!-- 标签 -->
     <view class="custom-view">
         <!-- 根据 in_maintenance 显示文本 -->
-        <text class="left-text1">含管理费</text>
+        <text v-if="parkModel?.in_maintenance" class="left-text1">含管理费</text>
 
         <!-- 根据 negotiable 显示文本 -->
-        <text class="left-text2">可小刀</text>
+        <text v-if="parkModel?.negotiable" class="left-text2">可小刀</text>
 
         <!-- 固定显示的文本 -->
         <text class="left-text3">年租</text>
 
         <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
-        <text class="right-text">2023.11.27</text>
+        <text class="right-text">{{ timeDis.formatDate(parkModel?.CreatedAt ?? '') }}</text>
     </view>
     <view class="component-footer">
         <!-- 两个按钮，右对齐 -->

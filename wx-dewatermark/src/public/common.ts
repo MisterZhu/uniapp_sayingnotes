@@ -13,3 +13,17 @@ export const common_key = {
     k_DefaultCommunityId: 'DefaultCommunityId',
     k_DefaultCommunityName: 'DefaultCommunityName',
 } as const;
+
+// 转译日期格式
+ const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}.${month}.${day}`;
+  }
+
+// 导出函数集合
+export const timeDis = {
+  formatDate,
+};

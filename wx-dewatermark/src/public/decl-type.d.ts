@@ -73,6 +73,7 @@ export interface UserInfoModel {
     username: string;
     state: int;
     default_community: string;
+    default_community_id: int;
     default_room: string;
 
 }
