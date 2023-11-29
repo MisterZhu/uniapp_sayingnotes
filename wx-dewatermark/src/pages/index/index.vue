@@ -94,12 +94,9 @@ async function requestAnalyList(callback: () => void) {
         isNeedSelect.value = false;
       } else {
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
-        // showSelectionDialog();
-
-        // showPicker();
         isNeedSelect.value = true;
-          // @ts-ignore
-          popup.value.open('bottom');
+        // @ts-ignore
+        popup.value.open('center');
       }
     } else {
       uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
@@ -110,20 +107,6 @@ async function requestAnalyList(callback: () => void) {
     uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
 }
-// 手动触发 Picker
-const showPicker = () => {
-  const pickerOptions = {
-    title: '产业方向',
-    itemList: communityAry.map(item => item.name),
-    success: (res: { tapIndex: number | undefined; }) => {
-      if (res && res.tapIndex !== undefined) {
-        industryIndex.value = res.tapIndex;
-      }
-    },
-  };
-
-  uni.showActionSheet(pickerOptions);
-};
 //获取openid
 function getUserInfo() {
   uni.login({
@@ -220,7 +203,7 @@ const bindChange = (e: any) => {
   // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
   console.log(`e:`, e);
 
-	optionIndex.value = communityAry[e.target.value].name;
+  optionIndex.value = communityAry[e.target.value].name;
 
 };
 // 产业方向选择改变
@@ -230,13 +213,13 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 </script>
 
 <template>
-  <!-- 使用 MyPicker 组件，并通过 communityAry 属性传递数据 -->
-  <!-- <cus-picker v-if="isNeedSelect" :communityAry="communityAry" @close="handlePickerClose" @confirm="handlePickerConfirm" /> -->
-  <uni-popup ref="popup" type="bottom" style="z-index: 9999999;">
+  <!-- 弹出选择框 -->
+  <uni-popup :mask-click="false" ref="popup" type="bottom" style="z-index: 9999999;">
     <div class="popup-view">
       <div class="popup-view-header">
-        <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div>
-        <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div>
+        <!-- <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div> -->
+        <div class="popup-view- title"> 请选择社区 </div>
+        <!-- <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div> -->
       </div>
       <picker-view v-if="isNeedSelect" :indicator-style="indicatorStyle" :value="communityAry.length" @change="bindChange"
         class="picker-view">
@@ -244,8 +227,14 @@ const bindIndustryDirectionPickerChange = (e: any) => {
           <view class="item" v-for="(item, index) in communityAry" :key="index">{{ item.name }}</view>
         </picker-view-column>
       </picker-view>
+      <div class="popup-view-header">
+        <!-- <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div> -->
+        <!-- <div class="popup-view- title"> 请选择社区 </div> -->
+        <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div>
+      </div>
     </div>
   </uni-popup>
+
 
   <!-- 下拉菜单 -->
   <view class="xuanze" :style="{ '--top': top + 'px' }">
@@ -369,7 +358,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
   display: flex;
   align-items: center;
   // justify-content: space-between;
-  z-index: 999;
+  z-index: 9;
 }
 
 .xuanze-image {
@@ -473,47 +462,73 @@ const bindIndustryDirectionPickerChange = (e: any) => {
   }
 }
 
-.popup-view {
-	background-color: #FFFFFF;
-	.popup-view-header {
-		text-align: center;
-		width: 100%;
-		height: 90rpx;
-		background-color: #fff;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-bottom: 1px solid #F5F5F5;
-		div {
-			max-width: 50%;
-			height: 100%;
-			box-sizing: border-box;
-			padding: 0 28rpx;
-			font-size: 34rpx;
-			line-height: 90rpx;
-			&:first-child {
-				color: #888888;
-			}
-			&:last-child {
-				color: #007aff;
-			}
-		}
-	}
-	.picker-view {
-		width: 100%;
-		height: 476rpx;
-		margin-top: 20rpx;
-		.item {
-			height: 68rpx !important;
-			line-height: 68rpx;
-			text-align: center;
-			color: #000;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
-			cursor: pointer;
-		}
-	}
+.popup-view-cancel {
+  color: $uni-color-gradient1;
+
 }
 
-</style>
+.popup-view-confirm {
+  color: $uni-color-gradient1;
+
+}
+
+.popup-view {
+  background-color: #FFFFFF;
+  margin: 10rpx;
+  border-radius: 10px;
+  /* 设置圆角的大小，根据需求调整 */
+
+  .popup-view-header {
+    text-align: center;
+    width: calc(100vw - 150rpx);
+    height: 90rpx;
+    background-color: #fff;
+    display: flex;
+    // justify-content: space-between;
+    justify-content: center;
+
+    align-items: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5rpx 35rpx;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    div {
+      max-width: 50%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 28rpx;
+      font-size: 34rpx;
+      line-height: 90rpx;
+      border-radius: 10px;
+      /* 设置圆角的大小，根据需求调整 */
+
+      &:first-child {
+        color: #888888;
+      }
+
+      &:last-child {
+        color: #007aff;
+      }
+    }
+  }
+
+  .picker-view {
+    width: 100%;
+    height: 476rpx;
+    margin-bottom: 1rpx;
+    border-radius: 10px;
+    /* 设置圆角的大小，根据需求调整 */
+
+    .item {
+      height: 68rpx !important;
+      line-height: 68rpx;
+      text-align: center;
+      color: #000;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  }
+}</style>
