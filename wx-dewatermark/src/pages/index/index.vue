@@ -67,7 +67,7 @@ async function requestUserInfoWithCode(code: string) {
   //将后台返回的用户信息赋值给 UserInfo
   UserInfo.value = { ...UserInfo.value, ...res.data };
   console.log("UserInfo.value.state = " + UserInfo.value.state)
-  console.log("UserInfo.value.room e:", UserInfo.value.room);
+  console.log("UserInfo.value.default_room e:", UserInfo.value.default_room);
 
   requestAnalyList(() => { })
 }
