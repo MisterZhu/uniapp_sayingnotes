@@ -7,6 +7,7 @@ import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import historyItem from '@/pages/index/parking/parking-widget/widget/part-item.vue';
+import { GlobalData, UserInfo } from '@/public/common';
 
 const props = defineProps({
   coverSrc: String

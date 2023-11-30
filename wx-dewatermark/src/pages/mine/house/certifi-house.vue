@@ -39,9 +39,9 @@ import { onLoad } from '@dcloudio/uni-app';
 import type { CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 
-const selectedClass = ref(' '); 
+const selectedClass = ref(' ');
 const classes = ref<Array<any>>([]); // 用于存储本地JSON数据
-const phoneNum = ref(''); 
+const phoneNum = ref('');
 let communityModel = ref<CommunityItem | null>(null)
 let imageValue = ref('');
 const QiniuData = {    //这里是直接绑定data的值
@@ -118,12 +118,14 @@ const handleItemClick = (itemModel: any) => {
 async function publishLeasePosts() {
 
   try {
+    let origRoom = selectedClass?.value ?? '';
+    var room = origRoom.slice(0, origRoom.lastIndexOf('-')) + '0' + origRoom.slice(origRoom.lastIndexOf('-') + 1);
     const requestData = {
       community: communityModel.value?.detail_name,
       community_id: communityModel.value?.ID,
-      room: selectedClass?.value ?? '',
+      room: room,
       telephone: phoneNum?.value ?? '',
-      state: 1, 
+      state: 1,
       img_url: imageValue.value,
       user_id: userInfo.value?.user_id ?? '',
     };

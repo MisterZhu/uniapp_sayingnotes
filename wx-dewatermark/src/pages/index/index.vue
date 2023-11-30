@@ -5,14 +5,12 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
 import type { Analysis, CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
-// import cusPicker from '@/common/cus-picker.vue';
-import cusPicker from '@/pages/common/cus-picker.vue';
+import { GlobalData, UserInfo } from '@/public/common';
 
 const top = ref(0);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
-let userInfo = ref<UserInfoModel>()
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
@@ -51,12 +49,10 @@ let page = 0
 const isXiala = ref(false)
 const isNeedSelect = ref(false)
 
-const optionIndex = ref<string>('天悦湾2号院')
-
+const optionIndex = ref<string>('请选择')
 const indicatorStyle = `height: 68rpx;`
 
 // 数据
-const industryIndex = ref(-1);
 const popup = ref(null);
 
 // MARK: 注册&获取用户信息
@@ -66,15 +62,14 @@ async function requestUserInfoWithCode(code: string) {
   console.log("local_token = " + res.token)
   uni.setStorageSync('local_token', res.token)
   uni.setStorageSync('local_user_info', JSON.stringify(res.data));
-  userInfo.value = res.data
+
+  GlobalData.token = res.token;
+  //将后台返回的用户信息赋值给 UserInfo
+  UserInfo.value = { ...UserInfo.value, ...res.data };
+  console.log("UserInfo.value.state = " + UserInfo.value.state)
+  console.log("UserInfo.value.room e:", UserInfo.value.room);
+
   requestAnalyList(() => { })
-}
-const getLocalUserInfo = () => {
-  var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-  console.log("userInfo = " + `${uInfo}`)
-  if (uInfo) {
-    userInfo.value = uInfo;
-  }
 }
 // MARK: 社区列表
 async function requestAnalyList(callback: () => void) {
@@ -86,13 +81,20 @@ async function requestAnalyList(callback: () => void) {
     if (res.code === 200) {
       communityAry = res.data
       console.log('0')
-      const foundCommunity = communityAry.find((community) => community.ID === userInfo?.value?.default_community_id);
+      const foundCommunity = communityAry.find((community) => community.ID === UserInfo.value.default_community_id);
 
       if (foundCommunity) {
         // 如果找到匹配的社区，设置 optionIndex 为社区的 name
         optionIndex.value = foundCommunity.name;
         isNeedSelect.value = false;
+        GlobalData.select_community = foundCommunity.name;
+        GlobalData.select_community_id = foundCommunity.ID;
+
       } else {
+        const firstModel = communityAry[0];
+        optionIndex.value = firstModel.name;
+        GlobalData.select_community = firstModel.name;
+        GlobalData.select_community_id = firstModel.ID;
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
         isNeedSelect.value = true;
         // @ts-ignore
@@ -119,7 +121,6 @@ getUserInfo()
 
 onShow(() => {
   console.log("App Show");
-  getLocalUserInfo()
 });
 //接收参数
 onLoad(options => {
@@ -129,21 +130,7 @@ onLoad(options => {
     inviter_openid.value = options.open_id
   }
 });
-// 弹出选择框的函数
-function showSelectionDialog() {
-  // 在这里实现弹出选择框的逻辑，可以使用 uni.showToast 或者其他组件
-  uni.showModal({
-    title: '选择社区',
-    content: '请选择您的社区',
-    success: function (res) {
-      if (res.confirm) {
-        // 用户点击确定按钮，处理相应的逻辑
-      } else if (res.cancel) {
-        // 用户点击取消按钮，处理相应的逻辑
-      }
-    }
-  });
-}
+
 const changeAction = (e: any) => {
   // let {
   //   index
@@ -173,7 +160,8 @@ const xuanzeMoban = (_label: any, _value: any) => {
   })
   optionIndex.value = _value
   isXiala.value = false
-
+  GlobalData.select_community = _value;
+  GlobalData.select_community_id = _value;
 }
 
 onMounted(() => {
@@ -194,6 +182,8 @@ const pickerCancel = () => {
 
 const pickerConfirm = (selectedCommunityName: any) => {
   // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
+  // console.log(`selectedCommunityName:`, selectedCommunityName);
+
   // @ts-ignore
   popup.value.close();
 
@@ -204,7 +194,8 @@ const bindChange = (e: any) => {
   console.log(`e:`, e);
 
   optionIndex.value = communityAry[e.target.value].name;
-
+  GlobalData.select_community = optionIndex.value;
+  GlobalData.select_community_id = e.target.value;
 };
 // 产业方向选择改变
 const bindIndustryDirectionPickerChange = (e: any) => {
@@ -531,4 +522,5 @@ const bindIndustryDirectionPickerChange = (e: any) => {
       cursor: pointer;
     }
   }
-}</style>
+}
+</style>

@@ -4,12 +4,13 @@ import { RequestApi } from '@/public/request';
 import { onShow } from '@dcloudio/uni-app';
 import { onMounted, ref } from 'vue';
 import MineItem from './mine-item.vue';
+import { GlobalData , UserInfo} from '@/public/common';
 
 
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
 let safeTop = ref<string>('')
-let userInfo = ref<UserInfoModel>()
+// let userInfo = ref<UserInfoModel>()
 
 const itmeAry = ref<MineItemModel[]>([
   {
@@ -25,22 +26,24 @@ const itmeAry = ref<MineItemModel[]>([
 ]);
 
 const getUserIn = () => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    console.log("userInfo = " + `${uInfo}`)
-    if (uInfo) {
-        userInfo.value = uInfo;
+    // var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+    console.log("userInfo = " + `${UserInfo}`)
+    console.log("state = " + `${UserInfo.value.state}`)
+
+    if (UserInfo) {
+        // userInfo.value = uInfo;
         var item = itmeAry.value[0];
 
-        if (userInfo.value?.state == 0) {
+        if (UserInfo.value?.state == 0) {
             item.right_title = '未认证';
             itmeAry.value[0] = item;
-        } else if (userInfo.value?.state == 1) {
+        } else if (UserInfo.value?.state == 1) {
             item.right_title = '认证中';
             itmeAry.value[0] = item;
-        } else if (userInfo.value?.state == 2) {
+        } else if (UserInfo.value?.state == 2) {
             item.right_title = '已认证';
             itmeAry.value[0] = item;
-        } else if (userInfo.value?.state == 3) {
+        } else if (UserInfo.value?.state == 3) {
             item.right_title = '认证失败';
             itmeAry.value[0] = item;
         }
@@ -56,21 +59,24 @@ async function requestUserInfoWithCode(code: string) {
     const res: any = await RequestApi.UserLogin({ "code": code })
     console.log(res)
     console.log("local_token = " + res.token)
-    uni.setStorageSync('local_token', res.token)
-    uni.setStorageSync('local_user_info', JSON.stringify(res.data));
-    userInfo.value = res.data;
+    // userInfo.value = res.data;
+    UserInfo.value = { ...UserInfo.value, ...res.data };
+    GlobalData.token = res.token;
+
+    console.log("state 1111= " + `${UserInfo.value.state}`)
+
     var item = itmeAry.value[0];
 
-    if (userInfo.value?.state == 0) {
+    if (UserInfo.value?.state == 0) {
         item.right_title = '未认证';
         itmeAry.value[0] = item;
-    } else if (userInfo.value?.state == 1) {
+    } else if (UserInfo.value?.state == 1) {
         item.right_title = '认证中';
         itmeAry.value[0] = item;
-    } else if (userInfo.value?.state == 2) {
+    } else if (UserInfo.value?.state == 2) {
         item.right_title = '已认证';
         itmeAry.value[0] = item;
-    } else if (userInfo.value?.state == 3) {
+    } else if (UserInfo.value?.state == 3) {
         item.right_title = '认证失败';
         itmeAry.value[0] = item;
     }
@@ -127,9 +133,9 @@ const handleItemClick = (itemModel: any) => {
             <!-- <image class="vip_head_icon" src="/static/mine/mine_authen1.png" /> -->
 
             <view class="header__info">
-                <text class="header__username">{{ userInfo?.username }}</text>
+                <text class="header__username">{{ UserInfo?.username }}</text>
                 <view class="header__userid-wrapper">
-                    <text class="header__userid">ID: {{ userInfo?.user_id }}</text>
+                    <text class="header__userid">ID: {{ UserInfo?.user_id }}</text>
                     <!-- <image class="header__copy-icon" @click="copyHandle()" src="/static/mine/mine_head_copy.png" /> -->
                     <view class="clickable-area" @click="copyHandle">
                         <image class="header__copy-icon" src="/static/mine/mine_head_copy.png" />

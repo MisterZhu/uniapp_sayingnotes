@@ -14,6 +14,17 @@ let userInfo = ref<UserInfoModel>()
 
 const itmeAry = <MineItemModel[]>[
     {
+        left_img: "/static/mine/mine_publish_icon.png",
+        left_title: "我的发布",
+        right_img: "/static/mine/mine-next-999.png",
+        right_title: "",
+        line_shou: true,
+        head_shou: false,
+        share_shou: false,
+        radius_type: 1,
+
+    },
+    {
         left_img: "/static/mine/mine_share2.png",
         left_title: "分享给好友",
         right_img: "/static/mine/mine-next-999.png",

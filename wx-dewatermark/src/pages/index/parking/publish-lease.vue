@@ -48,6 +48,7 @@ import type { UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
+import { GlobalData, UserInfo } from '@/public/common';
 
 
 // 基础表单数据
@@ -120,7 +121,6 @@ const seleAry3 = [
   { value: 23, text: "2900元/年" },
   { value: 24, text: "3000元/年" },
 ];
-let userInfo = ref<UserInfoModel>()
 
 const dynamicLists: any[] = [];
 
@@ -143,13 +143,7 @@ async function getUpToken(callback: () => void) {
     uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
   }
 }
-const getLocalUserInfo = () => {
-  var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-  console.log("userInfo = " + `${uInfo}`)
-  if (uInfo) {
-    userInfo.value = uInfo;
-  }
-}
+
 getUpToken(() => { })
 onLoad(options => {
   // @ts-ignore
@@ -215,12 +209,20 @@ const handleItemClick = (itemModel: any) => {
     });
     return;
   }
+
   publishLeasePosts();
 }
 // MARK: 
 async function publishLeasePosts() {
 
   try {
+    console.log("UserInfo.value.room e:", UserInfo.value.default_room);
+
+    const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
+    let loudongStr = '';
+    if (loudongAry.length > 0){
+      loudongStr = '-' + loudongAry[0] + '幢';
+    }
     const requestData = {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
@@ -231,7 +233,9 @@ async function publishLeasePosts() {
       state: 0, // Modify this based on your data structure
       annual_rent: aryText3.value,
       img_url: imageValue.value,
-      user_id: userInfo.value?.user_id ?? '',
+      user_id: UserInfo.value?.user_id,
+      community_id: UserInfo.value.community_id,
+      address: UserInfo.value.default_community + loudongStr,
       // Add other fields based on your data structure
     };
     const res: any = await RequestApi.AddPosts(requestData)

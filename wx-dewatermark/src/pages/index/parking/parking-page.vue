@@ -4,6 +4,7 @@
 import type { Analysis } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
 import { computed, ref, watch } from 'vue'
+import { GlobalData, UserInfo } from '@/public/common';
 
 import ParkLessor from "./parking-widget/park-lessor.vue";
 import ParkLender from "./parking-widget/park-renter.vue";
@@ -58,6 +59,28 @@ const selectItem = (e: any) => {
   //   title: `点击第${index}个宫格`,
   //   icon: 'none'
   // })
+  if (UserInfo.value.default_community_id != GlobalData.select_community_id) {
+    uni.showModal({
+      title: '温馨提示',
+      content: `您当前浏览社区为“${GlobalData.select_community}”，但是您认证的社区为“${UserInfo.value.default_community}”，将跳转到您所认证的社区发布页`,
+      showCancel: false, // 不展示取消按钮
+      confirmText: "知道了", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          if (index == 0) {
+            uni.navigateTo({
+              url: '/pages/index/parking/publish-lease'
+            })
+          } else {
+            uni.navigateTo({
+              url: '/pages/index/parking/publish-require'
+            })
+          }
+        }
+      }
+    });
+    return
+  }
   if (index == 0) {
     uni.navigateTo({
       url: '/pages/index/parking/publish-lease'
