@@ -12,7 +12,7 @@ const top = ref(0);
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 let userInfo = ref<UserInfoModel>()
-    let parkModel = ref<ParkItem | null>(null)
+let parkModel = ref<ParkItem | null>(null)
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
@@ -56,10 +56,10 @@ onShow(() => {
 });
 // 接收参数
 onLoad(options => {
-  // @ts-ignore
-  parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
-  console.log(`parkModel onLoad: ${parkModel.value?.title}`);
-  getLocalUserInfo();
+    // @ts-ignore
+    parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
+    console.log(`parkModel onLoad: ${parkModel.value?.title}`);
+    getLocalUserInfo();
 
 });
 
@@ -147,7 +147,7 @@ const handleSubmit = async () => {
     </view>
     <!-- 介绍 -->
     <view class="text-container">
-        <text class="left-text">{{parkModel?.title}}</text>
+        <text class="left-text">{{ parkModel?.title }}</text>
     </view>
     <!-- 价格 -->
     <view class="text-container1">
@@ -167,6 +167,13 @@ const handleSubmit = async () => {
         <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
         <text class="right-text">{{ timeDis.formatDate(parkModel?.CreatedAt ?? '') }}</text>
     </view>
+
+    <!-- 位置 -->
+    <view class="item-container">
+        <image class="addre-icon" src="/static/home/home_address_icon.png"></image>
+        <text class="addre-text">{{ parkModel?.address }}</text>
+    </view>
+    <!-- 按钮 -->
     <view class="component-footer">
         <!-- 两个按钮，右对齐 -->
         <!-- <view class="copy-btn" @click="copyHandle()">复制链接</view>
@@ -184,6 +191,25 @@ const handleSubmit = async () => {
 </template>
 
 <style lang="scss" scoped>
+
+.item-container {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px 10px 12px; /* 设置间距 */
+  }
+
+  .addre-icon {
+    width: 40rpx; /* 设置图标大小 */
+    height: 40rpx;
+    margin-left: 10rpx; /* 设置图标和文本之间的间距 */
+  }
+
+  .addre-text {
+    font-size: 14px; /* 设置文本字体大小 */
+    color: #333; /* 设置文本字体颜色 */
+    margin-left: 5rpx; /* 设置图标和文本之间的间距 */
+  }
+
 .swiper-container {
     margin-top: 0px;
     /* 上下左右各 20px 的边距 */
@@ -356,7 +382,7 @@ const handleSubmit = async () => {
 }
 
 /* 第一行文字样式 */
-.copy-btn .line1{
+.copy-btn .line1 {
     color: $uni-color-gradient1;
     /* 设置第一行文字的颜色 */
     font-size: 15px;
@@ -374,12 +400,13 @@ const handleSubmit = async () => {
 }
 
 /* 第二行文字样式 */
-.copy-btn .line2{
+.copy-btn .line2 {
     color: $uni-color-gradient1;
     /* 设置第二行文字的颜色 */
     font-size: 12px;
     /* 设置第二行文字的大小 */
 }
+
 .component-button .line2 {
     color: $uni-color-fff;
     /* 设置第二行文字的颜色 */

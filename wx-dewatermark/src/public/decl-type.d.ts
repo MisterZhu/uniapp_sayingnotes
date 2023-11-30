@@ -44,6 +44,8 @@ export interface ParkItem {
     title: string;
     img_url: string;
     annual_rent: string;
+    address: string;
+
   }
   
 // 首页第一项数据：数据解析
