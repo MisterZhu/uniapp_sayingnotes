@@ -131,7 +131,18 @@
 		{
 			"path": "pages/mine/house/select-community",
 			"style": {
-				"navigationBarTitleText": "选择社区",
+				"navigationBarTitleText": "请选择小区",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
+			"path": "pages/mine/my-publish/my-publish-page",
+			"style": {
+				"navigationBarTitleText": "我的发布",
 				"navigationBarTextStyle": "black",
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",

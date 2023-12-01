@@ -6,6 +6,7 @@ import type { UserInfoModel, MineItemModel } from '@/public/decl-type';
 import MineItem from './mine-widget/mine-item.vue';
 import MineHeader from './mine-widget/mine-header.vue';
 import { onShareAppMessage, onShow } from '@dcloudio/uni-app';
+import { GlobalData, UserInfo } from '@/public/common';
 
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
@@ -60,17 +61,29 @@ const itmeAry = <MineItemModel[]>[
 //用户信息模块
 
 
-async function requestUserInfoWithCode(code: string) {
-    const res: any = await RequestApi.UserLogin({ "code": code })
-    console.log(res)
-    console.log("local_token = " + res.token)
-    uni.setStorageSync('local_token', res.token)
-    uni.setStorageSync('local_user_info', JSON.stringify(res.data));
-    userInfo.value = res.data;
+// MARK: 仅仅获取用户信息
+async function requestUserInfo(code: string) {
+  const res: any = await RequestApi.UserLogin({ "code": code, })
+  console.log(res)
+  console.log("local_token = " + res.token)
+  uni.setStorageSync('local_token', res.token)
+  uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+  GlobalData.token = res.token;
+  //将后台返回的用户信息赋值给 UserInfo
+  UserInfo.value = { ...UserInfo.value, ...res.data };
+  console.log("UserInfo.value.state = " + UserInfo.value.state)
+}
+//获取openid
+function onlyGetUserInfo() {
+  uni.login({
+    success: (res) => {
+      requestUserInfo(res.code)
+    }
+  })
 }
 onShow(() => {
     console.log("mine Show");
-    getUserInfo()
+    onlyGetUserInfo()
 });
 onShareAppMessage(() => {
     const open_id = userInfo.value?.open_id ?? ''; // 获取userInfo的id
@@ -82,15 +95,6 @@ onShareAppMessage(() => {
     }
     return myObj;
 });
-
-//获取openid
-function getUserInfo() {
-    uni.login({
-        success: (res) => {
-            requestUserInfoWithCode(res.code)
-        }
-    })
-}
 
 onMounted(() => {
     let menu_but = uni.getStorageSync('SafeAreaInsetTop')
@@ -107,6 +111,11 @@ onMounted(() => {
 const handleItemClick = (itemModel: any) => {
     console.log('clicked item:', itemModel.left_title)
     switch (itemModel.left_title) {
+        case '我的发布':
+            uni.navigateTo({
+                url: '/pages/mine/my-publish/my-publish-page'
+            })
+            break;
         case '任务中心':
             uni.navigateTo({
                 url: '/pages/mine/task-center'

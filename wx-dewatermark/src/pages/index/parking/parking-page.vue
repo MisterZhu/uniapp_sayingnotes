@@ -53,43 +53,79 @@ const content = [{
 ]
 const selectItem = (e: any) => {
   const index = e.index;
+  console.log(UserInfo.value.state);
 
   // console.log(`dianji :`, index);
   // uni.showToast({
   //   title: `点击第${index}个宫格`,
   //   icon: 'none'
   // })
-  if (UserInfo.value.default_community_id != GlobalData.select_community_id) {
+  if (UserInfo.value.state === 0) {
     uni.showModal({
       title: '温馨提示',
-      content: `您当前浏览社区为“${GlobalData.select_community}”，但是您认证的社区为“${UserInfo.value.default_community}”，将跳转到您所认证的社区发布页`,
+      content: '您还没有进行房屋认证，为了保证发布信息的真实性，请先去申请房屋认证，通过以后才可以发布信息',
       showCancel: false, // 不展示取消按钮
-      confirmText: "知道了", // 确认按钮文字 
+      confirmText: "去认证", // 确认按钮文字 
       success: function (res) {
         if (res.confirm) {
-          if (index == 0) {
-            uni.navigateTo({
-              url: '/pages/index/parking/publish-lease'
-            })
-          } else {
-            uni.navigateTo({
-              url: '/pages/index/parking/publish-require'
-            })
-          }
+          uni.navigateTo({
+            url: '/pages/mine/house/select-community'
+          })
         }
       }
     });
-    return
-  }
-  if (index == 0) {
-    uni.navigateTo({
-      url: '/pages/index/parking/publish-lease'
-    })
+  } else if (UserInfo.value.state === 1) {
+    uni.showModal({
+      title: '温馨提示',
+      content: '您的房屋认证申请还未通过审核，您可以联系客服，催促客服快速审核',
+      // showCancel: false, // 不展示取消按钮
+      cancelText: "取消",
+      confirmText: "联系客服", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          uni.navigateTo({
+            url: '/pages/mine/help-center'
+          })
+        } else if (res.cancel) {
+
+        }
+      }
+    });
+
   } else {
-    uni.navigateTo({
-      url: '/pages/index/parking/publish-require'
-    })
+    if (UserInfo.value.default_community_id != GlobalData.select_community_id) {
+      uni.showModal({
+        title: '温馨提示',
+        content: `您当前浏览社区为“${GlobalData.select_community}”，但是您认证的社区为“${UserInfo.value.default_community}”，将跳转到您所认证的社区发布页`,
+        showCancel: false, // 不展示取消按钮
+        confirmText: "知道了", // 确认按钮文字 
+        success: function (res) {
+          if (res.confirm) {
+            if (index == 0) {
+              uni.navigateTo({
+                url: '/pages/index/parking/publish-lease'
+              })
+            } else {
+              uni.navigateTo({
+                url: '/pages/index/parking/publish-require'
+              })
+            }
+          }
+        }
+      });
+    } else {
+      if (index == 0) {
+        uni.navigateTo({
+          url: '/pages/index/parking/publish-lease'
+        })
+      } else {
+        uni.navigateTo({
+          url: '/pages/index/parking/publish-require'
+        })
+      }
+    }
   }
+
 }
 const fabClick = () => {
   // uni.showToast({

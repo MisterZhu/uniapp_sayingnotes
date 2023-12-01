@@ -71,6 +71,7 @@ async function requestUserInfoWithCode(code: string) {
 
   requestAnalyList(() => { })
 }
+
 // MARK: 社区列表
 async function requestAnalyList(callback: () => void) {
   try {
@@ -119,8 +120,29 @@ function getUserInfo() {
 }
 getUserInfo()
 
+// MARK: 仅仅获取用户信息
+async function requestUserInfo(code: string) {
+  const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
+  console.log(res)
+  console.log("local_token = " + res.token)
+  uni.setStorageSync('local_token', res.token)
+  uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+  GlobalData.token = res.token;
+  //将后台返回的用户信息赋值给 UserInfo
+  UserInfo.value = { ...UserInfo.value, ...res.data };
+  console.log("UserInfo.value.state = " + UserInfo.value.state)
+}
+//获取openid
+function onlyGetUserInfo() {
+  uni.login({
+    success: (res) => {
+      requestUserInfo(res.code)
+    }
+  })
+}
 onShow(() => {
   console.log("App Show");
+  onlyGetUserInfo();
 });
 //接收参数
 onLoad(options => {
@@ -209,7 +231,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
     <div class="popup-view">
       <div class="popup-view-header">
         <!-- <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div> -->
-        <div class="popup-view- title"> 请选择社区 </div>
+        <div class="popup-view- title"> 请选择小区 </div>
         <!-- <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div> -->
       </div>
       <picker-view v-if="isNeedSelect" :indicator-style="indicatorStyle" :value="communityAry.length" @change="bindChange"

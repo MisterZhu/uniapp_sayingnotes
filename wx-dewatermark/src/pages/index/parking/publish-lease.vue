@@ -147,7 +147,6 @@ async function getUpToken(callback: () => void) {
 getUpToken(() => { })
 onLoad(options => {
   // @ts-ignore
-  getLocalUserInfo();
 });
 const handleItemClick = (itemModel: any) => {
   if (!baseFormData.title) {
