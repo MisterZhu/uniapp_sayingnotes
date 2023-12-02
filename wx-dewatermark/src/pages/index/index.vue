@@ -131,6 +131,8 @@ async function requestUserInfo(code: string) {
   //将后台返回的用户信息赋值给 UserInfo
   UserInfo.value = { ...UserInfo.value, ...res.data };
   console.log("UserInfo.value.state = " + UserInfo.value.state)
+  console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
+
 }
 //获取openid
 function onlyGetUserInfo() {
@@ -241,8 +243,6 @@ const bindIndustryDirectionPickerChange = (e: any) => {
         </picker-view-column>
       </picker-view>
       <div class="popup-view-header">
-        <!-- <div class="popup-view-cancel" @click="pickerCancel"> 取消 </div> -->
-        <!-- <div class="popup-view- title"> 请选择社区 </div> -->
         <div class="popup-view-confirm" @click="pickerConfirm"> 完成 </div>
       </div>
     </div>
@@ -482,7 +482,12 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 
 .popup-view-confirm {
   color: $uni-color-gradient1;
+  width: 100%; /* 设置宽度为父组件的100% */
 
+  // padding-top: 5px;    /* 上方内边距为5px */
+  // padding-bottom: 5px; /* 下方内边距为5px */
+  // padding-left: 120px;  /* 左侧内边距为20px，较大 */
+  // padding-right: 120px; /* 右侧内边距为20px，较大 */
 }
 
 .popup-view {
@@ -493,7 +498,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 
   .popup-view-header {
     text-align: center;
-    width: calc(100vw - 150rpx);
+    width: calc(100vw - 100rpx);
     height: 90rpx;
     background-color: #fff;
     display: flex;

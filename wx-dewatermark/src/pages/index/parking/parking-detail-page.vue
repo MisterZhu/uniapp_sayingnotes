@@ -5,95 +5,40 @@ import { onMounted, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
 import type { ParkItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
-import { timeDis } from '@/public/common';
+import { common_url, timeDis } from '@/public/common';
+import { GlobalData, UserInfo } from '@/public/common';
+import { strAddStar } from "@/utils/string-utils";
 
 const top = ref(0);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
-let userInfo = ref<UserInfoModel>()
 let parkModel = ref<ParkItem | null>(null)
 
-let openid = uni.getStorageSync('openid')
-const inviter_openid = ref<string>('')
-const images = ["/static/home/home_head_bg.png", "/static/home/home_head_bg.png", "/static/home/home_head_bg.png"]
-
-const isXiala = ref(false)
-const jiage = ref("1000元/年")
-
-const optionIndex = ref<string>('天悦湾2号院')
-
-// MARK: 注册&获取用户信息
-async function requestUserInfoWithCode(code: string) {
-    const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
-    console.log(res)
-    console.log("local_token = " + res.token)
-    uni.setStorageSync('local_token', res.token)
-    uni.setStorageSync('local_user_info', JSON.stringify(res.data));
-    userInfo.value = res.data
-}
-const getLocalUserInfo = () => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    console.log("userInfo = " + `${uInfo}`)
-    if (uInfo) {
-        userInfo.value = uInfo;
-    }
-}
-
-//获取openid
-function getUserInfo() {
-    uni.login({
-        success: (res) => {
-            requestUserInfoWithCode(res.code)
-        }
-    })
-}
-getUserInfo()
+const images = ref<string[]>([])
 
 onShow(() => {
-    console.log("App Show");
-    getLocalUserInfo()
+    console.log("Det Show");
 });
 // 接收参数
 onLoad(options => {
     // @ts-ignore
     parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
-    console.log(`parkModel onLoad: ${parkModel.value?.title}`);
-    getLocalUserInfo();
+    console.log(`parkModel onLoad title: ${parkModel.value?.title}`);
+    console.log(`parkModel onLoad user_id: ${parkModel.value?.user_id}`);
+    console.log(`UserInfo.value.user_id: ${UserInfo.value.user_id}`);
+    console.log("UserInfo  = " + UserInfo.value.user_id)
+    let arr = [];
+    let myVar = UserInfo.value.img_url ?? common_url.home_parking_head;
+    if (myVar.includes(",")) {
+        arr = myVar.split(",");
+    } else {
+        arr = [myVar];
+    }
+    images.value = arr;
+    console.log("images  = " + images.value)
 
 });
-
-const changeAction = (e: any) => {
-    // let {
-    //   index
-    // } = e.detail
-    const index = e.detail.index;
-
-    console.log(index);
-
-    uni.showToast({
-        title: `点击第${index}个宫格`,
-        icon: 'none'
-    })
-    uni.navigateTo({
-        url: '/pages/index/parking/parking-page'
-    })
-
-}
-const selectIsXiala = (e: any) => {
-    isXiala.value = !isXiala.value
-    console.log(`dianji :`, isXiala.value);
-
-}
-const xuanzeMoban = (_label: any, _value: any) => {
-    uni.showToast({
-        title: `点击了 ${_value}`,
-        icon: 'none'
-    })
-    optionIndex.value = _value
-    isXiala.value = false
-
-}
 
 onMounted(() => {
     hidePasteBtn.value = !!inputValue.value
@@ -121,16 +66,77 @@ const copyHandle = async () => {
 
     uni.setClipboardData({
         // @ts-ignore
-        data: jiage.value,
+        data: parkModel?.wei_xin ?? '',
         success() {
             uni.showToast({
-                title: '复制成功'
+                title: `复制微信号成功：${parkModel?.value?.wei_xin ?? ''}`,
+                icon: 'none',
+                duration: 2000
             })
         }
     })
 }
+const handleDelete = async () => {
+    uni.showModal({
+        title: '温馨提示',
+        content: '确定要删除这篇帖子吗？',
+        cancelText: "取消", // 不展示取消按钮
+        confirmText: "确定", // 确认按钮文字 
+        success: function (res) {
+            if (res.confirm) {
+                deletePosts();
+            } else if (res.cancel) {
 
+            }
+        }
+    });
+
+}
+// MARK: 
+async function deletePosts() {
+    try {
+        console.log("UserInfo.value.room e:", UserInfo.value.default_room);
+
+        const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
+        let loudongStr = '';
+        if (loudongAry.length > 0) {
+            loudongStr = '-' + loudongAry[0] + '幢';
+        }
+        const requestData = {
+            id: parkModel?.value?.ID,
+            // Add other fields based on your data structure
+        };
+        const res: any = await RequestApi.DetPosts(requestData)
+        uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+
+        if (res.code === 200) {
+            // 延时一秒执行的操作
+            setTimeout(() => {
+                uni.$emit('isLessorRefresh', 1)
+                uni.$emit('isRenterRefresh', 1)
+                uni.$emit('isMyPublishRefresh', 1)
+                uni.navigateBack({
+                    delta: 1, // 返回的页面数，1 表示返回上一页
+                });
+            }, 1000);
+
+        } else {
+        }
+    } catch (error) {
+        console.error(error)
+        uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
+    }
+}
 const handleSubmit = async () => {
+    uni.makePhoneCall({
+        phoneNumber: `${parkModel?.value?.telephone ?? ''}`,
+        success: function () {
+            console.log('拨打电话成功');
+        },
+        fail: function () {
+            console.log('拨打电话失败');
+        }
+    });
 
 }
 </script>
@@ -139,9 +145,9 @@ const handleSubmit = async () => {
     <!-- 轮播图 -->
     <view class="swiper-container">
         <swiper class="custom-swiper" autoplay="true" interval="5000" circular="true" indicator-dots="true"
-            indicator-color="#ffffff" indicator-active-color="#FF6C00">
+            indicator-color="#ffffff" indicator-active-color="#FF6C00" style="height: 280px">
             <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
-                <image :src="image" class="full-width-image"></image>
+                <image :src="image" class="full-width-image" mode="aspectFill"></image>
             </swiper-item>
         </swiper>
     </view>
@@ -151,7 +157,7 @@ const handleSubmit = async () => {
     </view>
     <!-- 价格 -->
     <view class="text-container1">
-        <rich-text :nodes="generateRichTextContent(jiage)"></rich-text>
+        <rich-text :nodes="generateRichTextContent(parkModel?.annual_rent ?? '')"></rich-text>
     </view>
     <!-- 标签 -->
     <view class="custom-view">
@@ -174,41 +180,58 @@ const handleSubmit = async () => {
         <text class="addre-text">{{ parkModel?.address }}</text>
     </view>
     <!-- 按钮 -->
-    <view class="component-footer">
-        <!-- 两个按钮，右对齐 -->
-        <!-- <view class="copy-btn" @click="copyHandle()">复制链接</view>
-        <view class="component-button" @click="handleSubmit()">重新解析</view> -->
-        <view class="copy-btn" @click="copyHandle()">
-            <span class="line1">Mister***zhu</span>
+    <view v-if="(parkModel?.user_id ?? '') === UserInfo.user_id" class="component-footer">
+        <!-- 判断是否为当前用户 -->
+        <view class="delete-btn" @click="handleDelete">
+            删除
+        </view>
+    </view>
+    <view v-else-if="(parkModel?.user_id ?? '') !== UserInfo.user_id && parkModel?.wei_xin" class="component-footer">
+        <!-- copy-btn 按钮 -->
+        <view class="copy-btn" @click="copyHandle">
+            <span class="line1">{{ strAddStar(parkModel?.wei_xin ?? '') }}</span>
             <span class="line2">复制微信号</span>
         </view>
-
-        <view class="component-button" @click="handleSubmit()">
-            <span class="line1">186****8871</span>
+        <!-- component-button 按钮 -->
+        <view class="component-button" @click="handleSubmit">
+            <span class="line1">{{ strAddStar(parkModel?.telephone ?? '') }}</span>
+            <span class="line2">拨打手机号</span>
+        </view>
+    </view>
+    <view v-else class="component-footer">
+        <!-- 默认情况下展示 component-button 按钮 -->
+        <view class="component-button" @click="handleSubmit">
+            <span class="line1">{{ strAddStar(parkModel?.telephone ?? '') }}</span>
             <span class="line2">拨打手机号</span>
         </view>
     </view>
 </template>
 
 <style lang="scss" scoped>
-
+/* 样式部分 */
 .item-container {
     display: flex;
     align-items: center;
-    padding: 20px 10px 10px 12px; /* 设置间距 */
-  }
+    padding: 20px 10px 10px 12px;
+    /* 设置间距 */
+}
 
-  .addre-icon {
-    width: 40rpx; /* 设置图标大小 */
+.addre-icon {
+    width: 40rpx;
+    /* 设置图标大小 */
     height: 40rpx;
-    margin-left: 10rpx; /* 设置图标和文本之间的间距 */
-  }
+    margin-left: 10rpx;
+    /* 设置图标和文本之间的间距 */
+}
 
-  .addre-text {
-    font-size: 14px; /* 设置文本字体大小 */
-    color: #333; /* 设置文本字体颜色 */
-    margin-left: 5rpx; /* 设置图标和文本之间的间距 */
-  }
+.addre-text {
+    font-size: 14px;
+    /* 设置文本字体大小 */
+    color: #333;
+    /* 设置文本字体颜色 */
+    margin-left: 5rpx;
+    /* 设置图标和文本之间的间距 */
+}
 
 .swiper-container {
     margin-top: 0px;
@@ -222,9 +245,17 @@ const handleSubmit = async () => {
 .full-width-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
 
+// ::v-deep .full-width-image {
+// 	height: 100%;
+// 	width: 100%;
+// 	img {
+// 		height: 100%;
+// 		width: 100%;
+// 		object-fit: contain;
+// 	}
+// }
 .text-container {
     margin: 18px 20px 10px 20px;
 }
@@ -319,31 +350,21 @@ const handleSubmit = async () => {
 .copy-btn {
     flex: 1;
     /* 让两个按钮平分剩余的宽度 */
-    padding: 5px 10px;
+    padding: 10px 10px;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
 }
 
-// .component-button {
-//     margin-left: 10px; /* 设置按钮之间的间距 */
-//     background-color: $uni-color-theme;
-//     color: $uni-color-fff;
-// }
-
-// .copy-btn {
-//     margin-right: 10px; /* 设置按钮之间的间距 */
-//     background-color: $uni-color-f8f;
-//     color: $uni-color-333;
-//     border: 1px solid $uni-color-ccc;
-// }
 /* 按钮样式 */
 .component-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    /* 居中对齐 */
     padding: 18px;
 }
 
+.delete-btn,
 .copy-btn,
 .component-button {
     display: flex;
@@ -353,27 +374,37 @@ const handleSubmit = async () => {
     cursor: pointer;
 }
 
+.delete-btn {
+    /* 根据实际需求调整样式 */
+    flex: 1;
+    height: 40px;
+    padding-top: 16px;
+    background-color: red;
+    color: white;
+    border: 1px solid $uni-color-gradient1;
+    border-radius: 8px;
+
+}
+
 .copy-btn {
     flex: 1;
-    margin-right: 8px;
+    margin-right: 12px;
     /* 设置按钮之间的间距 */
     background-color: $uni-color-f8f;
     color: $uni-color-333;
     border: 1px solid $uni-color-gradient1;
-
-
 }
 
 .component-button {
     flex: 1;
-    margin-left: 8px;
+    // margin-left: 8px;
     /* 设置按钮之间的间距 */
     background-color: $uni-color-gradient1;
     color: $uni-color-fff;
 }
 
 /* 文字样式 */
-.copy-btn span,
+.delete-btn .copy-btn span,
 .component-button span {
     font-size: 14px;
     color: $uni-color-333;
@@ -382,35 +413,15 @@ const handleSubmit = async () => {
 }
 
 /* 第一行文字样式 */
-.copy-btn .line1 {
-    color: $uni-color-gradient1;
-    /* 设置第一行文字的颜色 */
-    font-size: 15px;
-    /* 设置第一行文字的大小 */
-    font-weight: 500;
-
-}
-
+.copy-btn .line1,
 .component-button .line1 {
-    color: $uni-color-fff;
-    /* 设置第一行文字的颜色 */
     font-size: 15px;
     font-weight: 500;
-    /* 设置第一行文字的大小 */
 }
 
 /* 第二行文字样式 */
-.copy-btn .line2 {
-    color: $uni-color-gradient1;
-    /* 设置第二行文字的颜色 */
-    font-size: 12px;
-    /* 设置第二行文字的大小 */
-}
-
+.copy-btn .line2,
 .component-button .line2 {
-    color: $uni-color-fff;
-    /* 设置第二行文字的颜色 */
     font-size: 12px;
-    /* 设置第二行文字的大小 */
 }
 </style>

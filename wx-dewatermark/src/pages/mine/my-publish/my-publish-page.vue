@@ -19,8 +19,8 @@ let page = 0
 onShow(() => {
   let that = this
   // 移除之前的事件监听器
-  uni.$off('isLessorRefresh');
-  uni.$on('isLessorRefresh', function (data) {
+  uni.$off('isMyPublishRefresh');
+  uni.$on('isMyPublishRefresh', function (data) {
     console.log('3监听到事件来自返回的参数：' + data);
     if (data === 1){
       console.log('3 requestPostsList' + data);

@@ -219,7 +219,7 @@ async function publishLeasePosts() {
 
     const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
     let loudongStr = '';
-    if (loudongAry.length > 0){
+    if (loudongAry.length > 0) {
       loudongStr = '-' + loudongAry[0] + '幢';
     }
     const requestData = {
@@ -238,14 +238,19 @@ async function publishLeasePosts() {
       // Add other fields based on your data structure
     };
     const res: any = await RequestApi.AddPosts(requestData)
+    uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
 
     if (res.code === 200) {
-      uni.$emit('isLessorRefresh', 1)
-      uni.navigateBack({
-        delta: 1, // 返回的页面数，1 表示返回上一页
-      });
+      // 延时一秒执行的操作
+      setTimeout(() => {
+        // 在这里写需要延时执行的代码
+        uni.$emit('isLessorRefresh', 1)
+        uni.navigateBack({
+          delta: 1, // 返回的页面数，1 表示返回上一页
+        });
+      }, 1000);
+
     } else {
-      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
     }
   } catch (error) {
     console.error(error)

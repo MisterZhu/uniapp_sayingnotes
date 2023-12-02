@@ -125,6 +125,11 @@ const RequestApi = {
     //删除小区
     DetCommunity:(data:any)=>request('/community/det','POST',data),
 
+
+    /*------------------------  v3 小程序建议反馈API  ------------------------------*/
+    //新增反馈
+    AddFeedback:(data:any)=>request('/feedback/add','POST',data),
+
     /*------------------------  v3 业主认证API  ------------------------------*/
     //申请认证列表
     ApplyList:(data:any)=>request('/user/apply_list','POST',data),

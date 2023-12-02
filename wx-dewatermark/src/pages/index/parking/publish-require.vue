@@ -1,52 +1,52 @@
 <template>
-    <view class="container">
-      <uni-card :is-shadow="false" is-full>
-        <view class="example-body">
-          <text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
-        </view>
-      </uni-card>
-      <uni-card :is-shadow="false">
-        <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.title"
-          placeholder="请简单描述自己的需求（例如：需要几号楼下哪个区的车位）" />
-        
-      </uni-card>
-      <view class="example">
-        <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
-  
-          <uni-forms-item label="车位租金预算" required>
-            <uni-data-select v-model="aryIndex3" :localdata="seleAry3" @change="rentChange" :clear="false"
-              placeholder="请选择"></uni-data-select>
-          </uni-forms-item>
-
-          <uni-forms-item label="是否含管理费" required>
-            <uni-data-checkbox v-model="aryIndex1" :localdata="seleAry1" @change="maintenanceChange" />
-          </uni-forms-item>
-
-          <uni-forms-item label="手机号" required>
-            <uni-easyinput v-model="baseFormData.telephone" placeholder="请输入联系方式" />
-          </uni-forms-item>
-  
-          <uni-forms-item label="微信号">
-            <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让出租车位的邻居加微信联系" />
-          </uni-forms-item>
-  
-
-  
-        </uni-forms>
+  <view class="container">
+    <uni-card :is-shadow="false" is-full>
+      <view class="example-body">
+        <text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
       </view>
+    </uni-card>
+    <uni-card :is-shadow="false">
+      <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.title"
+        placeholder="请简单描述自己的需求（例如：需要几号楼下哪个区的车位）" />
+
+    </uni-card>
+    <view class="example">
+      <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
+
+        <uni-forms-item label="车位租金预算" required>
+          <uni-data-select v-model="aryIndex3" :localdata="seleAry3" @change="rentChange" :clear="false"
+            placeholder="请选择"></uni-data-select>
+        </uni-forms-item>
+
+        <uni-forms-item label="是否含管理费" required>
+          <uni-data-checkbox v-model="aryIndex1" :localdata="seleAry1" @change="maintenanceChange" />
+        </uni-forms-item>
+
+        <uni-forms-item label="手机号" required>
+          <uni-easyinput v-model="baseFormData.telephone" placeholder="请输入联系方式" />
+        </uni-forms-item>
+
+        <uni-forms-item label="微信号">
+          <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让出租车位的邻居加微信联系" />
+        </uni-forms-item>
+
+
+
+      </uni-forms>
     </view>
-    <button class="server-btn" @click="handleItemClick">发布</button>
-    <view class="divider"></view>
-  </template>
+  </view>
+  <button class="server-btn" @click="handleItemClick">发布</button>
+  <view class="divider"></view>
+</template>
   
   
-  <script setup lang="ts">
-  import type { UserInfoModel } from '@/public/decl-type';
+<script setup lang="ts">
+import type { UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
-  import { computed, ref } from 'vue';
-  
- // 基础表单数据
+import { computed, ref } from 'vue';
+
+// 基础表单数据
 let baseFormData = {
   title: '', // 
   telephone: '', // 联系方式，对应后端的 Telephone
@@ -104,23 +104,23 @@ const seleAry3 = [
 let userInfo = ref<UserInfoModel>()
 
 const dynamicLists: any[] = [];
-  let dynamicRules = {
-    email: {
-      rules: [{
-        required: true,
-        errorMessage: '域名不能为空'
-      }, {
-        format: 'email',
-        errorMessage: '域名格式错误'
-      }]
-    }
-  };
-  onLoad(options => {
-    // @ts-ignore
-    getLocalUserInfo();
+let dynamicRules = {
+  email: {
+    rules: [{
+      required: true,
+      errorMessage: '域名不能为空'
+    }, {
+      format: 'email',
+      errorMessage: '域名格式错误'
+    }]
+  }
+};
+onLoad(options => {
+  // @ts-ignore
+  getLocalUserInfo();
 
-  });
-  const getLocalUserInfo = () => {
+});
+const getLocalUserInfo = () => {
   var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
   console.log("userInfo = " + `${uInfo}`)
   if (uInfo) {
@@ -189,14 +189,19 @@ async function publishLeasePosts() {
       // Add other fields based on your data structure
     };
     const res: any = await RequestApi.AddPosts(requestData)
+    uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
 
     if (res.code === 200) {
-      uni.$emit('isRenterRefresh', 1)
-      uni.navigateBack({
-        delta: 1, // 返回的页面数，1 表示返回上一页
-      });
+      // 延时一秒执行的操作
+      setTimeout(() => {
+        // 在这里写需要延时执行的代码
+        uni.$emit('isRenterRefresh', 1)
+        uni.navigateBack({
+          delta: 1, // 返回的页面数，1 表示返回上一页
+        });
+      }, 1000);
+
     } else {
-      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
     }
   } catch (error) {
     console.error(error)
@@ -224,79 +229,80 @@ const maintenanceChange = (e: any) => {
 </script>
 
   
-  <style lang="scss">
-  .example-body{
-    margin: 0px 10px;
-  }
-  /* 设置 uni-easyinput 的字体大小 */
-  .uni-easyinput {
-    font-size: 24px;
-    color: red;
-  }
-  
-  .uni-h6 {
-    font-size: 14px;
-    color: #FF6C00;
-  
-  }
-  
-  .divider {
-    width: 100%;
-    /* 横向分割线 */
-    height: 50px;
-    /* 分割线的高度 */
-    background-color: transparent;
-    /* 分割线的颜色 */
-    margin-top: 0px;
-    /* 分割线与上方元素的间隔 */
-  }
-  
-  .server-btn {
-    display: flex;
-    justify-content: center;
-    height: 40px;
-    line-height: 40px;
-    /* 等于按钮高度 */
-    background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
-    color: $uni-color-fff;
-    font-size: 16px;
-    border-radius: 5px;
-    margin-right: 22px;
-    margin-left: 22px;
-    margin-top: 32px;
-  }
-  
-  .custom-margin {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  
-  .example {
-    padding: 15px;
-    background-color: #fff;
-  }
-  
-  .segmented-control {
-    margin-bottom: 12px;
-  }
-  
-  .button-group {
-    margin-top: 12px;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .form-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .button {
-    display: flex;
-    align-items: center;
-    height: 35px;
-    margin-left: 12px;
-  }
-  </style>
+<style lang="scss">
+.example-body {
+  margin: 0px 10px;
+}
+
+/* 设置 uni-easyinput 的字体大小 */
+.uni-easyinput {
+  font-size: 24px;
+  color: red;
+}
+
+.uni-h6 {
+  font-size: 14px;
+  color: #FF6C00;
+
+}
+
+.divider {
+  width: 100%;
+  /* 横向分割线 */
+  height: 50px;
+  /* 分割线的高度 */
+  background-color: transparent;
+  /* 分割线的颜色 */
+  margin-top: 0px;
+  /* 分割线与上方元素的间隔 */
+}
+
+.server-btn {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  line-height: 40px;
+  /* 等于按钮高度 */
+  background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
+  color: $uni-color-fff;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 22px;
+  margin-left: 22px;
+  margin-top: 32px;
+}
+
+.custom-margin {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.example {
+  padding: 15px;
+  background-color: #fff;
+}
+
+.segmented-control {
+  margin-bottom: 12px;
+}
+
+.button-group {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  margin-left: 12px;
+}
+</style>
   
   

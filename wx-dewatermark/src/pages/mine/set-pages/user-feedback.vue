@@ -1,12 +1,48 @@
 <script lang="ts" setup>
+import { RequestApi } from '@/public/request';
 import { ref } from 'vue';
+import { GlobalData, UserInfo } from '@/public/common';
 
 let feedback = ref<string>('')
 
 const submitFeedback = () => {
-  console.log('点击事件')
-  uni.showToast({ title: '提交成功', duration: 2000 })
 
+
+  if (!feedback.value) {
+    uni.showToast({
+      title: '请输入建议和反馈内容',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
+  publishFeedback();
+
+
+}
+async function publishFeedback() {
+  try {
+    const requestData = {
+      content: feedback.value,
+      user_id: UserInfo.value?.user_id,
+    };
+    const res: any = await RequestApi.AddFeedback(requestData)
+    uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+    if (res.code === 200) {
+      // 延时一秒执行的操作
+      setTimeout(() => {
+        // 在这里写需要延时执行的代码
+        uni.navigateBack({
+          delta: 1, // 返回的页面数，1 表示返回上一页
+        });
+      }, 1000);
+
+    } else {
+    }
+  } catch (error) {
+    console.error(error)
+    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
+  }
 }
 </script>
 
@@ -34,10 +70,12 @@ const submitFeedback = () => {
   margin: 0;
   padding: 0;
 }
+
 form {
   margin: 0;
   padding: 0;
 }
+
 .form-group {
   flex: 1;
   width: 100%;
@@ -69,7 +107,9 @@ textarea {
   font-size: 16px;
   cursor: pointer;
 }
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
 }

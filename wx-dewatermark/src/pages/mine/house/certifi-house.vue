@@ -130,14 +130,19 @@ async function publishLeasePosts() {
       user_id: userInfo.value?.user_id ?? '',
     };
     const res: any = await RequestApi.AddApply(requestData)
+    uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
 
     if (res.code === 200) {
-      uni.$emit('isMyHouseRefresh', 1)
-      uni.navigateBack({
-        delta: 2, // 返回的页面数，1 表示返回上一页
-      });
+      // 延时一秒执行的操作
+      setTimeout(() => {
+        // 在这里写需要延时执行的代码
+        uni.$emit('isMyHouseRefresh', 1)
+        uni.navigateBack({
+          delta: 2, // 返回的页面数，1 表示返回上一页
+        });
+      }, 1000);
+
     } else {
-      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
     }
   } catch (error) {
     console.error(error)
