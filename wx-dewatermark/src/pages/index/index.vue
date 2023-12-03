@@ -17,19 +17,19 @@ const inviter_openid = ref<string>('')
 const images = ["/static/home/home_head_bg.png", "/static/home/home_head_bg.png", "/static/home/home_head_bg.png"]
 const list = [
   {
-    url: '/static/home/home_carport_icon6.png',
+    url: '/static/home/home_lessor_icon1.png',
     text: '车位出租',
     badge: '1',
     type: "success"
   },
   {
-    url: '/static/home/home_carport_icon5.png',
+    url: '/static/home/home_sale_icon1.png',
     text: '车位买卖',
     badge: '2',
     type: "warning"
   },
   {
-    url: '/static/home/home_sale_icon1.png',
+    url: '/static/home/home_used_icon1.png',
     text: '卖闲置',
     badge: '3',
     type: "warning"
@@ -312,8 +312,8 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 }
 
 .grid-item-box image {
-  width: 70rpx;
-  height: 70rpx;
+  width: 105rpx;
+  height: 105rpx;
 }
 
 .text {

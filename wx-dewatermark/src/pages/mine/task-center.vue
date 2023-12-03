@@ -45,7 +45,7 @@ var rewardAry = [2, 2, 3, 3, 5, 5, 7]
 // MARK: 签到
 async function requestSignIn() {
   try {
-    const res: any = await RequestApi.SignIn({ "sigin_count": userInfo.value?.sigin_count, "sigin_reward": userInfo.value?.sigin_reward })
+    const res: any = await RequestApi.SignIn({ "sigin_count": userInfo.value?.state, "sigin_reward": userInfo.value?.state })
     console.log(res)
     if (res.code === 200) {
       userInfo.value = res.data
@@ -85,7 +85,7 @@ const handleSignIn = () => {
 
 }
 const isSigned = computed(() => {
-  const createdAt = new Date(userInfo.value?.sigin_time ?? '2023-04-05T19:42:03+08:00');
+  const createdAt = new Date(userInfo.value?.created_at ?? '2023-04-05T19:42:03+08:00');
   if (isToday(createdAt)) {
     console.log('是同一天')
 
@@ -97,21 +97,22 @@ const isSigned = computed(() => {
   }
 })
 const active = computed(() => {
-  // 将 created_at 字段转换为日期对象
-  const createdAt = new Date(userInfo.value?.sigin_time ?? '2023-04-05T19:42:03+08:00');
+  // // 将 created_at 字段转换为日期对象
+  // const createdAt = new Date(userInfo.value?.sigin_time ?? '2023-04-05T19:42:03+08:00');
 
-  // 判断日期是否是今天
-  if (isToday(createdAt)) {
-    console.log('今天');
-    return userInfo.value?.sigin_count - 1
-    // 判断日期是否是昨天
-  } else if (isYesterday(createdAt)) {
-    console.log('昨天');
-    return userInfo.value?.sigin_count
-  } else {
-    console.log('断签');
-    return userInfo.value?.sigin_count
-  }
+  // // 判断日期是否是今天
+  // if (isToday(createdAt)) {
+  //   console.log('今天');
+  //   return userInfo.value?.sigin_count - 1
+  //   // 判断日期是否是昨天
+  // } else if (isYesterday(createdAt)) {
+  //   console.log('昨天');
+  //   return userInfo.value?.sigin_count
+  // } else {
+  //   console.log('断签');
+  //   return userInfo.value?.sigin_count
+  // }
+  return 0;
 })
 const handleItemClick = (itemModel: any) => {
   console.log('clicked item:', itemModel.left_title)
@@ -133,10 +134,10 @@ onShareAppMessage(() => {
     <view class="header">
       <view class="header__left">
         <view class="header__info">
-          <text class="header__username">已连续签到{{ userInfo?.sigin_count }}天</text>
+          <text class="header__username">已连续签到{{ userInfo?.state }}天</text>
           <text class="header__userid">
-            {{ isSigned ? `今日已签到\n明日继续签到可领取 ${rewardAry[userInfo?.sigin_count + 1]} 次解析次数` : `今日签到可以领取
-            ${userInfo?.sigin_reward} 次解析次数` }}
+            {{ isSigned ? `今日已签到\n明日继续签到可领取 ${rewardAry[userInfo?.state + 1]} 次解析次数` : `今日签到可以领取
+            ${userInfo?.state} 次解析次数` }}
           </text>
         </view>
       </view>
