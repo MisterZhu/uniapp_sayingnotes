@@ -6,6 +6,7 @@ import { isToday, isYesterday } from "@/utils/time-utils";
 import { RequestApi } from '@/public/request';
 import { onShareAppMessage } from '@dcloudio/uni-app';
 import HelpItem from "./help-widget/help-item.vue";
+import { common_key } from '@/public/common';
 
 let userInfo = ref<UserInfoModel>()
 
@@ -49,8 +50,9 @@ async function requestSignIn() {
     console.log(res)
     if (res.code === 200) {
       userInfo.value = res.data
-      uni.setStorageSync('local_token', res.token)
-      uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+      uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+      uni.setStorageSync(common_key.k_local_token, res.token)
+      uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
       uni.showToast({ title: res.msg, duration: 2000 })
 
     } else {
@@ -175,16 +177,18 @@ onShareAppMessage(() => {
   opacity: 0;
   cursor: pointer;
 }
+
 // .HelpItem{
 //   width: 95vw;
 // }
-.share_friend{
+.share_friend {
   display: flex;
   align-items: center;
   position: relative;
   margin-top: 150px;
 
 }
+
 .header {
   display: flex;
   justify-content: space-between;

@@ -4,8 +4,8 @@
 import { onMounted, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
 import type { ParkItem, UserInfoModel } from '@/public/decl-type';
-import { onLoad, onShow } from '@dcloudio/uni-app';
-import { common_url, timeDis } from '@/public/common';
+import { onLoad, onShareAppMessage, onShow } from '@dcloudio/uni-app';
+import { common_key, common_url, timeDis } from '@/public/common';
 import { GlobalData, UserInfo } from '@/public/common';
 import { strAddStar } from "@/utils/string-utils";
 
@@ -14,6 +14,7 @@ const top = ref(0);
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 let parkModel = ref<ParkItem | null>(null)
+const inviter_detailid = ref<string>('')
 
 const images = ref<string[]>([])
 
@@ -22,24 +23,76 @@ onShow(() => {
 });
 // 接收参数
 onLoad(options => {
-    // @ts-ignore
-    parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
-    console.log(`parkModel onLoad title: ${parkModel.value?.title}`);
-    console.log(`parkModel onLoad user_id: ${parkModel.value?.user_id}`);
-    console.log(`UserInfo.value.user_id: ${UserInfo.value.user_id}`);
-    console.log("UserInfo  = " + UserInfo.value.user_id)
-    let arr = [];
-    let myVar = UserInfo.value.img_url ?? common_url.home_parking_head;
-    if (myVar.includes(",")) {
-        arr = myVar.split(",");
-    } else {
-        arr = [myVar];
+    if (options) {
+        if ((options.detail_id ?? '').trim().length === 0) {
+            // @ts-ignore
+            parkModel.value = JSON.parse(decodeURIComponent(options.parkModel as string)) as CommunityItem
+            console.log(`parkModel onLoad title: ${parkModel.value?.title}`);
+            console.log(`parkModel onLoad user_id: ${parkModel.value?.user_id}`);
+            console.log(`UserInfo.value.user_id: ${UserInfo.value.user_id}`);
+            console.log("UserInfo  = " + UserInfo.value.user_id)
+            let arr = [];
+            let myVar = UserInfo.value.img_url ?? common_url.home_parking_head;
+            if (myVar.includes(",")) {
+                arr = myVar.split(",");
+            } else {
+                arr = [myVar];
+            }
+            images.value = arr;
+            console.log("images  = " + images.value)
+        }else{
+            inviter_detailid.value = options.detail_id
+            onlyGetUserInfo();
+        }
+        // 处理逻辑
+        // console.log(`index onLoad:`, options);
+        // inviter_openid.value = options.open_id
     }
-    images.value = arr;
-    console.log("images  = " + images.value)
-
 });
-
+// MARK: 仅仅获取用户信息
+async function requestUserInfo(code: string) {
+  const res: any = await RequestApi.UserLogin({ "code": code })
+  console.log(res)
+  console.log("local_token = " + res.token)
+  uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+  uni.setStorageSync(common_key.k_local_token, res.token)
+  uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
+  GlobalData.token = res.token;
+  //将后台返回的用户信息赋值给 UserInfo
+  UserInfo.value = { ...UserInfo.value, ...res.data };
+  console.log("UserInfo.value.state = " + UserInfo.value.state)
+  console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
+  requestPostsDet(() => {
+        // TODO 下面执行刷新的方法
+      });
+}
+//获取openid
+function onlyGetUserInfo() {
+  uni.login({
+    success: (res) => {
+      requestUserInfo(res.code)
+    }
+  })
+}
+// MARK: 帖子详情
+async function requestPostsDet(callback: () => void) {
+  console.log('----------222--------');
+  try {
+    const res: any = await RequestApi.DetailPosts({ "id": inviter_detailid.value })
+    if (typeof callback === 'function') {
+      callback();
+    }
+    if (res.code === 200) {
+        parkModel.value = res.data
+    } else {
+      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+    }
+  } catch (error) {
+    callback && callback()
+    console.error(error)
+    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
+  }
+}
 onMounted(() => {
     hidePasteBtn.value = !!inputValue.value
 
@@ -139,6 +192,16 @@ const handleSubmit = async () => {
     });
 
 }
+onShareAppMessage(() => {
+    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+    const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
+    let myObj = {
+        title: `${parkModel?.value?.title ?? ''}`,
+        path: "pages/index/parking/parking-detail-page?detail_id=" + open_id,
+        imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
+    }
+    return myObj;
+});
 </script>
 
 <template>
@@ -179,13 +242,14 @@ const handleSubmit = async () => {
         <image class="addre-icon" src="/static/home/home_address_icon.png"></image>
         <text class="addre-text">{{ parkModel?.address }}</text>
     </view>
-    <!-- 按钮 -->
+    <!-- 删除按钮 -->
     <view v-if="(parkModel?.user_id ?? '') === UserInfo.user_id" class="component-footer">
         <!-- 判断是否为当前用户 -->
         <view class="delete-btn" @click="handleDelete">
             删除
         </view>
     </view>
+
     <view v-else-if="(parkModel?.user_id ?? '') !== UserInfo.user_id && parkModel?.wei_xin" class="component-footer">
         <!-- copy-btn 按钮 -->
         <view class="copy-btn" @click="copyHandle">
@@ -203,6 +267,13 @@ const handleSubmit = async () => {
         <view class="component-button" @click="handleSubmit">
             <span class="line1">{{ strAddStar(parkModel?.telephone ?? '') }}</span>
             <span class="line2">拨打手机号</span>
+        </view>
+    </view>
+    <!-- 分享 -->
+    <view class="component-footer">
+        <!-- 判断是否为当前用户 -->
+        <view class="share-btn" @click="handleDelete">
+            分享到微信群/好友
         </view>
     </view>
 </template>
@@ -364,7 +435,7 @@ const handleSubmit = async () => {
     padding: 18px;
 }
 
-.delete-btn,
+.share-btn .delete-btn,
 .copy-btn,
 .component-button {
     display: flex;
@@ -382,6 +453,17 @@ const handleSubmit = async () => {
     background-color: red;
     color: white;
     border: 1px solid $uni-color-gradient1;
+    border-radius: 8px;
+
+}
+
+.share-btn {
+    /* 根据实际需求调整样式 */
+    flex: 1;
+    height: 40px;
+    padding-top: 16px;
+    background-color: $uni-color-gradient1;
+    color: white;
     border-radius: 8px;
 
 }

@@ -62,6 +62,10 @@
         "setting" : {
             "urlCheck" : false
         },
+        "share": {
+            "title": "分享标题",
+            "imageUrl": "/static/share.png"
+          },      
         "usingComponents" : true
     },
     "mp-alipay" : {

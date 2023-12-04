@@ -90,7 +90,7 @@ watch(
       ></communityItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无解析记录~</text>
+    <text class="center-text">暂无小区数据~</text>
   </view>
 </template>
 

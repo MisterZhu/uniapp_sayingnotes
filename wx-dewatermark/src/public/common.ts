@@ -11,6 +11,7 @@ export const common_url = {
 export const common_key = {
     k_local_token: 'local_token',
     k_local_user_info: 'local_user_info',
+    k_local_open_id: 'local_open_id',
     k_DefaultCommunityId: 'DefaultCommunityId',
     k_DefaultCommunityName: 'DefaultCommunityName',
 } as const;

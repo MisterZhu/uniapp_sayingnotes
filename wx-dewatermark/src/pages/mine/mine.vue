@@ -6,7 +6,7 @@ import type { UserInfoModel, MineItemModel } from '@/public/decl-type';
 import MineItem from './mine-widget/mine-item.vue';
 import MineHeader from './mine-widget/mine-header.vue';
 import { onShareAppMessage, onShow } from '@dcloudio/uni-app';
-import { GlobalData, UserInfo } from '@/public/common';
+import { GlobalData, UserInfo, common_key } from '@/public/common';
 
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
@@ -66,8 +66,9 @@ async function requestUserInfo(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, })
   console.log(res)
   console.log("local_token = " + res.token)
-  uni.setStorageSync('local_token', res.token)
-  uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+  uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+  uni.setStorageSync(common_key.k_local_token, res.token)
+  uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
   GlobalData.token = res.token;
   //将后台返回的用户信息赋值给 UserInfo
   UserInfo.value = { ...UserInfo.value, ...res.data };

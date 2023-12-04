@@ -16,16 +16,16 @@ const handleClick = () => {
   emits('click', props.itemModel)
 }
 
-onShareAppMessage(() => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
-    let myObj = {
-        title: `来自好友的邀请`,
-        path: "/pages/index/index?open_id=" + open_id,
-        imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
-    }
-    return myObj;
-});
+// onShareAppMessage(() => {
+//     var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+//     const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
+//     let myObj = {
+//         title: `来自好友的邀请`,
+//         path: "/pages/index/index?open_id=" + open_id,
+//         imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
+//     }
+//     return myObj;
+// });
 
 
 // const handleClick = () => {

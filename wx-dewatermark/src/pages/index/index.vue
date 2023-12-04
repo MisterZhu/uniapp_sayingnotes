@@ -5,7 +5,7 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
 import type { Analysis, CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
-import { GlobalData, UserInfo } from '@/public/common';
+import { common_key, GlobalData, UserInfo } from '@/public/common';
 
 const top = ref(0);
 
@@ -60,8 +60,9 @@ async function requestUserInfoWithCode(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
   console.log(res)
   console.log("local_token = " + res.token)
-  uni.setStorageSync('local_token', res.token)
-  uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+  uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+  uni.setStorageSync(common_key.k_local_token, res.token)
+  uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
 
   GlobalData.token = res.token;
   //将后台返回的用户信息赋值给 UserInfo
@@ -125,8 +126,9 @@ async function requestUserInfo(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
   console.log(res)
   console.log("local_token = " + res.token)
-  uni.setStorageSync('local_token', res.token)
-  uni.setStorageSync('local_user_info', JSON.stringify(res.data));
+  uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+  uni.setStorageSync(common_key.k_local_token, res.token)
+  uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
   GlobalData.token = res.token;
   //将后台返回的用户信息赋值给 UserInfo
   UserInfo.value = { ...UserInfo.value, ...res.data };
@@ -225,6 +227,7 @@ const bindChange = (e: any) => {
 const bindIndustryDirectionPickerChange = (e: any) => {
   // 可以在这里添加其他逻辑
 };
+
 </script>
 
 <template>
