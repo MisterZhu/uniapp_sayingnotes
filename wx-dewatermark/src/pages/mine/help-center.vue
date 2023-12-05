@@ -5,7 +5,7 @@
     </view>
     <button class="server-btn" open-type="contact" :bindcontact="handleContact">联系客服</button>
     <view class="title_bg">
-      <p class="right_title">客服在线时间：工作日 9:00-12:00 13:00-18:00</p>
+      <p class="right_title">客服在线时间：工作日 9:00-12:00 13:30-18:00 周末有时也在线</p>
     </view>
 
 
@@ -19,9 +19,9 @@ import { onMounted, ref } from "vue";
 const itmeAry = ref<MineItemModel[]>([
   {
     left_img: "/static/mine/mine-up-999.png",
-    left_title: "如何复制视频链接？",
+    left_title: "如何发布帖子？",
     right_img: "/static/mine/mine-down-999.png",
-    right_title: "在视频或图集来源的APP中点击该视频或图集的分享，在分享选项里找到“复制链接”并点击，然后回到全站去水印小程序，点击粘贴按钮，再点击解析即可",
+    right_title: "首先你需要在首页，点击左上角的小区，切换到自己的小区，然后再点击自己需要的功能（例如车位出租），点击右下角悬浮按钮发布，发布之前需要先进行业主身份认证，提交认证信息以后，管理员会在24小时内进行审核，如果着急，可以直接联系客服，给客服发消息，进行加急处理",
     line_shou: true,
     head_shou: false,
     share_shou: false,
@@ -30,9 +30,9 @@ const itmeAry = ref<MineItemModel[]>([
   },
   {
     left_img: "/static/mine/mine-up-999.png",
-    left_title: "提示提取失败怎么办？",
+    left_title: "如果无法使用，或者出现问题怎么办？",
     right_img: "/static/mine/mine-down-999.png",
-    right_title: "请检查链接是否有效？可以把链接粘贴到浏览器尝试打开，若浏览器中无法正常打开播放，则该链接是无效的。如果浏览器能打开，请看解析次数是否大于0。如果解析次数大于0，请点击下方的联系人工客服反馈。",
+    right_title: "请点击下方的“联系客服”按钮进行反馈",
     line_shou: true,
     head_shou: false,
     share_shou: false,
@@ -82,11 +82,14 @@ const handleContact = (event: any) => {
   justify-content: center;
   align-items: flex-start;
   margin-top: 45px;
+  margin-left: 30px;
+  margin-right: 30px;
+
 }
 .right_title {
   font-size: 14px;
   color: $uni-color-999;
-  text-align: center;
+  text-align: start;
 }
 
 </style>

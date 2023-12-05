@@ -57,14 +57,14 @@ const toggleExpand = () => {
 }
 
 .card-header-left {
-  width: 50%;
+  width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .card-header-right {
-  width: 50%;
+  width: 30%;
   text-align: right;
 }
 

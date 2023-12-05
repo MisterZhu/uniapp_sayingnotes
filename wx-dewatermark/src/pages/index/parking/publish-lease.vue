@@ -94,7 +94,6 @@ const QiniuData = {    //这里是直接绑定data的值
   token: "", //七牛云token
 }
 const seleAry3 = [
-  { value: 25, text: "600元/年" },
   { value: 0, text: "600元/年" },
   { value: 1, text: "700元/年" },
   { value: 2, text: "800元/年" },

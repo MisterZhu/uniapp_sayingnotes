@@ -169,9 +169,16 @@ const changeAction = (e: any) => {
     title: `点击第${index}个宫格`,
     icon: 'none'
   })
-  uni.navigateTo({
-    url: '/pages/index/parking/parking-page'
-  })
+  if (index == 0) {
+    uni.navigateTo({
+      url: '/pages/index/parking/parking-page'
+    })
+  } else if (index == 1) {
+    uni.navigateTo({
+      url: '/pages/index/park-sell/park-business'
+    })
+  }
+
 
 }
 const selectIsXiala = (e: any) => {
@@ -485,7 +492,8 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 
 .popup-view-confirm {
   color: $uni-color-gradient1;
-  width: 100%; /* 设置宽度为父组件的100% */
+  width: 100%;
+  /* 设置宽度为父组件的100% */
 
   // padding-top: 5px;    /* 上方内边距为5px */
   // padding-bottom: 5px; /* 下方内边距为5px */

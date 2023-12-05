@@ -14,7 +14,7 @@ const top = ref(0);
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 let parkModel = ref<ParkItem | null>(null)
-const inviter_detailid = ref<string>('')
+const inviter_detailid = ref<number>(0)
 
 const images = ref<string[]>([])
 
@@ -40,10 +40,15 @@ onLoad(options => {
             }
             images.value = arr;
             console.log("images  = " + images.value)
+            inviter_detailid.value = parkModel.value?.ID ?? 0;
+
         }else{
-            inviter_detailid.value = options.detail_id
+            inviter_detailid.value = Number(options.detail_id)
             onlyGetUserInfo();
         }
+        requestPostsDet(() => {
+        // TODO 下面执行刷新的方法
+      });
         // 处理逻辑
         // console.log(`index onLoad:`, options);
         // inviter_openid.value = options.open_id
@@ -62,9 +67,7 @@ async function requestUserInfo(code: string) {
   UserInfo.value = { ...UserInfo.value, ...res.data };
   console.log("UserInfo.value.state = " + UserInfo.value.state)
   console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
-  requestPostsDet(() => {
-        // TODO 下面执行刷新的方法
-      });
+  
 }
 //获取openid
 function onlyGetUserInfo() {
@@ -193,6 +196,8 @@ const handleSubmit = async () => {
 
 }
 onShareAppMessage(() => {
+    console.log('掉漆成功');
+
     var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
     const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
     let myObj = {
@@ -243,7 +248,7 @@ onShareAppMessage(() => {
         <text class="addre-text">{{ parkModel?.address }}</text>
     </view>
     <!-- 删除按钮 -->
-    <view v-if="(parkModel?.user_id ?? '') === UserInfo.user_id" class="component-footer">
+    <view v-if="(parkModel?.user_id ?? '') === UserInfo.user_id" class="single-btn-bg">
         <!-- 判断是否为当前用户 -->
         <view class="delete-btn" @click="handleDelete">
             删除
@@ -270,11 +275,11 @@ onShareAppMessage(() => {
         </view>
     </view>
     <!-- 分享 -->
-    <view class="component-footer">
+    <view class="single-btn-bg">
         <!-- 判断是否为当前用户 -->
-        <view class="share-btn" @click="handleDelete">
+        <button class="share-btn" open-type="share">
             分享到微信群/好友
-        </view>
+        </button>
     </view>
 </template>
 
@@ -408,13 +413,7 @@ onShareAppMessage(() => {
 
 }
 
-/* 组件底部样式，包括两个按钮 */
-/* 组件底部样式，包括两个按钮 */
-// .component-footer {
-//     display: flex;
-//     justify-content: space-between; /* 使用 space-between 让两个按钮分别位于容器的两端 */
-//     padding: 18px;
-// }
+
 
 /* 按钮样式 */
 .component-button,
@@ -435,7 +434,6 @@ onShareAppMessage(() => {
     padding: 18px;
 }
 
-.share-btn .delete-btn,
 .copy-btn,
 .component-button {
     display: flex;
@@ -445,27 +443,36 @@ onShareAppMessage(() => {
     cursor: pointer;
 }
 
+/* 组件底部样式，dan个按钮 */
+.single-btn-bg {
+    display: flex;
+    justify-content: center;
+    padding: 0 18px;
+    margin-top: 12px;
+}
 .delete-btn {
     /* 根据实际需求调整样式 */
     flex: 1;
-    height: 40px;
-    padding-top: 16px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     background-color: red;
     color: white;
-    border: 1px solid $uni-color-gradient1;
     border-radius: 8px;
-
 }
 
 .share-btn {
     /* 根据实际需求调整样式 */
     flex: 1;
-    height: 40px;
-    padding-top: 16px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    // padding-top: 16px;
     background-color: $uni-color-gradient1;
     color: white;
-    border-radius: 8px;
-
+    border-radius: 8px; 
 }
 
 .copy-btn {
