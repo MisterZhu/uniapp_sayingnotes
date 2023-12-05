@@ -21,3 +21,12 @@ export function strAddStar(dateStr: string): string {
     const masked = "***";
     return prefix + masked + suffix;
 }
+//修改标题
+export function setTitle(name: string) {
+    // const page = uni.$mp.page
+    // const title = uni.$refs.title
+    // title.text = name
+    uni.setNavigationBarTitle({
+        title: name
+    });
+}

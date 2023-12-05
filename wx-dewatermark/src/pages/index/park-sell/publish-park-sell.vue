@@ -122,7 +122,8 @@
   ];
   
   const dynamicLists: any[] = [];
-  
+  const indexType = ref('');
+
   async function getUpToken(callback: () => void) {
     try {
       const res: any = await RequestApi.QiniuToken(null)
@@ -146,6 +147,18 @@
   getUpToken(() => { })
   onLoad(options => {
     // @ts-ignore
+    console.log(options.index);
+    indexType.value = options?.index;
+    if(indexType.value === '1'){
+      uni.setNavigationBarTitle({
+        title: '出售车位'
+    });
+    }else if(indexType.value === '2'){
+      uni.setNavigationBarTitle({
+        title: '购买车位'
+    });
+}
+
   });
   const handleItemClick = (itemModel: any) => {
     if (!baseFormData.title) {

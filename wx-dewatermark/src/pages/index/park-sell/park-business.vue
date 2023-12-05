@@ -10,8 +10,8 @@ import ParkLessor from "./park-sell-page.vue";
 import ParkLender from "./park-buy-page.vue";
 
 let analyModel = ref<Analysis | null>(null)
-let items2 = ['出租', '求租']
-let items = ['出售', '求购']
+let items = ['出租', '求租']
+let items2 = ['出售', '求购']
 
 var current = ref(0)
 let activeColor = '#FF6C00'
@@ -41,13 +41,13 @@ const pattern = {
 const content = [{
   iconPath: '/static/home/home_lessor_icon2.png',
   selectedIconPath: '/static/home/home_lessor_icon2.png',
-  text: '出租',
+  text: '出售',
   active: false
 },
 {
   iconPath: '/static/home/home_renter_icon2.png',
   selectedIconPath: '/static/home/home_renter_icon2.png',
-  text: '求租',
+  text: '求购',
   active: false
 }
 ]
@@ -103,11 +103,11 @@ const selectItem = (e: any) => {
           if (res.confirm) {
             if (index == 0) {
               uni.navigateTo({
-                url: '/pages/index/parking/publish-lease'
+                url: '/pages/index/park-sell/publish-park-sell?index=1'
               })
             } else {
               uni.navigateTo({
-                url: '/pages/index/parking/publish-require'
+                url: '/pages/index/park-sell/publish-park-sell?index=2'
               })
             }
           }
@@ -116,11 +116,11 @@ const selectItem = (e: any) => {
     } else {
       if (index == 0) {
         uni.navigateTo({
-          url: '/pages/index/parking/publish-lease'
+          url: '/pages/index/park-sell/publish-park-sell?index=1'
         })
       } else {
         uni.navigateTo({
-          url: '/pages/index/parking/publish-require'
+          url: '/pages/index/park-sell/publish-park-sell?index=2'
         })
       }
     }
