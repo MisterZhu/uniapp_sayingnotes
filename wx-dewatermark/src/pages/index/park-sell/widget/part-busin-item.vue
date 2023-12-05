@@ -49,7 +49,7 @@ const generateRichTextContent = (annualRent: string) => {
         <text class="left-text">{{ props.analyModel.title }}</text>
         <view class="right-custom-view-image">
           <image class="right-image"
-            :src="analyModel.posts_type === 1 ? common_url.home_renter_icon5 : common_url.home_lessor_icon5"
+            :src="analyModel.posts_type === 3 ? common_url.home_park_sell_icon : common_url.home_park_buy_icon"
             mode="aspectFill"></image>
         </view>
       </view>
@@ -59,14 +59,8 @@ const generateRichTextContent = (annualRent: string) => {
           <rich-text :nodes="generateRichTextContent(analyModel.annual_rent)"></rich-text>
         </view>
         <view class="custom-view">
-          <!-- 根据 in_maintenance 显示文本 -->
-          <text v-if="analyModel.in_maintenance" class="left-text1">含管理费</text>
-
           <!-- 根据 negotiable 显示文本 -->
           <text v-if="analyModel.negotiable" class="left-text2">可小刀</text>
-
-          <!-- 固定显示的文本 -->
-          <text class="left-text3">年租</text>
 
           <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
           <text class="right-text">{{ timeDis.formatDate(analyModel.CreatedAt) }}</text>
@@ -176,7 +170,7 @@ const generateRichTextContent = (annualRent: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   margin-right: 0px;
   width: calc(100vw - 288rpx);
 

@@ -176,7 +176,7 @@ const generateRichTextContent = (annualRent: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   margin-right: 0px;
   width: calc(100vw - 288rpx);
 

@@ -5,7 +5,10 @@ export const common_url = {
     home_head_bg: 'https://qiniu.aimissu.top/common_img/home_head_bg.png',
     home_renter_icon5: 'https://qiniu.aimissu.top/common_img/home_renter_icon5.png',
     home_lessor_icon5: 'https://qiniu.aimissu.top/common_img/home_lessor_icon5.png',
+    home_park_sell_icon: 'https://qiniu.aimissu.top/common_img/home_park_sell_icon.png',
+    home_park_buy_icon: 'https://qiniu.aimissu.top/common_img/home_park_buy_icon.png',
     home_parking_head: 'https://qiniu.aimissu.top/common_img/home_parking_head.png',
+
 } as const;
 
 export const common_key = {

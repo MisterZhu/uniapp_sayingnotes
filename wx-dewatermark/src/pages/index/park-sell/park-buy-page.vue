@@ -23,7 +23,7 @@ async function requestPostsList(callback: () => void) {
   console.log('----------111--------');
 
   try {
-    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 2 })
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 4 })
     if (typeof callback === 'function') {
       callback();
     }
