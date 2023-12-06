@@ -23,7 +23,10 @@
         </view> -->
         <view class="container2">
           <uni-forms-item label="售价" required>
-            <input class="input" type="number" placeholder="请输入(单位：万元)" />
+            <view class="container3">
+              <input class="uni-input" type="number"  v-model="aryText3" placeholder="请输入价格" />
+              <text class="info">万元</text>
+            </view>
           </uni-forms-item>
         </view>
         <uni-forms-item label="价格能否协商" required>
@@ -77,44 +80,15 @@ let seleAry2 = [{
 const aryIndex1 = ref();
 const aryIndex2 = ref();
 const aryIndex3 = ref();
-let aryText1 = ref('');
 const aryText2 = ref('');
 const aryText3 = ref('');
 
 let imageValue = ref('');
-let code = ref('');
 
 const QiniuData = {    //这里是直接绑定data的值
   key: "", //图片名字处理
   token: "", //七牛云token
 }
-const seleAry3 = [
-  { value: 0, text: "600元/年" },
-  { value: 1, text: "700元/年" },
-  { value: 2, text: "800元/年" },
-  { value: 3, text: "900元/年" },
-  { value: 4, text: "1000元/年" },
-  { value: 5, text: "1100元/年" },
-  { value: 6, text: "1200元/年" },
-  { value: 7, text: "1300元/年" },
-  { value: 8, text: "1400元/年" },
-  { value: 9, text: "1500元/年" },
-  { value: 10, text: "1600元/年" },
-  { value: 11, text: "1700元/年" },
-  { value: 12, text: "1800元/年" },
-  { value: 13, text: "1900元/年" },
-  { value: 14, text: "2000元/年" },
-  { value: 15, text: "2100元/年" },
-  { value: 16, text: "2200元/年" },
-  { value: 17, text: "2300元/年" },
-  { value: 18, text: "2400元/年" },
-  { value: 19, text: "2500元/年" },
-  { value: 20, text: "2600元/年" },
-  { value: 21, text: "2700元/年" },
-  { value: 22, text: "2800元/年" },
-  { value: 23, text: "2900元/年" },
-  { value: 24, text: "3000元/年" },
-];
 
 const dynamicLists: any[] = [];
 const indexType = ref('');
@@ -144,11 +118,11 @@ onLoad(options => {
   // @ts-ignore
   console.log(options.index);
   indexType.value = options?.index;
-  if (indexType.value === '1') {
+  if (indexType.value === '3') {
     uni.setNavigationBarTitle({
       title: '出售车位'
     });
-  } else if (indexType.value === '2') {
+  } else if (indexType.value === '4') {
     uni.setNavigationBarTitle({
       title: '购买车位'
     });
@@ -183,31 +157,16 @@ const handleItemClick = (itemModel: any) => {
   //   return;
   // }
 
-  if (!aryIndex3.value) {
+  if (!aryText3.value) {
     uni.showToast({
-      title: '请选择租金',
+      title: '请选填写价格',
       icon: 'none',
       duration: 2000,
     });
     return;
   }
-  console.log("aryIndex3.value:", aryIndex3.value);
-  console.log("aryText3.value:", aryText3.value);
-  seleAry3.forEach((item) => {
-    if (item.value === aryIndex3.value) {
-      aryText3.value = item.text;
-    }
-  });
   console.log("aryText3.value:", aryText3.value);
 
-  if (!aryText1.value) {
-    uni.showToast({
-      title: '请选择是否包含管理费',
-      icon: 'none',
-      duration: 2000,
-    });
-    return;
-  }
   if (!aryText2.value) {
     uni.showToast({
       title: '请选择是否可协商',
@@ -247,9 +206,9 @@ async function publishLeasePosts() {
       wei_xin: baseFormData.wei_xin,
       in_maintenance: !!aryIndex1,
       negotiable: !!aryIndex2,
-      posts_type: 1, // Modify this based on your data structure
+      posts_type: Number(indexType.value), // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
-      annual_rent: aryText3.value,
+      annual_rent: aryText3.value + '万元',
       img_url: imageValue.value,
       user_id: UserInfo.value?.user_id,
       community_id: UserInfo.value.community_id,
@@ -263,7 +222,9 @@ async function publishLeasePosts() {
       // 延时一秒执行的操作
       setTimeout(() => {
         // 在这里写需要延时执行的代码
-        uni.$emit('isLessorRefresh', 1)
+        uni.$emit('isSellRefresh', 1)
+        uni.$emit('isBuyRefresh', 1)
+
         uni.navigateBack({
           delta: 1, // 返回的页面数，1 表示返回上一页
         });
@@ -434,6 +395,14 @@ inputText {
   // border-radius: 10px;
 }
 
+.container3 {
+  display: flex;
+  align-items: center;
+  // padding: 10px;
+  // border: 1px solid #ccc;
+  // border-radius: 10px;
+}
+
 .title {
   flex: 1;
   /* 填充剩余空间 */
@@ -441,8 +410,8 @@ inputText {
   margin-right: 10px;
 }
 
-.input {
-  flex: 2;
+.uni-input {
+  flex: 1;
   /* 填充剩余空间 */
   border: 1px solid #ccc;
   border-radius: 5px;

@@ -3,6 +3,7 @@
 import type { ParkItem } from '@/public/decl-type';
 import type { PropType } from 'vue';
 import { common_url , timeDis} from '@/public/common';
+import { placeImgWithType } from "@/utils/string-utils";
 
 
 const props = defineProps({
@@ -25,24 +26,31 @@ const handleItemClick = () => {
 };
 const generateRichTextContent = (annualRent: string) => {
   // 从 annualRent 中分离数字和单位
-  const matchResult = annualRent.match(/(\d+)([^\d]+)/);
+  const matchResult = annualRent.match(/(\d+(?:\.\d+)?)([^\d]+)/);
   if (matchResult) {
     const [amount, unit] = matchResult.slice(1);
 
     // 使用分隔后的数据构建 richTextContent
-    return `<div style="color: red;"><span style="font-weight: 500; font-size: 20px;">${amount}</span><span style="font-size: 14px;">${unit}</span></div>`;
+    return `<div style="color: red;"><span style="font-weight: 500; font-size: 20px;">${amount}</span><span style="font-size: 12px;">${unit}</span></div>`;
   } else {
     // 如果没有匹配结果，可以选择返回默认值或者空字符串
     return '';
   }
 };
+const imgError = () =>{
+  if(props.analyModel.posts_type === 3){
+    props.analyModel.img_url = common_url.home_parking_chushou;
+  }else{
+    props.analyModel.img_url = common_url.home_parking_qiugou;
+  }
+}
 </script>
 
 <template>
   <view class="component-wrapper" @click="handleItemClick">
     <view class="left-custom-view">
-      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : common_url.home_parking_head"
-        mode="aspectFill"></image>
+      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : placeImgWithType(analyModel.posts_type)"
+      @error="imgError" mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">

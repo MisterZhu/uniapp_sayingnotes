@@ -21,11 +21,11 @@ let page = 0
 onShow(() => {
   let that = this
   // 移除之前的事件监听器
-  uni.$off('isLessorRefresh');
-  uni.$on('isLessorRefresh', function (data) {
+  uni.$off('isSellRefresh');
+  uni.$on('isSellRefresh', function (data) {
     console.log('3监听到事件来自返回的参数：' + data);
     if (data === 1){
-      console.log('3 requestPostsList' + data);
+      console.log('3 isSellRefresh' + data);
 
       requestPostsList(() => {
         // TODO 下面执行刷新的方法
@@ -107,7 +107,7 @@ watch(
 ></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无出租信息~</text>
+    <text class="center-text">暂无出售车位信息~</text>
   </view>
 </template>
 

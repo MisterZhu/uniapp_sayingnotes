@@ -103,11 +103,11 @@ const selectItem = (e: any) => {
           if (res.confirm) {
             if (index == 0) {
               uni.navigateTo({
-                url: '/pages/index/park-sell/publish-park-sell?index=1'
+                url: '/pages/index/park-sell/publish-park-sell?index=3'
               })
             } else {
               uni.navigateTo({
-                url: '/pages/index/park-sell/publish-park-sell?index=2'
+                url: '/pages/index/park-sell/publish-park-sell?index=4'
               })
             }
           }
@@ -116,11 +116,11 @@ const selectItem = (e: any) => {
     } else {
       if (index == 0) {
         uni.navigateTo({
-          url: '/pages/index/park-sell/publish-park-sell?index=1'
+          url: '/pages/index/park-sell/publish-park-sell?index=3'
         })
       } else {
         uni.navigateTo({
-          url: '/pages/index/park-sell/publish-park-sell?index=2'
+          url: '/pages/index/park-sell/publish-park-sell?index=4'
         })
       }
     }

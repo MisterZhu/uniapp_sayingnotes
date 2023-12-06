@@ -8,6 +8,7 @@ import { onLoad, onShareAppMessage, onShow } from '@dcloudio/uni-app';
 import { common_key, common_url, timeDis } from '@/public/common';
 import { GlobalData, UserInfo } from '@/public/common';
 import { strAddStar } from "@/utils/string-utils";
+import { placeImgWithType } from "@/utils/string-utils";
 
 const top = ref(0);
 
@@ -32,7 +33,7 @@ onLoad(options => {
             console.log(`UserInfo.value.user_id: ${UserInfo.value.user_id}`);
             console.log("UserInfo  = " + UserInfo.value.user_id)
             let arr = [];
-            let myVar = UserInfo.value.img_url ?? common_url.home_parking_head;
+            let myVar = parkModel?.value?.img_url ? parkModel?.value?.img_url : placeImgWithType(parkModel?.value?.posts_type ?? 1);
             if (myVar.includes(",")) {
                 arr = myVar.split(",");
             } else {
@@ -42,13 +43,13 @@ onLoad(options => {
             console.log("images  = " + images.value)
             inviter_detailid.value = parkModel.value?.ID ?? 0;
 
-        }else{
+        } else {
             inviter_detailid.value = Number(options.detail_id)
             onlyGetUserInfo();
         }
         requestPostsDet(() => {
-        // TODO 下面执行刷新的方法
-      });
+            // TODO 下面执行刷新的方法
+        });
         // 处理逻辑
         // console.log(`index onLoad:`, options);
         // inviter_openid.value = options.open_id
@@ -56,45 +57,53 @@ onLoad(options => {
 });
 // MARK: 仅仅获取用户信息
 async function requestUserInfo(code: string) {
-  const res: any = await RequestApi.UserLogin({ "code": code })
-  console.log(res)
-  console.log("local_token = " + res.token)
-  uni.setStorageSync(common_key.k_local_open_id, res.open_id)
-  uni.setStorageSync(common_key.k_local_token, res.token)
-  uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
-  GlobalData.token = res.token;
-  //将后台返回的用户信息赋值给 UserInfo
-  UserInfo.value = { ...UserInfo.value, ...res.data };
-  console.log("UserInfo.value.state = " + UserInfo.value.state)
-  console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
-  
+    const res: any = await RequestApi.UserLogin({ "code": code })
+    console.log(res)
+    console.log("local_token = " + res.token)
+    uni.setStorageSync(common_key.k_local_open_id, res.open_id)
+    uni.setStorageSync(common_key.k_local_token, res.token)
+    uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
+    GlobalData.token = res.token;
+    //将后台返回的用户信息赋值给 UserInfo
+    UserInfo.value = { ...UserInfo.value, ...res.data };
+    console.log("UserInfo.value.state = " + UserInfo.value.state)
+    console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
+
 }
 //获取openid
 function onlyGetUserInfo() {
-  uni.login({
-    success: (res) => {
-      requestUserInfo(res.code)
-    }
-  })
+    uni.login({
+        success: (res) => {
+            requestUserInfo(res.code)
+        }
+    })
 }
 // MARK: 帖子详情
 async function requestPostsDet(callback: () => void) {
-  console.log('----------222--------');
-  try {
-    const res: any = await RequestApi.DetailPosts({ "id": inviter_detailid.value })
-    if (typeof callback === 'function') {
-      callback();
+    console.log('----------222--------');
+    try {
+        const res: any = await RequestApi.DetailPosts({ "id": inviter_detailid.value })
+        if (typeof callback === 'function') {
+            callback();
+        }
+        if (res.code === 200) {
+            parkModel.value = res.data
+            let arr = [];
+            let myVar = parkModel?.value?.img_url ?? common_url.home_parking_chuzu;
+            if (myVar.includes(",")) {
+                arr = myVar.split(",");
+            } else {
+                arr = [myVar];
+            }
+            images.value = arr;
+        } else {
+            uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
+        }
+    } catch (error) {
+        callback && callback()
+        console.error(error)
+        uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
     }
-    if (res.code === 200) {
-        parkModel.value = res.data
-    } else {
-      uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
-    }
-  } catch (error) {
-    callback && callback()
-    console.error(error)
-    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
-  }
 }
 onMounted(() => {
     hidePasteBtn.value = !!inputValue.value
@@ -148,6 +157,25 @@ const handleDelete = async () => {
     });
 
 }
+const imgError = (e: any) => {
+    switch (parkModel?.value?.posts_type) {
+        case 1:
+            images.value[e] = common_url.home_parking_chuzu;
+            break;
+        case 2:
+            images.value[e] = common_url.home_parking_qiuzu;
+
+            break;
+        case 3:
+            images.value[e] = common_url.home_parking_chushou;
+
+            break;
+        default:
+            images.value[e] = common_url.home_parking_qiugou;
+
+            break;
+    }
+}
 // MARK: 
 async function deletePosts() {
     try {
@@ -170,6 +198,8 @@ async function deletePosts() {
             setTimeout(() => {
                 uni.$emit('isLessorRefresh', 1)
                 uni.$emit('isRenterRefresh', 1)
+                uni.$emit('isSellRefresh', 1)
+                uni.$emit('isBuyRefresh', 1)
                 uni.$emit('isMyPublishRefresh', 1)
                 uni.navigateBack({
                     delta: 1, // 返回的页面数，1 表示返回上一页
@@ -207,6 +237,7 @@ onShareAppMessage(() => {
     }
     return myObj;
 });
+
 </script>
 
 <template>
@@ -215,7 +246,7 @@ onShareAppMessage(() => {
         <swiper class="custom-swiper" autoplay="true" interval="5000" circular="true" indicator-dots="true"
             indicator-color="#ffffff" indicator-active-color="#FF6C00" style="height: 280px">
             <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
-                <image :src="image" class="full-width-image" mode="aspectFill"></image>
+                <image :src="image" class="full-width-image" @error="imgError(index)" mode="aspectFill"></image>
             </swiper-item>
         </swiper>
     </view>
@@ -450,6 +481,7 @@ onShareAppMessage(() => {
     padding: 0 18px;
     margin-top: 12px;
 }
+
 .delete-btn {
     /* 根据实际需求调整样式 */
     flex: 1;
@@ -472,7 +504,7 @@ onShareAppMessage(() => {
     // padding-top: 16px;
     background-color: $uni-color-gradient1;
     color: white;
-    border-radius: 8px; 
+    border-radius: 8px;
 }
 
 .copy-btn {

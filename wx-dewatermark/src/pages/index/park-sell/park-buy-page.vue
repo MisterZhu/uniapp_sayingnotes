@@ -82,12 +82,12 @@ onReachBottom(() => {
 onShow(() => {
   let that = this
   // 移除之前的事件监听器
-  uni.$off('isRenterRefresh');
-  uni.$on('isRenterRefresh', function (data) {
+  uni.$off('isBuyRefresh');
+  uni.$on('isBuyRefresh', function (data) {
     console.log('2监听到事件来自返回的参数：' + data);
     // TODO 下面执行刷新的方法
     if (data === 1){
-      console.log('2 requestPostsList' + data);
+      console.log('2 isBuyRefresh' + data);
 
       requestPostsList(() => {
         // TODO 下面执行刷新的方法
@@ -109,7 +109,7 @@ watch(
     <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无求租信息~</text>
+    <text class="center-text">暂无求购车位信息~</text>
   </view>
 </template>
 
