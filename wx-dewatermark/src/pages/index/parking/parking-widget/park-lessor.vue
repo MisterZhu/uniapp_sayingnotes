@@ -4,7 +4,7 @@
 import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, defineExpose } from 'vue';
 import historyItem from '@/pages/index/parking/parking-widget/widget/part-item.vue';
 import { GlobalData, UserInfo } from '@/public/common';
 
@@ -17,6 +17,16 @@ let analyAry = reactive({
 })
 const size = 10
 let page = 0
+let isCurrent = ref(true);
+
+defineExpose({
+  setCurrentPage(res: boolean){
+    console.log('---------------chu zu:' + res);
+
+    isCurrent.value = res
+  },
+})
+
 //接收参数
 onShow(() => {
   let that = this
@@ -33,6 +43,13 @@ onShow(() => {
     }
     // TODO 下面执行刷新的方法
   })
+
+// var pages = getCurrentPages(); //获取所有页面的数组对象
+// var currPage = pages[pages.length - 1]; 
+// let url = currPage.route;
+// console.log('---------------出租页面监听 url = ' + url);
+
+
 });
 // MARK: 解析记录
 async function requestPostsList(callback: () => void) {
@@ -85,7 +102,7 @@ const handleItemClick = (itemModel: any) => {
 };
 // 触底的事件
 onReachBottom(() => {
-  console.log('触底的事件');
+  console.log('----------------出租触底的事件');
   page++
   requestPostsList(() => { })
 });

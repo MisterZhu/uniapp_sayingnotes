@@ -18,6 +18,14 @@ let analyAry = reactive({
 })
 const size = 10
 let page = 0
+let isCurrent = ref(false);
+defineExpose({
+  setCurrentPage(res: boolean){
+    console.log('---------------qiu zu:' + res);
+
+    isCurrent.value = res
+  },
+})
 // MARK: 解析记录
 async function requestPostsList(callback: () => void) {
   console.log('----------111--------');
@@ -66,7 +74,7 @@ const handleItemClick = (itemModel: any) => {
 }
 // 触底的事件
 onReachBottom(() => {
-  console.log('触底的事件');
+  console.log('----------------求租触底的事件');
   page++
   requestPostsList(() => { })
 });
@@ -86,7 +94,7 @@ onShow(() => {
   uni.$on('isRenterRefresh', function (data) {
     console.log('2监听到事件来自返回的参数：' + data);
     // TODO 下面执行刷新的方法
-    if (data === 1){
+    if (data === 1) {
       console.log('2 requestPostsList' + data);
 
       requestPostsList(() => {
@@ -94,6 +102,10 @@ onShow(() => {
       });
     }
   })
+  // var pages = getCurrentPages(); //获取所有页面的数组对象
+  // var currPage = pages[pages.length - 1];
+  // let url = currPage.route;
+  // console.log('---------------求租页面监听 url = ' + url);
 });
 watch(
   () => props.coverSrc,

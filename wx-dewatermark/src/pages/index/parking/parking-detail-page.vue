@@ -89,7 +89,7 @@ async function requestPostsDet(callback: () => void) {
         if (res.code === 200) {
             parkModel.value = res.data
             let arr = [];
-            let myVar = parkModel?.value?.img_url ?? common_url.home_parking_chuzu;
+            let myVar = parkModel?.value?.img_url ? parkModel?.value?.img_url : placeImgWithType(parkModel?.value?.posts_type ?? 1);
             if (myVar.includes(",")) {
                 arr = myVar.split(",");
             } else {

@@ -51,6 +51,10 @@ const content = [{
   active: false
 }
 ]
+const chuzu = ref(null);
+const qiuzu = ref(null);
+
+
 const selectItem = (e: any) => {
   const index = e.index;
   console.log(UserInfo.value.state);
@@ -162,6 +166,27 @@ const onClickItem = (e: { currentIndex: number; }) => {
   if (current.value != e.currentIndex) {
     current.value = e.currentIndex;
     console.log('current is now', current.value);
+
+    // 直接在组件引用上调用 setCurrentPage 方法
+    if (current.value === 0) {
+      if (qiuzu.value !== null) {
+        (qiuzu.value as { setCurrentPage: (arg: boolean) => void }).setCurrentPage(true);
+        // qiuzu.value.setCurrentPage(true);
+      }
+      if (chuzu.value !== null) {
+        (chuzu.value as { setCurrentPage: (arg: boolean) => void }).setCurrentPage(false);
+      }
+
+    } else if (current.value === 1) {
+      if (chuzu.value !== null) {
+        (chuzu.value as { setCurrentPage: (arg: boolean) => void }).setCurrentPage(true);
+      }
+      if (qiuzu.value !== null) {
+        (qiuzu.value as { setCurrentPage: (arg: boolean) => void }).setCurrentPage(false);
+      }
+
+    }
+
   }
 }
 // 根据analyModel.value.video是否有值来判断展示items或者items2
@@ -186,11 +211,11 @@ const photosToShow = computed(() => {
     </view>
     <view class="content">
       <view class="video-container" v-show="current === 0">
-        <ParkLessor :coverSrc="analyModel?.images" />
+        <ParkLessor ref="chuzu" :coverSrc="analyModel?.images" />
       </view>
       <view v-show="current === 1">
         <view class="video-container">
-          <ParkLender :coverSrc="analyModel?.cover" />
+          <ParkLender ref="qiuzu" :coverSrc="analyModel?.cover" />
         </view>
       </view>
     </view>
