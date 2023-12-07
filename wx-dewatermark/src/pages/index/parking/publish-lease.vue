@@ -32,7 +32,7 @@
         </uni-forms-item>
 
         <uni-forms-item label="微信号">
-          <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让租客加微信联系" />
+          <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让想租车位的邻居加微信联系" />
         </uni-forms-item>
 
       </uni-forms>

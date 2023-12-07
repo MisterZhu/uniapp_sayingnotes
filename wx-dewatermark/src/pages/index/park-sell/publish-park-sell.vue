@@ -8,23 +8,17 @@
     <uni-card :is-shadow="false">
       <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.title"
         :placeholder="dynamicPlaceholder" />
-      <view>
+      <view v-if="indexType === '3'">
         <uni-file-picker file-mediatype="image" mode="grid" file-extname="png,jpg" :limit="1" @progress="progress"
           @success="success" @fail="fail" @select="select" />
       </view>
     </uni-card>
     <view class="example">
       <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
-
-        <!-- <view style="display: flex;flex-direction: row;">
-          <input class="inputText" style="width:337rpx;height:76rpx;line-height:76rpx;" v-model="code"
-            placeholder="请输入验证码" />
-          <button class="btn" style="width:337rpx;height:76rpx;line-height:76rpx;" @click="sendCode()">验证码</button>
-        </view> -->
         <view class="container2">
-          <uni-forms-item label="售价" required>
+          <uni-forms-item :label="dynamicTtile" required>
             <view class="container3">
-              <input class="uni-input" type="number"  v-model="aryText3" placeholder="请输入价格" />
+              <input class="uni-input" type="number" v-model="aryText3" placeholder="请输入价格" />
               <text class="info">万元</text>
             </view>
           </uni-forms-item>
@@ -37,7 +31,7 @@
         </uni-forms-item>
 
         <uni-forms-item label="微信号">
-          <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让租客加微信联系" />
+          <uni-easyinput v-model="baseFormData.wei_xin" placeholder="（选填项）可让小区邻居加微信联系" />
         </uni-forms-item>
 
       </uni-forms>
@@ -137,6 +131,15 @@ const dynamicPlaceholder = computed(() => {
     return '请输入要自己想要购买车位的一些要求（例如：想要几号楼下哪个区的车位）';
   } else {
     return '请输入介绍';
+  }
+});
+const dynamicTtile = computed(() => {
+  if (indexType.value === '3') {
+    return '售价';
+  } else if (indexType.value === '4') {
+    return '预算';
+  } else {
+    return '价格';
   }
 });
 const handleItemClick = (itemModel: any) => {

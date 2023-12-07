@@ -12,6 +12,7 @@ export const common_url = {
   home_parking_qiuzu: '/static/home/home_parking_qiuzu.jpeg',
   home_parking_chushou: '/static/home/home_parking_chushou.jpeg',
   home_parking_qiugou: '/static/home/home_parking_qiugou.jpeg',
+  home_used_icon: '/static/home/home_used_icon.jpeg',
 
 } as const;
 

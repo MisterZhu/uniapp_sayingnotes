@@ -40,8 +40,10 @@ const generateRichTextContent = (annualRent: string) => {
 const imgError = () =>{
   if(props.analyModel.posts_type === 3){
     props.analyModel.img_url = common_url.home_parking_chushou;
-  }else{
+  }else if (props.analyModel.posts_type === 4){
     props.analyModel.img_url = common_url.home_parking_qiugou;
+  }else if (props.analyModel.posts_type === 5){
+    props.analyModel.img_url = common_url.home_used_icon;
   }
 }
 </script>
@@ -57,7 +59,7 @@ const imgError = () =>{
         <text class="left-text">{{ props.analyModel.title }}</text>
         <view class="right-custom-view-image">
           <image class="right-image"
-            :src="analyModel.posts_type === 3 ? common_url.home_park_sell_icon : common_url.home_park_buy_icon"
+            :src="analyModel.posts_type === 4 ? common_url.home_park_buy_icon : common_url.home_park_sell_icon"
             mode="aspectFill"></image>
         </view>
       </view>

@@ -109,7 +109,7 @@ watch(
     <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无求购车位信息~</text>
+    <text class="center-text">暂无求购车位信息\n快去发布吧~</text>
   </view>
 </template>
 

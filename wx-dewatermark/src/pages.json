@@ -84,6 +84,28 @@
 			}
 		},
 		{
+			"path": "pages/index/used/used-page",
+			"style": {
+				"navigationBarTitleText": "二手闲置",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
+			"path": "pages/index/used/publish-used",
+			"style": {
+				"navigationBarTitleText": "发布闲置",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
 			"path": "pages/history/search-history",
 			"style": {
 				"navigationBarTitleText": "解析记录",

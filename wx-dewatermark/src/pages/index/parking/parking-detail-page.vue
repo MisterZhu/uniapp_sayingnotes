@@ -170,8 +170,15 @@ const imgError = (e: any) => {
             images.value[e] = common_url.home_parking_chushou;
 
             break;
+        case 4:
+            images.value[e] = common_url.home_parking_chushou;
+
+            break;
+        case 5:
+            images.value[e] = common_url.home_used_icon;
+
+            break;
         default:
-            images.value[e] = common_url.home_parking_qiugou;
 
             break;
     }
@@ -200,6 +207,7 @@ async function deletePosts() {
                 uni.$emit('isRenterRefresh', 1)
                 uni.$emit('isSellRefresh', 1)
                 uni.$emit('isBuyRefresh', 1)
+                uni.$emit('isUsedRefresh', 1)
                 uni.$emit('isMyPublishRefresh', 1)
                 uni.navigateBack({
                     delta: 1, // 返回的页面数，1 表示返回上一页

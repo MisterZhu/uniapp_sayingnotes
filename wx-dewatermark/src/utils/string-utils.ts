@@ -41,7 +41,11 @@ export function placeImgWithType(postType: number): string {
             return common_url.home_parking_qiuzu;
         case 3:
             return common_url.home_parking_chushou;
-        default:
+        case 4:
             return common_url.home_parking_qiugou;
+        case 5:
+            return common_url.home_used_icon;
+        default:
+            return common_url.home_used_icon;
     }
 }

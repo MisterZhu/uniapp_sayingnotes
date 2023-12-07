@@ -11,7 +11,6 @@ import { GlobalData, UserInfo, common_key } from '@/public/common';
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
 let safeTop = ref<string>('')
-let userInfo = ref<UserInfoModel>()
 
 const itmeAry = <MineItemModel[]>[
     {
@@ -87,7 +86,7 @@ onShow(() => {
     onlyGetUserInfo()
 });
 onShareAppMessage(() => {
-    const open_id = userInfo.value?.open_id ?? ''; // 获取userInfo的id
+    const open_id = UserInfo.value?.open_id ?? ''; // 获取userInfo的id
 
     let myObj = {
         title: `来自好友的邀请`,

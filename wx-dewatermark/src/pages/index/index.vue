@@ -14,7 +14,7 @@ const hidePasteBtn = ref<boolean>(false)
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
-const images = ["/static/home/home_head_bg.png", "/static/home/home_head_bg.png", "/static/home/home_head_bg.png"]
+const images = ["/static/home/home_head_bg1.png", "/static/home/home_head_bg2.png", "/static/home/home_head_bg3.png"]
 const list = [
   {
     url: '/static/home/home_lessor_icon1.png',
@@ -177,6 +177,10 @@ const changeAction = (e: any) => {
     uni.navigateTo({
       url: '/pages/index/park-sell/park-business'
     })
+  } else if (index == 2) {
+    uni.navigateTo({
+      url: '/pages/index/used/used-page'
+    })
   }
 
 
@@ -279,10 +283,10 @@ const bindIndustryDirectionPickerChange = (e: any) => {
   </view>
   <!-- 轮播图 -->
   <view class="swiper-container">
-    <swiper class="custom-swiper" autoplay="true" interval="5000" circular="true" indicator-dots="true"
+    <swiper class="custom-swiper" autoplay="true" interval="4000" circular="true" indicator-dots="true"
       indicator-color="#ffffff" indicator-active-color="#FF6C00">
       <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
-        <image :src="image" class="full-width-image"></image>
+        <image :src="image" class="full-width-image" mode="aspectFill"></image>
       </swiper-item>
     </swiper>
   </view>

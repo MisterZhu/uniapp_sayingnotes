@@ -5,8 +5,7 @@ import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
-// import historyItem from '@/pages/history/history-widget/history-item.vue';
-import historyItem from '@/pages/index/parking/parking-widget/widget/part-item.vue';
+import historyItem from '@/pages/index/park-sell/widget/part-busin-item.vue';
 import { GlobalData, UserInfo } from '@/public/common';
 
 const props = defineProps({
@@ -18,20 +17,29 @@ let analyAry = reactive({
 })
 const size = 10
 let page = 0
-let isCurrent = ref(false);
-defineExpose({
-  setCurrentPage(res: boolean){
-    console.log('---------------qiu zu:' + res);
+//接收参数
+onShow(() => {
+  let that = this
+  // 移除之前的事件监听器
+  uni.$off('isUsedRefresh');
+  uni.$on('isUsedRefresh', function (data) {
+    console.log('3监听到事件来自返回的参数：' + data);
+    if (data === 1) {
+      console.log('3 isUsedRefresh' + data);
 
-    isCurrent.value = res
-  },
-})
+      requestPostsList(() => {
+        // TODO 下面执行刷新的方法
+      });
+    }
+    // TODO 下面执行刷新的方法
+  })
+});
 // MARK: 解析记录
 async function requestPostsList(callback: () => void) {
-  console.log('----------111--------');
+  console.log('----------222--------');
 
   try {
-    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 2 })
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 5 })
     if (typeof callback === 'function') {
       callback();
     }
@@ -67,45 +75,18 @@ onPullDownRefresh(() => {
   // 2. 重新发起请求
   requestPostsList(() => uni.stopPullDownRefresh())
 });
-const handleItemClick = (itemModel: any) => {
+const handleButtonClick = () => {
+  // Assuming 'uni' is a valid object that can call 'navigateTo'
   uni.navigateTo({
-    url: '/pages/index/parking/parking-page'
-  })
-}
+    url: '/pages/index/used/publish-used',
+  });
+};
+
 // 触底的事件
 onReachBottom(() => {
-  console.log('----------------求租触底的事件');
+  console.log('触底的事件');
   page++
   requestPostsList(() => { })
-});
-// watch(
-//   () => analyAry,
-//   (newValue) => {
-//     analyAry = newValue
-//     console.log(`history watch images: ${newValue}`);
-//   },
-//   { immediate: true }
-// );
-//接收参数
-onShow(() => {
-  let that = this
-  // 移除之前的事件监听器
-  uni.$off('isRenterRefresh');
-  uni.$on('isRenterRefresh', function (data) {
-    console.log('2监听到事件来自返回的参数：' + data);
-    // TODO 下面执行刷新的方法
-    if (data === 1) {
-      console.log('2 requestPostsList' + data);
-
-      requestPostsList(() => {
-        // TODO 下面执行刷新的方法
-      });
-    }
-  })
-  // var pages = getCurrentPages(); //获取所有页面的数组对象
-  // var currPage = pages[pages.length - 1];
-  // let url = currPage.route;
-  // console.log('---------------求租页面监听 url = ' + url);
 });
 watch(
   () => props.coverSrc,
@@ -121,7 +102,11 @@ watch(
     <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无求租信息\n快去发布吧~</text>
+    <text class="center-text">暂无出售闲置物品信息\n快去发布吧~</text>
+  </view>
+  <view class="float-button" @click="handleButtonClick">
+    <image class="icon" src="/static/home/home_used_publish3.png" />
+    <text class="text">发布</text>
   </view>
 </template>
 
@@ -132,5 +117,46 @@ watch(
   left: 50%;
   transform: translate(-50%, -50%);
   color: $uni-color-666;
+  text-align: center;
 }
-</style>
+
+.float-button {
+  position: fixed;
+  bottom: 70px;
+  /* 距离底部的距离 */
+  right: 30px;
+  /* 距离右侧的距离 */
+  background-color: #4CAF50;
+  /* 按钮背景颜色 */
+  color: #fff;
+  /* 按钮文字颜色 */
+  // padding: 20rpx;
+  // margin: 10rpx;
+  /* 按钮内边距 */
+  border-radius: 120rpx;
+  flex-direction: column; /* 设置为垂直方向排列 */
+  justify-content: center; /* 设置垂直方向居中 */
+
+  width: 120rpx; /* 设置宽度 */
+  height: 120rpx; /* 设置高度 */
+  /* 圆角 */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 5rpx 10rpx rgba(0, 0, 0, 0.9);
+
+}
+
+.icon {
+  width: 40rpx;
+  /* 图标宽度 */
+  height: 40rpx;
+  /* 图标高度 */
+  margin-bottom: 5rpx;
+  /* 图标和文字之间的间距 */
+}
+
+.text {
+  font-size: 14px;
+  /* 文字大小 */
+}</style>

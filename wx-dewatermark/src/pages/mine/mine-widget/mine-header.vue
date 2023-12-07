@@ -10,7 +10,6 @@ import { GlobalData , UserInfo} from '@/public/common';
 let menu_top = ref<string>('')
 let menu_height = ref<string>('')
 let safeTop = ref<string>('')
-// let userInfo = ref<UserInfoModel>()
 
 const itmeAry = ref<MineItemModel[]>([
   {
@@ -93,8 +92,7 @@ function getUserInfo() {
 const copyHandle = async () => {
 
     uni.setClipboardData({
-        // @ts-ignore
-        data: userInfo.value?.user_id,
+        data: UserInfo.value?.user_id,
         success() {
             uni.showToast({
                 title: '复制成功'
