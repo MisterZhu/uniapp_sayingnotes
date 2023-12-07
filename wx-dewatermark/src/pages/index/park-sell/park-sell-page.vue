@@ -15,7 +15,7 @@ const props = defineProps({
 let analyAry = reactive({
   data: [] as ParkItem[]
 })
-const size = 10
+const size = 20
 let page = 0
 //接收参数
 onShow(() => {
@@ -39,7 +39,7 @@ async function requestPostsList(callback: () => void) {
   console.log('----------222--------');
 
   try {
-    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 3 })
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 3, "community_id": GlobalData.select_community_id })
     if (typeof callback === 'function') {
       callback();
     }

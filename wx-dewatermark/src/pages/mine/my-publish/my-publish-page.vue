@@ -13,7 +13,7 @@ import { GlobalData, UserInfo } from '@/public/common';
 let analyAry = reactive({
   data: [] as ParkItem[]
 })
-const size = 10
+const size = 20
 let page = 0
 //接收参数
 onShow(() => {

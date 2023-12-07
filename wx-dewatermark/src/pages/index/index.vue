@@ -192,13 +192,16 @@ const selectIsXiala = (e: any) => {
 }
 const xuanzeMoban = (_label: any, _value: any) => {
   uni.showToast({
-    title: `点击了 ${_value}`,
+    title: `切换为：${_value}`,
     icon: 'none'
   })
+  console.log(`_label:`, _label);
+  console.log(`_value:`, _value);
+
   optionIndex.value = _value
   isXiala.value = false
   GlobalData.select_community = _value;
-  GlobalData.select_community_id = _value;
+  GlobalData.select_community_id = _label;
 }
 
 onMounted(() => {

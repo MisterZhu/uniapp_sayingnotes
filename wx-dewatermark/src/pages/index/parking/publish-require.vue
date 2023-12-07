@@ -41,6 +41,7 @@
   
   
 <script setup lang="ts">
+import { UserInfo } from '@/public/common';
 import type { UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
@@ -177,6 +178,12 @@ const handleItemClick = (itemModel: any) => {
 async function publishLeasePosts() {
 
   try {
+    const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
+    let loudongStr = '';
+    if (loudongAry.length > 0) {
+      loudongStr = '-' + loudongAry[0] + '幢';
+    }
+    
     const requestData = {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
@@ -185,7 +192,9 @@ async function publishLeasePosts() {
       posts_type: 2, // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
       annual_rent: aryText3.value,
-      user_id: userInfo.value?.user_id ?? '',
+      community_id: UserInfo.value.community_id,
+      user_id: UserInfo.value?.user_id ?? '',
+      address: UserInfo.value.default_community + loudongStr,
       // Add other fields based on your data structure
     };
     const res: any = await RequestApi.AddPosts(requestData)
