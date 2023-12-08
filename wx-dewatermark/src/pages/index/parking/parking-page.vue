@@ -67,7 +67,7 @@ const selectItem = (e: any) => {
   if (UserInfo.value.state === 0) {
     uni.showModal({
       title: '温馨提示',
-      content: '您还没有进行房屋认证，为了保证发布信息的真实性，请先去申请房屋认证，通过以后才可以发布信息',
+      content: '您还没有进行房屋认证，为了保证发布信息的真实性，请先进行房屋认证，通过以后才可以发布信息',
       showCancel: false, // 不展示取消按钮
       confirmText: "去认证", // 确认按钮文字 
       success: function (res) {
@@ -81,7 +81,7 @@ const selectItem = (e: any) => {
   } else if (UserInfo.value.state === 1) {
     uni.showModal({
       title: '温馨提示',
-      content: '您的房屋认证申请还未通过审核，您可以联系客服，催促客服快速审核',
+      content: '您的房屋认证还未通过审核，您可以联系客服，催促客服快速审核，审核通过以后才可以发布信息',
       // showCancel: false, // 不展示取消按钮
       cancelText: "取消",
       confirmText: "联系客服", // 确认按钮文字 

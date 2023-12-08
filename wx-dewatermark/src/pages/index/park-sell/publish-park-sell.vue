@@ -55,20 +55,15 @@ let baseFormData = {
   title: '', // 
   telephone: '', // 联系方式，对应后端的 Telephone
   wei_xin: '', // 微信号
-  // in_maintenance: false, // 是否在维护中，对应后端的 InMaintenance
-  // negotiable: false, // 价格是否可协商，对应后端的 Negotiable
-  // annual_rent: '', // 租金，对应后端的 AnnualRent
-  // img_url: '',
-  // 其他字段根据后端模型添加
 };
 
 // 多选数据源
 let seleAry2 = [{
   text: '可协商',
-  value: 0
+  value: 1
 }, {
   text: '一口价',
-  value: 1
+  value: 0
 }];
 
 const aryIndex1 = ref();
@@ -207,14 +202,14 @@ async function publishLeasePosts() {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
       wei_xin: baseFormData.wei_xin,
-      in_maintenance: !!aryIndex1,
-      negotiable: !!aryIndex2,
+      in_maintenance: !!aryIndex1.value,
+      negotiable: !!aryIndex2.value,
       posts_type: Number(indexType.value), // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
       annual_rent: aryText3.value + '万元',
       img_url: imageValue.value,
       user_id: UserInfo.value?.user_id,
-      community_id: UserInfo.value.community_id,
+      community_id: UserInfo.value.default_community_id,
       address: UserInfo.value.default_community + loudongStr,
       // Add other fields based on your data structure
     };

@@ -3,10 +3,13 @@
 const baseUrl = 'http://127.0.0.1:8080/api/v3'
 const loadQiniuUrl = 'https://qiniu.aimissu.top/'
 const updateQiniuUrl = 'https://upload.qiniup.com'
+import { common_key, GlobalData, UserInfo } from '@/public/common';
 
 //獲取token
 function getToken(): string {
-    let token = "Bearer " + uni.getStorageSync('local_token')
+    let golbToken = GlobalData.token;
+    console.log("local_token = " + golbToken)
+    let token = "Bearer " + golbToken
     return token
 }
 

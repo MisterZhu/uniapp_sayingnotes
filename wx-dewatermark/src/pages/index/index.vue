@@ -235,7 +235,7 @@ const bindChange = (e: any) => {
 
   optionIndex.value = communityAry[e.target.value].name;
   GlobalData.select_community = optionIndex.value;
-  GlobalData.select_community_id = e.target.value;
+  GlobalData.select_community_id = communityAry[e.target.value].ID;
 };
 // 产业方向选择改变
 const bindIndustryDirectionPickerChange = (e: any) => {

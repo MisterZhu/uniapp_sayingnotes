@@ -21,7 +21,9 @@
         <uni-forms-item label="是否含管理费" required>
           <uni-data-checkbox v-model="aryIndex1" :localdata="seleAry1" @change="maintenanceChange" />
         </uni-forms-item>
-
+        <uni-forms-item label="价格能否协商" required>
+          <uni-data-checkbox v-model="aryIndex2" :localdata="seleAry2" @change="negotiableChange" />
+        </uni-forms-item>
         <uni-forms-item label="手机号" required>
           <uni-easyinput v-model="baseFormData.telephone" placeholder="请输入联系方式" />
         </uni-forms-item>
@@ -52,26 +54,29 @@ let baseFormData = {
   title: '', // 
   telephone: '', // 联系方式，对应后端的 Telephone
   wei_xin: '', // 微信号
-  // in_maintenance: false, // 是否在维护中，对应后端的 InMaintenance
-  // negotiable: false, // 价格是否可协商，对应后端的 Negotiable
-  // annual_rent: '', // 租金，对应后端的 AnnualRent
-  // img_url: '',
-  // 其他字段根据后端模型添加
 };
 
 
 // 单选数据源
 let seleAry1 = [{
   text: '包含',
-  value: 0
+  value: 1
 }, {
   text: '不包含',
-  value: 1
+  value: 0
 }];
-
+let seleAry2 = [{
+  text: '可协商',
+  value: 1
+}, {
+  text: '一口价',
+  value: 0
+}];
 const aryIndex1 = ref();
+const aryIndex2 = ref();
 const aryIndex3 = ref();
 let aryText1 = ref('');
+const aryText2 = ref('');
 const aryText3 = ref('');
 
 const seleAry3 = [
@@ -163,7 +168,14 @@ const handleItemClick = (itemModel: any) => {
     });
     return;
   }
-
+  if (!aryText2.value) {
+    uni.showToast({
+      title: '请选择是否可协商',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
   if (!baseFormData.telephone) {
     uni.showToast({
       title: '请填写手机号',
@@ -188,11 +200,12 @@ async function publishLeasePosts() {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
       wei_xin: baseFormData.wei_xin,
-      in_maintenance: !!aryIndex1,
+      in_maintenance: !!aryIndex1.value,
+      negotiable: !!aryIndex2.value,
       posts_type: 2, // Modify this based on your data structure
       state: 0, // Modify this based on your data structure
       annual_rent: aryText3.value,
-      community_id: UserInfo.value.community_id,
+      community_id: UserInfo.value.default_community_id,
       user_id: UserInfo.value?.user_id ?? '',
       address: UserInfo.value.default_community + loudongStr,
       // Add other fields based on your data structure
@@ -234,7 +247,16 @@ const maintenanceChange = (e: any) => {
     }
   });
 };
-
+const negotiableChange = (e: any) => {
+  // aryIndex2.value = e.detail.value;
+  console.log("negotiableChange e:", e);
+  console.log("aryIndex2.value:", aryIndex2.value);
+  seleAry2.forEach((item) => {
+    if (item.value === aryIndex2.value) {
+      aryText2.value = item.text;
+    }
+  });
+};
 </script>
 
   

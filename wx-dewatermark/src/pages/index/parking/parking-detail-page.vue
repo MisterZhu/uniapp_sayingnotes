@@ -127,8 +127,49 @@ const generateRichTextContent = (annualRent: string) => {
         return '';
     }
 };
-const copyHandle = async () => {
+const permissionVerify = () => {
+    if (UserInfo.value.state === 0) {
+        uni.showModal({
+            title: '温馨提示',
+            content: '您还没有进行房屋认证，发布者的联系方式只允许邻居查看，请先去进行房屋认证',
+            showCancel: false, // 不展示取消按钮
+            confirmText: "去认证", // 确认按钮文字 
+            success: function (res) {
+                if (res.confirm) {
+                    uni.navigateTo({
+                        url: '/pages/mine/house/select-community'
+                    })
+                }
+            }
+        });
+        return false;
+    } else if (UserInfo.value.state === 1) {
+        uni.showModal({
+            title: '温馨提示',
+            content: '您的房屋认证还未通过审核，您可以联系客服，催促客服快速审核，审核通过以后才可以获取发布者联系方式',
+            // showCancel: false, // 不展示取消按钮
+            cancelText: "取消",
+            confirmText: "联系客服", // 确认按钮文字 
+            success: function (res) {
+                if (res.confirm) {
+                    uni.navigateTo({
+                        url: '/pages/mine/help-center'
+                    })
+                } else if (res.cancel) {
 
+                }
+            }
+        });
+        return false;
+    } else {
+        return true;
+    }
+}
+const copyHandle = async () => {
+    let pass = permissionVerify();
+    if (!pass) {
+        return;
+    }
     uni.setClipboardData({
         // @ts-ignore
         data: parkModel?.wei_xin ?? '',
@@ -153,6 +194,22 @@ const handleDelete = async () => {
             } else if (res.cancel) {
 
             }
+        }
+    });
+
+}
+const handleSubmit = async () => {
+    let pass = permissionVerify();
+    if (!pass) {
+        return;
+    }
+    uni.makePhoneCall({
+        phoneNumber: `${parkModel?.value?.telephone ?? ''}`,
+        success: function () {
+            console.log('拨打电话成功');
+        },
+        fail: function () {
+            console.log('拨打电话失败');
         }
     });
 
@@ -221,18 +278,7 @@ async function deletePosts() {
         uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
     }
 }
-const handleSubmit = async () => {
-    uni.makePhoneCall({
-        phoneNumber: `${parkModel?.value?.telephone ?? ''}`,
-        success: function () {
-            console.log('拨打电话成功');
-        },
-        fail: function () {
-            console.log('拨打电话失败');
-        }
-    });
 
-}
 onShareAppMessage(() => {
     console.log('掉漆成功');
 

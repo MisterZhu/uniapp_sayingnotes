@@ -71,10 +71,16 @@ const imgError = () =>{
         </view>
         <view class="custom-view">
           <!-- 根据 in_maintenance 显示文本 -->
-          <text v-if="analyModel.in_maintenance" class="left-text1">含管理费</text>
+          <text v-if="analyModel.in_maintenance && analyModel.posts_type === 1" class="left-text1">含管理费</text>
+          <text v-if="!analyModel.in_maintenance && analyModel.posts_type === 1" class="left-text3">不含管理费</text>
+
+          <text v-if="!analyModel.in_maintenance && analyModel.posts_type === 2" class="left-text1">管理自费</text>
+          <text v-if="analyModel.in_maintenance && analyModel.posts_type === 2" class="left-text3">含管理费</text>
 
           <!-- 根据 negotiable 显示文本 -->
-          <text v-if="analyModel.negotiable" class="left-text2">可小刀</text>
+          <text v-if="!analyModel.negotiable" class="left-text3">一口价</text>
+          <text v-if="analyModel.negotiable && analyModel.posts_type === 1" class="left-text2">可小刀</text>
+          <text v-if="analyModel.negotiable && analyModel.posts_type === 2" class="left-text2">可协商</text>
 
           <!-- 固定显示的文本 -->
           <text class="left-text3">年租</text>
@@ -205,7 +211,6 @@ const imgError = () =>{
   padding: 2px 3px;
   /* 内边距 5px */
 }
-
 .left-text2 {
   /* 样式设置，如字体大小、颜色等 */
   color: #5CC289;

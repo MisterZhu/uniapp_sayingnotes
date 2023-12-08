@@ -70,8 +70,9 @@ const imgError = () =>{
         </view>
         <view class="custom-view">
           <!-- 根据 negotiable 显示文本 -->
-          <text v-if="analyModel.negotiable" class="left-text2">可小刀</text>
-
+          <text v-if="analyModel.negotiable && analyModel.posts_type === 3" class="left-text2">可小刀</text>
+          <text v-if="analyModel.negotiable && analyModel.posts_type === 4" class="left-text2">可协商</text>
+          <text v-if="!analyModel.negotiable" class="left-text2">一口价</text>
           <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
           <text class="right-text">{{ timeDis.formatDate(analyModel.CreatedAt) }}</text>
         </view>
