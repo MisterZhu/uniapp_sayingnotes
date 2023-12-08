@@ -120,9 +120,9 @@ onLoad(options => {
 });
 // 计算属性，根据 indexType 的值返回不同的 placeholder
 const dynamicPlaceholder = computed(() => {
-  if (indexType.value === '1') {
+  if (indexType.value === '3') {
     return '请输入要出售车位的详细介绍（例如：车位在几号楼下哪个区）';
-  } else if (indexType.value === '2') {
+  } else if (indexType.value === '4') {
     return '请输入要自己想要购买车位的一些要求（例如：想要几号楼下哪个区的车位）';
   } else {
     return '请输入介绍';
