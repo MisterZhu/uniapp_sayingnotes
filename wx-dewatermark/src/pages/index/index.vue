@@ -59,7 +59,7 @@ const popup = ref(null);
 async function requestUserInfoWithCode(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
   console.log(res)
-  console.log("local_token = " + res.token)
+  console.log("------set local_token = " + res.token)
   uni.setStorageSync(common_key.k_local_open_id, res.open_id)
   uni.setStorageSync(common_key.k_local_token, res.token)
   uni.setStorageSync(common_key.k_local_user_info, JSON.stringify(res.data));
@@ -87,15 +87,15 @@ async function requestAnalyList(callback: () => void) {
 
       if (foundCommunity) {
         // 如果找到匹配的社区，设置 optionIndex 为社区的 name
-        optionIndex.value = foundCommunity.name;
+        optionIndex.value = foundCommunity.detail_name;
         isNeedSelect.value = false;
-        GlobalData.select_community = foundCommunity.name;
+        GlobalData.select_community = foundCommunity.detail_name;
         GlobalData.select_community_id = foundCommunity.ID;
 
       } else {
         const firstModel = communityAry[0];
-        optionIndex.value = firstModel.name;
-        GlobalData.select_community = firstModel.name;
+        optionIndex.value = firstModel.detail_name;
+        GlobalData.select_community = firstModel.detail_name;
         GlobalData.select_community_id = firstModel.ID;
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
         isNeedSelect.value = true;
@@ -233,7 +233,7 @@ const bindChange = (e: any) => {
   // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
   console.log(`e:`, e);
 
-  optionIndex.value = communityAry[e.target.value].name;
+  optionIndex.value = communityAry[e.target.value].detail_name;
   GlobalData.select_community = optionIndex.value;
   GlobalData.select_community_id = communityAry[e.target.value].ID;
 };
@@ -256,7 +256,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
       <picker-view v-if="isNeedSelect" :indicator-style="indicatorStyle" :value="communityAry.length" @change="bindChange"
         class="picker-view">
         <picker-view-column>
-          <view class="item" v-for="(item, index) in communityAry" :key="index">{{ item.name }}</view>
+          <view class="item" v-for="(item, index) in communityAry" :key="index">{{ item.detail_name }}</view>
         </picker-view-column>
       </picker-view>
       <div class="popup-view-header">
@@ -278,8 +278,8 @@ const bindIndustryDirectionPickerChange = (e: any) => {
     <view class="xiala" v-show="isXiala">
       <view class="xiala-xuan" :class="[isXiala == true ? 'open' : 'close']">
         <view class="xiala-hang" v-for="(item, index) in communityAry" :key="index"
-          @click="xuanzeMoban(item.ID, item?.name ?? '')">
-          <text>{{ item?.name ?? '' }}</text>
+          @click="xuanzeMoban(item.ID, item?.detail_name ?? '')">
+          <text>{{ item?.detail_name ?? '' }}</text>
         </view>
       </view>
     </view>

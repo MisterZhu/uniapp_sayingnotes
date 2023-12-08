@@ -136,9 +136,12 @@ async function publishLeasePosts() {
       // 延时一秒执行的操作
       setTimeout(() => {
         // 在这里写需要延时执行的代码
-        uni.$emit('isMyHouseRefresh', 1)
-        uni.navigateBack({
-          delta: 2, // 返回的页面数，1 表示返回上一页
+        // uni.$emit('isMyHouseRefresh', 1)
+        // uni.navigateBack({
+        //   delta: 2, // 返回的页面数，1 表示返回上一页
+        // });
+        uni.switchTab({
+          url: '/pages/index/index', // 返回的页面数，1 表示返回上一页
         });
       }, 1000);
 

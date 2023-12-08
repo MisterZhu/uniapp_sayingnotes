@@ -74,11 +74,11 @@ const imgError = () =>{
           <text v-if="analyModel.in_maintenance && analyModel.posts_type === 1" class="left-text1">含管理费</text>
           <text v-if="!analyModel.in_maintenance && analyModel.posts_type === 1" class="left-text3">不含管理费</text>
 
-          <text v-if="!analyModel.in_maintenance && analyModel.posts_type === 2" class="left-text1">管理自费</text>
+          <text v-if="!analyModel.in_maintenance && analyModel.posts_type === 2" class="left-text1">不含管理费</text>
           <text v-if="analyModel.in_maintenance && analyModel.posts_type === 2" class="left-text3">含管理费</text>
 
           <!-- 根据 negotiable 显示文本 -->
-          <text v-if="!analyModel.negotiable" class="left-text3">一口价</text>
+          <text v-if="!analyModel.negotiable" class="left-text2">一口价</text>
           <text v-if="analyModel.negotiable && analyModel.posts_type === 1" class="left-text2">可小刀</text>
           <text v-if="analyModel.negotiable && analyModel.posts_type === 2" class="left-text2">可协商</text>
 

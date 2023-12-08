@@ -318,10 +318,13 @@ onShareAppMessage(() => {
         <text v-if="parkModel?.in_maintenance" class="left-text1">含管理费</text>
 
         <!-- 根据 negotiable 显示文本 -->
-        <text v-if="parkModel?.negotiable" class="left-text2">可小刀</text>
+        <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 1 || parkModel?.posts_type === 3 || parkModel?.posts_type === 5)" class="left-text2">可小刀</text>
+        <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 2 || parkModel?.posts_type === 4)" class="left-text2">可协商</text>
+
+        <text v-if="!parkModel?.negotiable" class="left-text2">一口价</text>
 
         <!-- 固定显示的文本 -->
-        <text class="left-text3">年租</text>
+        <text v-if="parkModel?.posts_type === 1 || parkModel?.posts_type === 2" class="left-text3">年租</text>
 
         <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
         <text class="right-text">{{ timeDis.formatDate(parkModel?.CreatedAt ?? '') }}</text>

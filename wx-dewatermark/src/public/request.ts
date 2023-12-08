@@ -8,7 +8,7 @@ import { common_key, GlobalData, UserInfo } from '@/public/common';
 //獲取token
 function getToken(): string {
     let golbToken = GlobalData.token;
-    console.log("local_token = " + golbToken)
+    console.log("-----------getToken local_token = " + golbToken)
     let token = "Bearer " + golbToken
     return token
 }
