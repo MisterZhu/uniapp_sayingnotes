@@ -49,3 +49,9 @@ export function placeImgWithType(postType: number): string {
             return common_url.home_used_icon;
     }
 }
+
+export function isUrl(str: string) {
+    // 使用正则表达式判断是否是合法的URL
+    const urlPattern = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/;
+    return urlPattern.test(str);
+  }

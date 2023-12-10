@@ -3,18 +3,18 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
-import type { Analysis, CommunityItem, UserInfoModel } from '@/public/decl-type';
+import type { CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { onLoad, onShow } from '@dcloudio/uni-app';
 import { common_key, GlobalData, UserInfo } from '@/public/common';
 
-const top = ref(0);
+const top = ref(32);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
-const images = ["/static/home/home_head_bg1.png", "/static/home/home_head_bg2.png", "/static/home/home_head_bg3.png"]
+const images = ["/static/home/home_head_bg1.jpeg", "/static/home/home_head_bg2.jpeg", "/static/home/home_head_bg3.jpeg"]
 const list = [
   {
     url: '/static/home/home_lessor_icon1.png',
@@ -119,8 +119,25 @@ function getUserInfo() {
     }
   })
 }
+//获取json
+function getConfigJson() {
+  // 使用 uni.request 进行网络请求
+  uni.request({
+      url: 'https://qiniu.aimissu.top/config/floor.json',
+      method: 'GET',
+      success: (res) => {
+        // 请求成功，res.data 包含了 JSON 数据
+        console.log('JSON 数据加载成功', res.data);
+        uni.setStorageSync(common_key.k_cachedJsonData, res.data);
+      },
+      fail: (err) => {
+        // 请求失败
+        console.error('JSON 数据加载失败', err);
+      }
+    });
+  }
 getUserInfo()
-
+getConfigJson()
 // MARK: 仅仅获取用户信息
 async function requestUserInfo(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
@@ -208,7 +225,7 @@ onMounted(() => {
   hidePasteBtn.value = !!inputValue.value
 
   let menu_but = uni.getStorageSync('SafeAreaInsetTop')
-  top.value = menu_but + 4;
+  top.value = menu_but;
 
   // top.value = uni.getStorageSync('SafeAreaInsetTop')
   console.log(`onMounted:`, top.value);
@@ -377,7 +394,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 .xuanze {
   position: fixed;
   top: var(--top);
-  left: 16rpx;
+  left: 24rpx;
   // width: 200rpx;
   height: 64rpx;
   border-radius: 30rpx;

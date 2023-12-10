@@ -5,7 +5,7 @@ import { RequestApi } from "@/public/request";
 import type { UserInfoModel, MineItemModel } from '@/public/decl-type';
 import MineItem from './mine-widget/mine-item.vue';
 import MineHeader from './mine-widget/mine-header.vue';
-import { onShareAppMessage, onShow } from '@dcloudio/uni-app';
+import { onShow } from '@dcloudio/uni-app';
 import { GlobalData, UserInfo, common_key } from '@/public/common';
 
 let menu_top = ref<string>('')
@@ -85,20 +85,11 @@ onShow(() => {
     console.log("mine Show");
     onlyGetUserInfo()
 });
-onShareAppMessage(() => {
-    const open_id = UserInfo.value?.open_id ?? ''; // 获取userInfo的id
 
-    let myObj = {
-        title: `来自好友的邀请`,
-        path: "/pages/index/index?open_id=" + open_id,
-        imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
-    }
-    return myObj;
-});
 
 onMounted(() => {
     let menu_but = uni.getStorageSync('SafeAreaInsetTop')
-    menu_top.value = (menu_but + 44) + 'px'
+    menu_top.value = (menu_but + 40) + 'px'
     menu_height.value = '32px'
     safeTop.value = '0px'
     // console.log("SafeAreaInsetTop = " + SafeAreaInsetTop);

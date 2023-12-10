@@ -22,6 +22,10 @@ export const common_key = {
   k_local_open_id: 'local_open_id',
   k_DefaultCommunityId: 'DefaultCommunityId',
   k_DefaultCommunityName: 'DefaultCommunityName',
+  k_detail_id: 'detail_id',
+  k_detail_title: 'detail_title',
+  k_detail_img: 'detail_img',
+  k_cachedJsonData: 'cachedJsonData',
 } as const;
 
 

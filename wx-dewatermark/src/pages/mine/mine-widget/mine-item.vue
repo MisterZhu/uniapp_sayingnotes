@@ -1,7 +1,6 @@
 
 <script setup lang="ts">
 import type { MineItemModel } from '@/public/decl-type';
-import { onShareAppMessage } from '@dcloudio/uni-app';
 import type { PropType } from 'vue';
 
 const props = defineProps({
@@ -16,26 +15,13 @@ const handleClick = () => {
   emits('click', props.itemModel)
 }
 
-onShareAppMessage(() => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
-    let myObj = {
-        title: `来自好友的邀请`,
-        path: "/pages/index/index?open_id=" + open_id,
-        imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
-    }
-    return myObj;
-});
-
-
-// const handleClick = () => {
-//   console.log('item clicked:', props.itemModel.left_title)
-// }
 </script>
 
 <template>
   <view class="header" v-show="itemModel.head_shou"></view>
-  <view class="my-component" :class="{'rounded-top': itemModel.radius_type === 1, 'rounded-bottom': itemModel.radius_type === 2, 'rounded-all': itemModel.radius_type === 3}" @click="handleClick()">
+  <view class="my-component"
+    :class="{ 'rounded-top': itemModel.radius_type === 1, 'rounded-bottom': itemModel.radius_type === 2, 'rounded-all': itemModel.radius_type === 3 }"
+    @click="handleClick()">
     <button v-show="itemModel.share_shou" class="share-button" open-type="share"></button>
     <view class="my-component__left">
       <img class="down_icon" :src="itemModel.left_img" />
@@ -49,7 +35,6 @@ onShareAppMessage(() => {
   <view class="footer" v-show="itemModel.line_shou">
     <view class="divider"></view>
   </view>
-
 </template>
   
 <style lang="scss" scoped>
@@ -63,7 +48,8 @@ onShareAppMessage(() => {
   margin-left: 15px;
   margin-right: 15px;
   position: relative;
-  border-radius: 0; /* 默认情况下，不添加圆角 */
+  border-radius: 0;
+  /* 默认情况下，不添加圆角 */
   width: calc(100vw - 60px);
 
 
@@ -78,7 +64,8 @@ onShareAppMessage(() => {
   }
 
   &.rounded-all {
-    border-radius: 10px; /* 四个角都添加圆角 */
+    border-radius: 10px;
+    /* 四个角都添加圆角 */
   }
 }
 
@@ -151,6 +138,7 @@ onShareAppMessage(() => {
 
   background-color: $uni-color-f8f;
 }
+
 .share-button {
   position: absolute;
   width: 95%;
@@ -158,7 +146,8 @@ onShareAppMessage(() => {
   opacity: 0;
   cursor: pointer;
 }
-.share-button.show{
+
+.share-button.show {
   position: absolute;
   width: 95%;
   height: 100%;

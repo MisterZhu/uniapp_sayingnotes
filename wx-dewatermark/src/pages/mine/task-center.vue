@@ -4,7 +4,6 @@ import { computed, ref } from 'vue';
 
 import { isToday, isYesterday } from "@/utils/time-utils";
 import { RequestApi } from '@/public/request';
-import { onShareAppMessage } from '@dcloudio/uni-app';
 import HelpItem from "./help-widget/help-item.vue";
 import { common_key } from '@/public/common';
 
@@ -119,16 +118,7 @@ const active = computed(() => {
 const handleItemClick = (itemModel: any) => {
   console.log('clicked item:', itemModel.left_title)
 }
-onShareAppMessage(() => {
-  var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-  const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
-  let myObj = {
-    title: `来自好友的邀请`,
-    path: "/pages/index/index?open_id=" + open_id,
-    imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
-  }
-  return myObj;
-});
+
 </script>
 
 <template>

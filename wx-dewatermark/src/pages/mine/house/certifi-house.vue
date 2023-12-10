@@ -34,10 +34,10 @@
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import jsonData from "@/static/floor.json"
 import { onLoad } from '@dcloudio/uni-app';
 import type { CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
+import { common_key } from '@/public/common';
 
 const selectedClass = ref(' ');
 const classes = ref<Array<any>>([]); // 用于存储本地JSON数据
@@ -154,7 +154,7 @@ async function publishLeasePosts() {
 }
 // 异步加载本地JSON数据
 onMounted(() => {
-  classes.value = jsonData; // 将JSON数据赋值给classes
+  classes.value = uni.getStorageSync(common_key.k_cachedJsonData); // 将JSON数据赋值给classes
 });
 
 const onnodeclick = (e: any) => {

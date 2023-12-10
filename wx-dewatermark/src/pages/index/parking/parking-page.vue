@@ -201,6 +201,7 @@ const videoToShow = computed(() => {
 const photosToShow = computed(() => {
   return analyModel.value?.images ? true : false;
 })
+
 </script>
 
 <template>

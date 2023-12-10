@@ -4,7 +4,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { RequestApi } from "@/public/request"
 import type { ParkItem, UserInfoModel } from '@/public/decl-type';
-import { onLoad, onShareAppMessage, onShow } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { common_key, common_url, timeDis } from '@/public/common';
 import { GlobalData, UserInfo } from '@/public/common';
 import { strAddStar } from "@/utils/string-utils";
@@ -19,9 +19,6 @@ const inviter_detailid = ref<number>(0)
 
 const images = ref<string[]>([])
 
-onShow(() => {
-    console.log("Det Show");
-});
 // 接收参数
 onLoad(options => {
     if (options) {
@@ -96,6 +93,18 @@ async function requestPostsDet(callback: () => void) {
                 arr = [myVar];
             }
             images.value = arr;
+            let img = '';
+            if (arr.length > 0) {
+                console.log('----------arr.length > 0--------');
+
+                img = arr[0];
+            }
+            console.log(`----------img =: ${img}`);
+
+            uni.setStorageSync(common_key.k_detail_img, img)
+            uni.setStorageSync(common_key.k_detail_title, parkModel.value?.title)
+            uni.setStorageSync(common_key.k_detail_id, parkModel.value?.ID.toString())
+
         } else {
             uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
         }
@@ -109,7 +118,7 @@ onMounted(() => {
     hidePasteBtn.value = !!inputValue.value
 
     let menu_but = uni.getStorageSync('SafeAreaInsetTop')
-    top.value = menu_but + 4;
+    top.value = menu_but;
 
     // top.value = uni.getStorageSync('SafeAreaInsetTop')
     console.log(`onMounted:`, top.value);
@@ -279,18 +288,8 @@ async function deletePosts() {
     }
 }
 
-onShareAppMessage(() => {
-    console.log('掉漆成功');
 
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    const open_id = uInfo?.open_id ?? ''; // 获取userInfo的id
-    let myObj = {
-        title: `${parkModel?.value?.title ?? ''}`,
-        path: "pages/index/parking/parking-detail-page?detail_id=" + open_id,
-        imageUrl: "https://qiniu.aimissu.top/images/qushuiyin_logo.png"
-    }
-    return myObj;
-});
+
 
 </script>
 
@@ -318,8 +317,11 @@ onShareAppMessage(() => {
         <text v-if="parkModel?.in_maintenance" class="left-text1">含管理费</text>
 
         <!-- 根据 negotiable 显示文本 -->
-        <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 1 || parkModel?.posts_type === 3 || parkModel?.posts_type === 5)" class="left-text2">可小刀</text>
-        <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 2 || parkModel?.posts_type === 4)" class="left-text2">可协商</text>
+        <text
+            v-if="parkModel?.negotiable && (parkModel?.posts_type === 1 || parkModel?.posts_type === 3 || parkModel?.posts_type === 5)"
+            class="left-text2">可小刀</text>
+        <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 2 || parkModel?.posts_type === 4)"
+            class="left-text2">可协商</text>
 
         <text v-if="!parkModel?.negotiable" class="left-text2">一口价</text>
 

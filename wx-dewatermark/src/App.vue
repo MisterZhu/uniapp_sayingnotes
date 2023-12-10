@@ -20,12 +20,14 @@ onLaunch(() => {
     success: (res) => {
       // 获取手机顶部状态栏的高度
       const statusBarHeight = res.statusBarHeight || 0;
-      uni.setStorageSync('SafeAreaInsetTop', statusBarHeight)
       console.log('SafeAreaInsetTop:', statusBarHeight);
       // 获取导航栏的高度（手机状态栏高度 + 胶囊高度 + 胶囊的上下间距）
       const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
       const navBarHeight = menuButtonInfo.height + (menuButtonInfo.top - statusBarHeight) * 2;
       console.log(menuButtonInfo);
+      uni.setStorageSync('SafeAreaInsetTop', menuButtonInfo.top);
+      console.log('SafeAreaInsetTop1:', menuButtonInfo.top);
+
       // 计算顶部图标距离
       const topIconDistance = statusBarHeight + navBarHeight;
 

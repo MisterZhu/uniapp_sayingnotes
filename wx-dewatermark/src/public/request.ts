@@ -1,6 +1,6 @@
 //请求地址
-// const baseUrl = 'https://aimissu.top/api/v2'
-const baseUrl = 'http://127.0.0.1:8080/api/v3'
+const baseUrl = 'https://aimissu.top/api/v3'
+// const baseUrl = 'http://127.0.0.1:8080/api/v3'
 const loadQiniuUrl = 'https://qiniu.aimissu.top/'
 const updateQiniuUrl = 'https://upload.qiniup.com'
 import { common_key, GlobalData, UserInfo } from '@/public/common';
