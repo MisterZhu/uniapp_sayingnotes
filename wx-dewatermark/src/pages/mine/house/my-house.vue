@@ -7,6 +7,7 @@ import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import houseItem from "./house-widget/house-item.vue";
+import { GlobalData } from '@/public/common';
 // let analyAry = ref([] as Analysis[])
 let applyAry = reactive({
   data: [] as ApplyItem[]
@@ -65,6 +66,7 @@ const getLocalUserInfo = () => {
     if (uInfo) {
         userInfo.value = uInfo;
         requestApplyList(() => { })
+        console.log("GlobalData.checking:", GlobalData.checking);
 
     }
 }
@@ -114,7 +116,7 @@ watch(
     </view>
     <!-- 添加按钮 -->
     <view class="button-container">
-      <button class="custom-button" @click="handleItemClick">新增</button>
+      <button v-show="!GlobalData.checking" class="custom-button" @click="handleItemClick">新增</button>
     </view>
   </view>
 </template>

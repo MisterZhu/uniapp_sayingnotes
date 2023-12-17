@@ -11,6 +11,7 @@ const top = ref(32);
 
 const inputValue = ref<string>('')
 const hidePasteBtn = ref<boolean>(false)
+const isChecking = ref<boolean>(true)
 
 let openid = uni.getStorageSync('openid')
 const inviter_openid = ref<string>('')
@@ -33,14 +34,46 @@ const list = [
     text: '卖闲置',
     badge: '3',
     type: "warning"
+  },
+  {
+    url: '/static/home/home_homemaking_icon1.jpeg',
+    text: '家政',
+    badge: '4',
+    type: "warning"
+  },
+  {
+    url: '/static/home/home_decoration_icon1.jpeg',
+    text: '装修',
+    badge: '5',
+    type: "warning"
+  },
+  {
+    url: '/static/home/home_recycle_icon1.jpeg',
+    text: '废品回收',
+    badge: '6',
+    type: "warning"
   }
-  // ,
-  // {
-  //   url: '/static/home/home_carport_icon3.png',
-  //   text: '房屋买卖',
-  //   badge: '4',
-  //   type: "warning"
-  // }
+]
+const images1 = ["/static/home/home_head_bg4.jpeg"]
+const list1 = [
+  {
+    url: '/static/home/home_homemaking_icon1.jpeg',
+    text: '家政',
+    badge: '4',
+    type: "warning"
+  },
+  {
+    url: '/static/home/home_decoration_icon1.jpeg',
+    text: '装修',
+    badge: '5',
+    type: "warning"
+  },
+  {
+    url: '/static/home/home_recycle_icon1.jpeg',
+    text: '废品回收',
+    badge: '6',
+    type: "warning"
+  }
 ]
 let communityAry = reactive<CommunityItem[]>([]);
 
@@ -71,8 +104,36 @@ async function requestUserInfoWithCode(code: string) {
   console.log("UserInfo.value.default_room e:", UserInfo.value.default_room);
 
   requestAnalyList(() => { })
-}
+  requestState(() => { })
 
+}
+// MARK: 社区列表
+async function requestState(callback: () => void) {
+  try {
+    const res: any = await RequestApi.GetConfigInfo({ "name": '1.0.3'})
+    if (typeof callback === 'function') {
+      callback();
+    }
+    if (res.code === 200) {
+      communityAry = res.data
+      if (res.data['state'] == 'true'){
+        isChecking.value = true;
+      }else{
+        isChecking.value = false;
+      }
+      GlobalData.checking = isChecking.value;
+      console.log("GlobalData.checking:", GlobalData.checking);
+
+      console.log('0')
+      
+    } else {
+    }
+  } catch (error) {
+    callback && callback()
+    console.error(error)
+    uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
+  }
+}
 // MARK: 社区列表
 async function requestAnalyList(callback: () => void) {
   try {
@@ -305,7 +366,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
   <view class="swiper-container">
     <swiper class="custom-swiper" autoplay="true" interval="4000" circular="true" indicator-dots="true"
       indicator-color="#ffffff" indicator-active-color="#FF6C00">
-      <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
+      <swiper-item v-for="(image, index) in (isChecking ? images1 : images)" :key="index" class="rounded-swiper-item">
         <image :src="image" class="full-width-image" mode="aspectFill"></image>
       </swiper-item>
     </swiper>
@@ -314,7 +375,7 @@ const bindIndustryDirectionPickerChange = (e: any) => {
   <view class="diamond">
     <view class="card-wrapper">
       <uni-grid :show-border="false" :column="4" :highlight="true" @change="changeAction">
-        <uni-grid-item v-for="(item, index) in list" :index="index" :key="index" clickable>
+        <uni-grid-item v-for="(item, index) in (isChecking ? list1 : list)" :index="index" :key="index" clickable>
           <view class="grid-item-box" style="background-color: #fff;">
             <image :src="item.url" class="image" mode="aspectFill" />
             <text class="text">{{ item.text }}</text>
@@ -348,6 +409,8 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 .grid-item-box image {
   width: 105rpx;
   height: 105rpx;
+  border-radius: 15rpx; /* 将图片的边框半径设置为50%以创建圆形效果 */
+  overflow: hidden; /* 避免圆角图片溢出 */
 }
 
 .text {

@@ -64,4 +64,6 @@ export let GlobalData = {
   select_community: '',
   select_community_id: 0,
   token: '',
+  checking: true,
+
 };

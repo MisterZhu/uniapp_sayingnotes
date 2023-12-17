@@ -1,6 +1,6 @@
 //请求地址
-const baseUrl = 'https://aimissu.top/api/v3'
-// const baseUrl = 'http://127.0.0.1:8080/api/v3'
+// const baseUrl = 'https://aimissu.top/api/v3'
+const baseUrl = 'http://127.0.0.1:8080/api/v3'
 const loadQiniuUrl = 'https://qiniu.aimissu.top/'
 const updateQiniuUrl = 'https://upload.qiniup.com'
 import { common_key, GlobalData, UserInfo } from '@/public/common';
@@ -108,6 +108,8 @@ const RequestApi = {
     HomeAnalysis: (data: any) => request('/user/analysis', 'POST', data),
     AnalyHistory: (data: any) => request('/user/analysisRecord', 'POST', data),
     SignIn: (data: any) => request('/user/signIn', 'POST', data),
+    GetConfigInfo: (data: any) => request('/config/get_det', 'POST', data),
+
     /*------------------------  v3 天悦湾车位API  ------------------------------*/
     //帖子列表
     PostsList: (data: any) => request('/user/park_posts_list', 'POST', data),
