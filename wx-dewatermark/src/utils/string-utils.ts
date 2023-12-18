@@ -32,7 +32,7 @@ export function setTitle(name: string) {
     });
 }
 
-//判断date是否是今天
+
 export function placeImgWithType(postType: number): string {
     switch (postType) {
         case 1:
@@ -47,6 +47,19 @@ export function placeImgWithType(postType: number): string {
             return common_url.home_used_icon;
         default:
             return common_url.home_used_icon;
+    }
+}
+export function shopPlaceImg(postType: number): string {
+    switch (postType) {
+        case 1:
+            return common_url.home_shop_jiazheng;
+        case 2:
+            return common_url.home_shop_zhuangxiu;
+        case 3:
+            return common_url.home_shop_huishou;
+ 
+        default:
+            return common_url.home_shop_jiazheng;
     }
 }
 

@@ -5,7 +5,7 @@ import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
-import historyItem from '@/pages/index/park-sell/widget/part-busin-item.vue';
+import shopItem from '@/pages/index/shops/widget/shop-item.vue';
 import { GlobalData, UserInfo } from '@/public/common';
 
 const props = defineProps({
@@ -99,10 +99,10 @@ watch(
 
 <template>
   <view v-show="analyAry.data.length > 0" class="history_item">
-    <historyItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></historyItem>
+    <shopItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></shopItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无出售闲置物品信息\n快去发布吧~</text>
+    <text class="center-text">暂无服务商家~</text>
   </view>
   <view class="float-button" @click="handleButtonClick">
     <image class="icon" src="/static/home/home_used_publish3.png" />

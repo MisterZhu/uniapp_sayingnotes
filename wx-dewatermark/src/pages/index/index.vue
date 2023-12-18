@@ -242,7 +242,7 @@ const changeAction = (e: any) => {
   const index = e.detail.index;
 
   console.log(e);
-  if (isChecking){
+  if (isChecking.value){
     if (index == 0) {
     uni.navigateTo({//家政
       url: '/pages/index/shops/shop-page'
@@ -268,6 +268,10 @@ const changeAction = (e: any) => {
   } else if (index == 2) {//二手闲置
     uni.navigateTo({
       url: '/pages/index/used/used-page'
+    })
+  } else if (index == 3) {//商家服务
+    uni.navigateTo({
+      url: '/pages/index/shops/shop-page'
     })
   }
   }

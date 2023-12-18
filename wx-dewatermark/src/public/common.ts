@@ -13,6 +13,9 @@ export const common_url = {
   home_parking_chushou: '/static/home/home_parking_chushou.jpeg',
   home_parking_qiugou: '/static/home/home_parking_qiugou.jpeg',
   home_used_icon: '/static/home/home_used_icon.jpeg',
+  home_shop_jiazheng: '/static/home/home_homemaking_icon1.jpeg',
+  home_shop_zhuangxiu: '/static/home/home_decoration_icon1.jpeg',
+  home_shop_huishou: '/static/home/home_recycle_icon1.jpeg',
 
 } as const;
 
