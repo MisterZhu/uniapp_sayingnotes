@@ -241,25 +241,37 @@ const changeAction = (e: any) => {
   // } = e.detail
   const index = e.detail.index;
 
-  console.log(index);
-
-  uni.showToast({
-    title: `点击第${index}个宫格`,
-    icon: 'none'
-  })
-  if (index == 0) {
+  console.log(e);
+  if (isChecking){
+    if (index == 0) {
+    uni.navigateTo({//家政
+      url: '/pages/index/shops/shop-page'
+    })
+  } else if (index == 1) {//装修
+    uni.navigateTo({
+      url: '/pages/index/shops/shop-page'
+    })
+  } else if (index == 2) {//废品回收
+    uni.navigateTo({
+      url: '/pages/index/shops/shop-page'
+    })
+  }
+  }else{
+    if (index == 0) {//车位出租
     uni.navigateTo({
       url: '/pages/index/parking/parking-page'
     })
-  } else if (index == 1) {
+  } else if (index == 1) {//车位买卖
     uni.navigateTo({
       url: '/pages/index/park-sell/park-business'
     })
-  } else if (index == 2) {
+  } else if (index == 2) {//二手闲置
     uni.navigateTo({
       url: '/pages/index/used/used-page'
     })
   }
+  }
+  
 
 
 }

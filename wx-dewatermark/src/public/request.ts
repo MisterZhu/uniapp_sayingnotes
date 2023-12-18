@@ -122,6 +122,18 @@ const RequestApi = {
     //帖子详情
     DetailPosts: (data: any) => request('/user/detail_park_posts', 'POST', data),
 
+    /*------------------------  v3 天悦湾商家API  ------------------------------*/
+    //帖子列表
+    ShopsList: (data: any) => request('/user/shops_list', 'POST', data),
+    //发布帖子
+    AddShops: (data: any) => request('/user/add_shops', 'POST', data),
+    //编辑帖子
+    EditShops: (data: any) => request('/user/edit_shops', 'POST', data),
+    //删除帖子
+    DetShops: (data: any) => request('/user/delete_shops', 'POST', data),
+    //帖子详情
+    DetailShops: (data: any) => request('/user/detail_shops', 'POST', data),
+
     /*------------------------  v3 小区相关API  ------------------------------*/
     //小区列表
     CommunityList: (data: any) => request('/community/get', 'POST', data),
