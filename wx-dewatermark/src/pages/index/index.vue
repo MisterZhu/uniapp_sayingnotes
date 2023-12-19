@@ -267,9 +267,9 @@ const changeAction = (e: any) => {
     uni.navigateTo({
       url: '/pages/index/shops/shop-page?index=3'
     })
-  } else if (index == 3) {//废品回收
+  } else if (index == 3) {//自装指南
     uni.navigateTo({
-      url: '/pages/index/shops/self-assembly-page'
+      url: '/pages/index/shops/self-assembly-page?index=4'
     })
   }
   }else{
@@ -285,13 +285,21 @@ const changeAction = (e: any) => {
     uni.navigateTo({
       url: '/pages/index/used/used-page'
     })
-  } else if (index == 6) {//商家服务
+  } else if (index == 3) {//家政
     uni.navigateTo({
-      url: '/pages/index/shops/self-assembly-page'
+      url: '/pages/index/shops/shop-page?index=1'
     })
-  } else {//商家服务
+  } else if (index == 4) {//装修
     uni.navigateTo({
-      url: '/pages/index/shops/shop-page'
+      url: '/pages/index/shops/shop-page?index=2'
+    })
+  } else if (index == 5) {//废品回收
+    uni.navigateTo({
+      url: '/pages/index/shops/shop-page?index=3'
+    })
+  } else if (index == 6) {//自装指南
+    uni.navigateTo({
+      url: '/pages/index/shops/self-assembly-page?index=4'
     })
   }
   }
