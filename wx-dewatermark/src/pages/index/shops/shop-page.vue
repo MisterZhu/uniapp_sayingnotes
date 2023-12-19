@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
-import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
+import { onLoad, onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 import shopItem from '@/pages/index/shops/widget/shop-item.vue';
 import { GlobalData, UserInfo } from '@/public/common';
@@ -17,6 +17,8 @@ let analyAry = reactive({
 })
 const size = 20
 let page = 0
+const indexType = ref(1);
+
 //接收参数
 onShow(() => {
   let that = this
@@ -34,12 +36,32 @@ onShow(() => {
     // TODO 下面执行刷新的方法
   })
 });
+onLoad(options => {
+  // @ts-ignore
+  console.log(options.index);
+  indexType.value = Number(options?.index);
+  if (indexType.value === 1) {
+    uni.setNavigationBarTitle({
+      title: '家政'
+    });
+  } else if (indexType.value === 2) {
+    uni.setNavigationBarTitle({
+      title: '装修'
+    });
+  }else{
+    uni.setNavigationBarTitle({
+      title: '废品回收'
+    });
+  }
+  requestPostsList(() => { })
+
+});
 // MARK: 解析记录
 async function requestPostsList(callback: () => void) {
   console.log('----------222--------');
 
   try {
-    const res: any = await RequestApi.ShopsList({ "page": page, "size": size, "posts_type": 1,})
+    const res: any = await RequestApi.ShopsList({ "page": page, "size": size, "posts_type": indexType.value,})
     if (typeof callback === 'function') {
       callback();
     }
@@ -64,7 +86,6 @@ async function requestPostsList(callback: () => void) {
   }
 }
 
-requestPostsList(() => { })
 
 // 下拉刷新的事件
 onPullDownRefresh(() => {
@@ -104,10 +125,7 @@ watch(
   <view v-show="analyAry.data.length <= 0" class="history_item">
     <text class="center-text">暂无服务商家~</text>
   </view>
-  <view class="float-button" @click="handleButtonClick">
-    <image class="icon" src="/static/home/home_used_publish3.png" />
-    <text class="text">发布</text>
-  </view>
+
 </template>
 
 <style lang="scss" scoped>

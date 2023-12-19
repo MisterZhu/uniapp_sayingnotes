@@ -78,7 +78,7 @@ function onlyGetUserInfo() {
 async function requestPostsDet(callback: () => void) {
     console.log('----------222--------');
     try {
-        const res: any = await RequestApi.DetailPosts({ "id": inviter_detailid.value })
+        const res: any = await RequestApi.DetailShops({ "id": inviter_detailid.value })
         if (typeof callback === 'function') {
             callback();
         }
@@ -299,35 +299,35 @@ async function deletePosts() {
         <text class="left-text">{{ parkModel?.title }}</text>
     </view>
     <!-- 价格 -->
-    <view class="text-container1">
+    <!-- <view class="text-container1">
         <rich-text :nodes="generateRichTextContent(parkModel?.annual_rent ?? '')"></rich-text>
-    </view>
+    </view> -->
     <!-- 标签 -->
     <view class="custom-view">
         <!-- 根据 in_maintenance 显示文本 -->
-        <text v-if="parkModel?.in_maintenance" class="left-text1">含管理费</text>
+        <!-- <text v-if="parkModel?.in_maintenance" class="left-text1">含管理费</text> -->
 
         <!-- 根据 negotiable 显示文本 -->
-        <text
+        <!-- <text
             v-if="parkModel?.negotiable && (parkModel?.posts_type === 1 || parkModel?.posts_type === 3 || parkModel?.posts_type === 5)"
             class="left-text2">可小刀</text>
         <text v-if="parkModel?.negotiable && (parkModel?.posts_type === 2 || parkModel?.posts_type === 4)"
             class="left-text2">可协商</text>
 
-        <text v-if="!parkModel?.negotiable" class="left-text2">一口价</text>
+        <text v-if="!parkModel?.negotiable" class="left-text2">一口价</text> -->
 
         <!-- 固定显示的文本 -->
-        <text v-if="parkModel?.posts_type === 1 || parkModel?.posts_type === 2" class="left-text3">年租</text>
+        <!-- <text v-if="parkModel?.posts_type === 1 || parkModel?.posts_type === 2" class="left-text3">年租</text> -->
 
         <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
         <text class="right-text">{{ timeDis.formatDate(parkModel?.CreatedAt ?? '') }}</text>
     </view>
 
     <!-- 位置 -->
-    <view class="item-container">
+    <!-- <view class="item-container">
         <image class="addre-icon" src="/static/home/home_address_icon.png"></image>
         <text class="addre-text">{{ parkModel?.address }}</text>
-    </view>
+    </view> -->
     <!-- 删除按钮 -->
     <view v-if="(parkModel?.user_id ?? '') === UserInfo.user_id" class="single-btn-bg">
         <!-- 判断是否为当前用户 -->

@@ -119,7 +119,18 @@
 		{
 			"path": "pages/index/shops/shop-detail-page",
 			"style": {
-				"navigationBarTitleText": "服务详情",
+				"navigationBarTitleText": "详情",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "default",
+				"backgroundColor":"#F5F5F5"
+
+			}
+		},
+		{
+			"path": "pages/index/shops/self-assembly-page",
+			"style": {
+				"navigationBarTitleText": "装修指南",
 				"navigationBarTextStyle": "black",
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "default",

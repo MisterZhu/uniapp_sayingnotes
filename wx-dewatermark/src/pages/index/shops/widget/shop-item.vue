@@ -3,7 +3,7 @@
 import type { ParkItem } from '@/public/decl-type';
 import type { PropType } from 'vue';
 import { common_url , timeDis} from '@/public/common';
-import { placeImgWithType } from "@/utils/string-utils";
+import { shopPlaceImg } from "@/utils/string-utils";
 
 
 const props = defineProps({
@@ -51,28 +51,27 @@ const imgError = () =>{
 <template>
   <view class="component-wrapper" @click="handleItemClick">
     <view class="left-custom-view">
-      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : placeImgWithType(analyModel.posts_type)"
+      <image class="left-image" :src="analyModel.img_url ? analyModel.img_url : shopPlaceImg(analyModel.posts_type)"
       @error="imgError" mode="aspectFill"></image>
     </view>
     <view class="right-custom-view">
       <view class="top-content">
         <text class="left-text">{{ props.analyModel.title }}</text>
-        <view class="right-custom-view-image">
+        <!-- <view class="right-custom-view-image">
           <image class="right-image"
             :src="analyModel.posts_type === 4 ? common_url.home_park_buy_icon : common_url.home_park_sell_icon"
             mode="aspectFill"></image>
-        </view>
+        </view> -->
       </view>
       <view class="bottom-content">
         <!-- 下侧内容 -->
-        <view class="custom-view">
+        <!-- <view class="custom-view">
           <rich-text :nodes="generateRichTextContent(analyModel.annual_rent)"></rich-text>
-        </view>
+        </view> -->
         <view class="custom-view">
-          <!-- 根据 negotiable 显示文本 -->
-          <text v-if="analyModel.negotiable && (analyModel.posts_type === 3 || analyModel.posts_type === 5)" class="left-text2">可小刀</text>
+          <!-- <text v-if="analyModel.negotiable && (analyModel.posts_type === 3 || analyModel.posts_type === 5)" class="left-text2">可小刀</text>
           <text v-if="analyModel.negotiable && analyModel.posts_type === 4" class="left-text2">可协商</text>
-          <text v-if="!analyModel.negotiable" class="left-text2">一口价</text>
+          <text v-if="!analyModel.negotiable" class="left-text2">一口价</text> -->
 
           <!-- 展示CreatedAt，使用 formatDate 方法转译 -->
           <text class="right-text">{{ timeDis.formatDate(analyModel.CreatedAt) }}</text>
@@ -144,7 +143,7 @@ const imgError = () =>{
   text-overflow: ellipsis;
   word-wrap: break-word;
   white-space: normal !important;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   /* 添加左对齐样式 */
   text-align: left;

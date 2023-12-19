@@ -52,6 +52,12 @@ const list = [
     text: '废品回收',
     badge: '6',
     type: "warning"
+  },
+  {
+    url: '/static/home/home_decoration_icon1.jpeg',
+    text: '自装指南',
+    badge: '7',
+    type: "warning"
   }
 ]
 const images1 = ["/static/home/home_head_bg4.jpeg"]
@@ -72,6 +78,12 @@ const list1 = [
     url: '/static/home/home_recycle_icon1.jpeg',
     text: '废品回收',
     badge: '6',
+    type: "warning"
+  },
+  {
+    url: '/static/home/home_decoration_icon1.jpeg',
+    text: '自装指南',
+    badge: '7',
     type: "warning"
   }
 ]
@@ -245,15 +257,19 @@ const changeAction = (e: any) => {
   if (isChecking.value){
     if (index == 0) {
     uni.navigateTo({//家政
-      url: '/pages/index/shops/shop-page'
+      url: '/pages/index/shops/shop-page?index=1'
     })
   } else if (index == 1) {//装修
     uni.navigateTo({
-      url: '/pages/index/shops/shop-page'
+      url: '/pages/index/shops/shop-page?index=2'
     })
   } else if (index == 2) {//废品回收
     uni.navigateTo({
-      url: '/pages/index/shops/shop-page'
+      url: '/pages/index/shops/shop-page?index=3'
+    })
+  } else if (index == 3) {//废品回收
+    uni.navigateTo({
+      url: '/pages/index/shops/self-assembly-page'
     })
   }
   }else{
@@ -269,7 +285,11 @@ const changeAction = (e: any) => {
     uni.navigateTo({
       url: '/pages/index/used/used-page'
     })
-  } else if (index == 3) {//商家服务
+  } else if (index == 6) {//商家服务
+    uni.navigateTo({
+      url: '/pages/index/shops/self-assembly-page'
+    })
+  } else {//商家服务
     uni.navigateTo({
       url: '/pages/index/shops/shop-page'
     })
