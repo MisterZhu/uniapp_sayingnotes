@@ -184,7 +184,7 @@ const copyHandle = async () => {
         data: parkModel?.wei_xin ?? '',
         success() {
             uni.showToast({
-                title: `复制微信号成功：${parkModel?.value?.wei_xin ?? ''}`,
+                title: `成功复制微信号：${parkModel?.value?.wei_xin ?? ''}`,
                 icon: 'none',
                 duration: 2000
             })

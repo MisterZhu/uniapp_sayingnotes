@@ -122,22 +122,22 @@ async function requestUserInfoWithCode(code: string) {
 // MARK: 社区列表
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '1.0.3'})
+    const res: any = await RequestApi.GetConfigInfo({ "name": '1.0.3' })
     if (typeof callback === 'function') {
       callback();
     }
     if (res.code === 200) {
       communityAry = res.data
-      if (res.data['state'] == 'true'){
+      if (res.data['state'] == 'true') {
         isChecking.value = true;
-      }else{
+      } else {
         isChecking.value = false;
       }
       GlobalData.checking = isChecking.value;
       console.log("GlobalData.checking:", GlobalData.checking);
 
       console.log('0')
-      
+
     } else {
     }
   } catch (error) {
@@ -196,19 +196,19 @@ function getUserInfo() {
 function getConfigJson() {
   // 使用 uni.request 进行网络请求
   uni.request({
-      url: 'https://qiniu.aimissu.top/config/floor.json',
-      method: 'GET',
-      success: (res) => {
-        // 请求成功，res.data 包含了 JSON 数据
-        console.log('JSON 数据加载成功', res.data);
-        uni.setStorageSync(common_key.k_cachedJsonData, res.data);
-      },
-      fail: (err) => {
-        // 请求失败
-        console.error('JSON 数据加载失败', err);
-      }
-    });
-  }
+    url: 'https://qiniu.aimissu.top/config/floor.json',
+    method: 'GET',
+    success: (res) => {
+      // 请求成功，res.data 包含了 JSON 数据
+      console.log('JSON 数据加载成功', res.data);
+      uni.setStorageSync(common_key.k_cachedJsonData, res.data);
+    },
+    fail: (err) => {
+      // 请求失败
+      console.error('JSON 数据加载失败', err);
+    }
+  });
+}
 getUserInfo()
 getConfigJson()
 // MARK: 仅仅获取用户信息
@@ -254,56 +254,56 @@ const changeAction = (e: any) => {
   const index = e.detail.index;
 
   console.log(e);
-  if (isChecking.value){
+  if (isChecking.value) {
     if (index == 0) {
-    uni.navigateTo({//家政
-      url: '/pages/index/shops/shop-page?index=1'
-    })
-  } else if (index == 1) {//装修
-    uni.navigateTo({
-      url: '/pages/index/shops/shop-page?index=2'
-    })
-  } else if (index == 2) {//废品回收
-    uni.navigateTo({
-      url: '/pages/index/shops/shop-page?index=3'
-    })
-  } else if (index == 3) {//自装指南
-    uni.navigateTo({
-      url: '/pages/index/shops/self-assembly-page?index=4'
-    })
-  }
-  }else{
+      uni.navigateTo({//家政
+        url: '/pages/index/shops/shop-page?index=1'
+      })
+    } else if (index == 1) {//装修
+      uni.navigateTo({
+        url: '/pages/index/shops/shop-page?index=2'
+      })
+    } else if (index == 2) {//废品回收
+      uni.navigateTo({
+        url: '/pages/index/shops/shop-page?index=3'
+      })
+    } else if (index == 3) {//自装指南
+      uni.navigateTo({
+        url: '/pages/index/shops/self-assembly-page?index=4'
+      })
+    }
+  } else {
     if (index == 0) {//车位出租
-    uni.navigateTo({
-      url: '/pages/index/parking/parking-page'
-    })
-  } else if (index == 1) {//车位买卖
-    uni.navigateTo({
-      url: '/pages/index/park-sell/park-business'
-    })
-  } else if (index == 2) {//二手闲置
-    uni.navigateTo({
-      url: '/pages/index/used/used-page'
-    })
-  } else if (index == 3) {//家政
-    uni.navigateTo({
-      url: '/pages/index/shops/shop-page?index=1'
-    })
-  } else if (index == 4) {//装修
-    uni.navigateTo({
-      url: '/pages/index/shops/shop-page?index=2'
-    })
-  } else if (index == 5) {//废品回收
-    uni.navigateTo({
-      url: '/pages/index/shops/shop-page?index=3'
-    })
-  } else if (index == 6) {//自装指南
-    uni.navigateTo({
-      url: '/pages/index/shops/self-assembly-page?index=4'
-    })
+      uni.navigateTo({
+        url: '/pages/index/parking/parking-page'
+      })
+    } else if (index == 1) {//车位买卖
+      uni.navigateTo({
+        url: '/pages/index/park-sell/park-business'
+      })
+    } else if (index == 2) {//二手闲置
+      uni.navigateTo({
+        url: '/pages/index/used/used-page'
+      })
+    } else if (index == 3) {//家政
+      uni.navigateTo({
+        url: '/pages/index/shops/shop-page?index=1'
+      })
+    } else if (index == 4) {//装修
+      uni.navigateTo({
+        url: '/pages/index/shops/shop-page?index=2'
+      })
+    } else if (index == 5) {//废品回收
+      uni.navigateTo({
+        url: '/pages/index/shops/shop-page?index=3'
+      })
+    } else if (index == 6) {//自装指南
+      uni.navigateTo({
+        url: '/pages/index/shops/self-assembly-page?index=4'
+      })
+    }
   }
-  }
-  
+
 
 
 }
@@ -354,10 +354,14 @@ const pickerConfirm = (selectedCommunityName: any) => {
 const bindChange = (e: any) => {
   // 处理选择器确认逻辑，selectedCommunityName 为用户选择的社区名称
   console.log(`e:`, e);
-
-  optionIndex.value = communityAry[e.target.value].detail_name;
+  let seleind = e.target.value[0];
+  console.log(`seleind:`, seleind);
+  let model = communityAry[seleind];
+  console.log(`model.detail_name:`, model.detail_name);
+  
+  optionIndex.value = model.detail_name;
   GlobalData.select_community = optionIndex.value;
-  GlobalData.select_community_id = communityAry[e.target.value].ID;
+  GlobalData.select_community_id = model.ID;
 };
 // 产业方向选择改变
 const bindIndustryDirectionPickerChange = (e: any) => {
@@ -453,8 +457,10 @@ const bindIndustryDirectionPickerChange = (e: any) => {
 .grid-item-box image {
   width: 105rpx;
   height: 105rpx;
-  border-radius: 15rpx; /* 将图片的边框半径设置为50%以创建圆形效果 */
-  overflow: hidden; /* 避免圆角图片溢出 */
+  border-radius: 15rpx;
+  /* 将图片的边框半径设置为50%以创建圆形效果 */
+  overflow: hidden;
+  /* 避免圆角图片溢出 */
 }
 
 .text {

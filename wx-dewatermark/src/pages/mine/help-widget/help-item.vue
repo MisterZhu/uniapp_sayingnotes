@@ -5,7 +5,7 @@
         <span class="left_title">{{ itemModel.left_title }}</span>
       </view>
       <view class="card-header-right">
-        <img class="down_icon" :src="itemModel.share_shou ? itemModel.left_img : itemModel.right_img " alt="">
+        <img class="down_icon" :src="itemModel.share_shou ? itemModel.left_img : itemModel.right_img" alt="">
       </view>
     </view>
     <view v-if="itemModel.share_shou" class="card-body">
@@ -14,7 +14,8 @@
   </view>
 </template>
   
-<script setup lang="ts">import type { MineItemModel } from '@/public/decl-type';
+<script setup lang="ts">
+import type { MineItemModel } from '@/public/decl-type';
 import type { PropType } from 'vue';
 
 const props = defineProps({
@@ -57,14 +58,14 @@ const toggleExpand = () => {
 }
 
 .card-header-left {
-  width: 70%;
+  width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .card-header-right {
-  width: 30%;
+  width: 10%;
   text-align: right;
 }
 
@@ -77,6 +78,7 @@ const toggleExpand = () => {
   height: 50px;
   margin-right: 10px;
 }
+
 .down_icon {
   width: 20px;
   height: 20px;
@@ -85,11 +87,14 @@ const toggleExpand = () => {
   // padding-bottom: 5px;
 
 }
+
 .left_title {
   font-size: 14px;
   font-weight: bold;
   color: $uni-color-333;
   padding-left: 10px;
+  // -webkit-line-clamp: 3;
+  // -webkit-box-orient: vertical;
 }
 
 .right_title {

@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <view>
-      <HelpItem v-for="(item, index) in itmeAry" :key="index" :item-model="item" @click="handleItemClick" />
+      <HelpItem v-for="(item, index) in (GlobalData.checking ? itmeAry1 : itmeAry)" :key="index" :item-model="item" @click="handleItemClick" />
     </view>
     <button class="server-btn" open-type="contact" :bindcontact="handleContact">联系客服</button>
     <view class="title_bg">
@@ -16,6 +16,7 @@
 import type { MineItemModel } from "@/public/decl-type";
 import HelpItem from "./help-widget/help-item.vue";
 import { onMounted, ref } from "vue";
+import { GlobalData } from '@/public/common';
 const itmeAry = ref<MineItemModel[]>([
   {
     left_img: "/static/mine/mine-up-999.png",
@@ -28,6 +29,19 @@ const itmeAry = ref<MineItemModel[]>([
     radius_type: 3,
 
   },
+  {
+    left_img: "/static/mine/mine-up-999.png",
+    left_title: "如果无法使用，或者出现问题怎么办？",
+    right_img: "/static/mine/mine-down-999.png",
+    right_title: "请点击下方的“联系客服”按钮进行反馈",
+    line_shou: true,
+    head_shou: false,
+    share_shou: false,
+    radius_type: 3,
+
+  },
+])
+const itmeAry1 = ref<MineItemModel[]>([
   {
     left_img: "/static/mine/mine-up-999.png",
     left_title: "如果无法使用，或者出现问题怎么办？",
