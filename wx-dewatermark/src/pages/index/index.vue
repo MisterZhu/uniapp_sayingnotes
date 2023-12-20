@@ -52,12 +52,6 @@ const list = [
     text: '废品回收',
     badge: '6',
     type: "warning"
-  },
-  {
-    url: '/static/home/home_decoration_icon1.jpeg',
-    text: '自装指南',
-    badge: '7',
-    type: "warning"
   }
 ]
 const images1 = ["/static/home/home_head_bg4.jpeg"]
@@ -78,12 +72,6 @@ const list1 = [
     url: '/static/home/home_recycle_icon1.jpeg',
     text: '废品回收',
     badge: '6',
-    type: "warning"
-  },
-  {
-    url: '/static/home/home_decoration_icon1.jpeg',
-    text: '自装指南',
-    badge: '7',
     type: "warning"
   }
 ]
@@ -122,7 +110,7 @@ async function requestUserInfoWithCode(code: string) {
 // MARK: 社区列表
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '1.0.3' })
+    const res: any = await RequestApi.GetConfigInfo({ "name": '2.0.0' })
     if (typeof callback === 'function') {
       callback();
     }

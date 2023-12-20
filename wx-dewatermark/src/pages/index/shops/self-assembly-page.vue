@@ -72,7 +72,7 @@ async function requestPostsList(callback: () => void) {
       if (page === 0) {
         // 如果是第一页，直接将 analyAry.data 映射到 itmeAry
         itmeAry.value = res.data.map((item: { img_url: any; title: any; annual_rent: any; }) => ({
-          left_img: item.img_url,
+          left_img: "/static/mine/mine-up-999.png",
           left_title: item.title,
           right_img: "/static/mine/mine-down-999.png",
           right_title: item.annual_rent,
@@ -84,7 +84,7 @@ async function requestPostsList(callback: () => void) {
       } else {
         // 如果不是第一页，将新数据添加到 itmeAry
         itmeAry.value = [...itmeAry.value, ...res.data.map((item: { img_url: any; title: any; annual_rent: any; }) => ({
-          left_img: item.img_url,
+          left_img: "/static/mine/mine-up-999.png",
           left_title: item.title,
           right_img: "/static/mine/mine-down-999.png",
           right_title: item.annual_rent,
