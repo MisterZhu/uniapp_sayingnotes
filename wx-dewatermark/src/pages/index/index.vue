@@ -102,9 +102,6 @@ async function requestUserInfoWithCode(code: string) {
   UserInfo.value = { ...UserInfo.value, ...res.data };
   console.log("UserInfo.value.state = " + UserInfo.value.state)
   console.log("UserInfo.value.default_room e:", UserInfo.value.default_room);
-
-  requestAnalyList(() => { })
-
 }
 async function requestState(callback: () => void) {
   try {
@@ -113,7 +110,6 @@ async function requestState(callback: () => void) {
       callback();
     }
     if (res.code === 200) {
-      communityAry = res.data
       if (res.data['state'] == 'true') {
         isChecking.value = true;
       } else {
@@ -158,9 +154,9 @@ async function requestAnalyList(callback: () => void) {
         GlobalData.select_community = firstModel.detail_name;
         GlobalData.select_community_id = firstModel.ID;
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
-        isNeedSelect.value = true;
+        // isNeedSelect.value = true;
         // @ts-ignore
-        popup.value.open('center');
+        // popup.value.open('center');
       }
     } else {
       uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
@@ -225,6 +221,7 @@ onShow(() => {
   console.log("App Show");
   onlyGetUserInfo();
   requestState(() => { })
+  requestAnalyList(() => { })
 
 });
 //接收参数
