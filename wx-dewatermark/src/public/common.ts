@@ -68,5 +68,6 @@ export let GlobalData = {
   select_community_id: 0,
   token: '',
   checking: true,
+  curent_title: '',
 
 };

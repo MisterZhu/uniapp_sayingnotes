@@ -104,13 +104,11 @@ async function requestUserInfoWithCode(code: string) {
   console.log("UserInfo.value.default_room e:", UserInfo.value.default_room);
 
   requestAnalyList(() => { })
-  requestState(() => { })
 
 }
-// MARK: 社区列表
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '2.0.0' })
+    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.0' })
     if (typeof callback === 'function') {
       callback();
     }
@@ -121,6 +119,7 @@ async function requestState(callback: () => void) {
       } else {
         isChecking.value = false;
       }
+      GlobalData.curent_title = res.data['title'];
       GlobalData.checking = isChecking.value;
       console.log("GlobalData.checking:", GlobalData.checking);
 
@@ -198,7 +197,7 @@ function getConfigJson() {
   });
 }
 getUserInfo()
-getConfigJson()
+// getConfigJson()
 // MARK: 仅仅获取用户信息
 async function requestUserInfo(code: string) {
   const res: any = await RequestApi.UserLogin({ "code": code, "inviter_id": inviter_openid })
@@ -225,6 +224,8 @@ function onlyGetUserInfo() {
 onShow(() => {
   console.log("App Show");
   onlyGetUserInfo();
+  requestState(() => { })
+
 });
 //接收参数
 onLoad(options => {

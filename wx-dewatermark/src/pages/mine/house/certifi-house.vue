@@ -84,6 +84,7 @@ onLoad(options => {
   communityModel.value = JSON.parse(decodeURIComponent(options.communityModel as string)) as CommunityItem
   console.log(`communityModel onLoad: ${communityModel.value.detail_name}`);
   getLocalUserInfo();
+  generateData();
 
 });
 const handleItemClick = (itemModel: any) => {
@@ -154,9 +155,57 @@ async function publishLeasePosts() {
 }
 // 异步加载本地JSON数据
 onMounted(() => {
-  classes.value = uni.getStorageSync(common_key.k_cachedJsonData); // 将JSON数据赋值给classes
-});
+  // classes.value = uni.getStorageSync(common_key.k_cachedJsonData); // 将JSON数据赋值给classes
+  // console.log(classes.value);
 
+  // generateData();
+
+});
+const generateData = () => {
+  classes.value = [];
+  for (let i = 1; i <= 20; i++) {
+    let units = [];
+
+    for (let j = 1; j <= 4; j++) {
+      let floors = [];
+
+      for (let k = 1; k <= 35; k++) {
+        let households = [];
+
+        for (let l = 1; l <= 6; l++) {
+          let household = {
+            text: `${k}0${l}`,
+            value: `${i}-${j}-${k}-${l}`,
+          };
+          households.push(household);
+        }
+
+        let floor = {
+          text: `${k}层`,
+          value: `${i}-${j}-${k}-0`,
+          children: households,
+        };
+        floors.push(floor);
+      }
+
+      let unit = {
+        text: `${j}单元`,
+        value: `${i}-${j}-0`,
+        children: floors,
+      };
+      units.push(unit);
+    }
+
+    let building = {
+      text: `${i}幢`,
+      value: `${i}-0-0`,
+      children: units,
+    };
+    classes.value.push(building);
+  }
+  console.log(classes.value);
+
+};
 const onnodeclick = (e: any) => {
   console.log('6666onnodeclick');
   console.log(e);
