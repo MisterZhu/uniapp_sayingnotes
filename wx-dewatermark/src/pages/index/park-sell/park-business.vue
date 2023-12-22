@@ -195,7 +195,7 @@ const photosToShow = computed(() => {
       </view>
     </view>
   </view>
-  <uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction"
+  <uni-fab v-if="GlobalData.curent_title.includes('misterzhu')" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction"
     @trigger="selectItem" @fabClick="fabClick"></uni-fab>
 </template>
 <style lang="scss">

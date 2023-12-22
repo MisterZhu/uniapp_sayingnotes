@@ -104,7 +104,7 @@ watch(
   <view v-show="analyAry.data.length <= 0" class="history_item">
     <text class="center-text">暂无出售闲置物品信息\n快去发布吧~</text>
   </view>
-  <view class="float-button" @click="handleButtonClick">
+  <view v-if="GlobalData.curent_title.includes('misterzhu')" class="float-button" @click="handleButtonClick">
     <image class="icon" src="/static/home/home_used_publish3.png" />
     <text class="text">发布</text>
   </view>

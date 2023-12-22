@@ -153,6 +153,8 @@ async function requestAnalyList(callback: () => void) {
         optionIndex.value = firstModel.detail_name;
         GlobalData.select_community = firstModel.detail_name;
         GlobalData.select_community_id = firstModel.ID;
+        uni.showToast({ title: "左上角可以切换你所在的小区！", icon: 'none', duration: 3000 })
+
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
         // isNeedSelect.value = true;
         // @ts-ignore
@@ -207,6 +209,7 @@ async function requestUserInfo(code: string) {
   UserInfo.value = { ...UserInfo.value, ...res.data };
   console.log("UserInfo.value.state = " + UserInfo.value.state)
   console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
+  requestAnalyList(() => { })
 
 }
 //获取openid
@@ -221,7 +224,6 @@ onShow(() => {
   console.log("App Show");
   onlyGetUserInfo();
   requestState(() => { })
-  requestAnalyList(() => { })
 
 });
 //接收参数

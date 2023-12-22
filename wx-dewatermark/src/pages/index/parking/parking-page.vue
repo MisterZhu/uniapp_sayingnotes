@@ -221,8 +221,12 @@ const photosToShow = computed(() => {
       </view>
     </view>
   </view>
-  <uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction"
-    @trigger="selectItem" @fabClick="fabClick"></uni-fab>
+  <uni-fab v-if="GlobalData.curent_title === 'misterzhu'"
+      :pattern="pattern" :content="content" 
+      :horizontal="horizontal" :vertical="vertical" 
+      :direction="direction"
+      @trigger="selectItem" @fabClick="fabClick"
+    ></uni-fab>
 </template>
 <style lang="scss">
 // .uni-common-mt {
