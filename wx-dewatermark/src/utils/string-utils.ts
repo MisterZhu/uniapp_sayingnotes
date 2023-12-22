@@ -1,6 +1,13 @@
 import { common_url } from "@/public/common";
 
-
+export function includesZhu(postType: string): boolean {
+    switch (postType) {
+        case 'misterzhu':
+            return true;
+        default:
+            return false;
+    }
+}
 //判断date是否是今天
 export function strAddStar(dateStr: string): string {
     // 将 date 字段转换为日期对象 '2023-04-05T19:42:03+08:00'

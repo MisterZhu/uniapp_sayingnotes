@@ -1,11 +1,19 @@
 <template>
   <view class="container">
-    <uni-card :is-shadow="false" is-full>
+    <uni-card v-if="includesZhu(GlobalData.curent_title)" :is-shadow="false" is-full>
       <view class="example-body">
         <text class="uni-h6">所填个人信息（手机号和微信号），只允许本小区实名认证通过的业主查看，可放心填写</text>
       </view>
     </uni-card>
-    <uni-card :is-shadow="false">
+    <uni-card v-if="!includesZhu(GlobalData.curent_title)" :is-shadow="false" is-full>
+      <view class="example-body">
+        <text class="uni-h6">你好，发布功能暂时未开放，如有问题请咨询客服</text>
+      </view>
+    </uni-card>
+    <view v-show="!includesZhu(GlobalData.curent_title)" class="history_item">
+      <text class="center-text">你好，发布功能暂时未开放\n如有问题请咨询客服</text>
+    </view>
+    <uni-card v-if="includesZhu(GlobalData.curent_title)" :is-shadow="false">
       <uni-easyinput :inputBorder="false" type="textarea" v-model="baseFormData.title"
         :placeholder="dynamicPlaceholder" />
       <view v-if="indexType === '3'">
@@ -13,7 +21,7 @@
           @success="success" @fail="fail" @select="select" />
       </view>
     </uni-card>
-    <view class="example">
+    <view v-if="includesZhu(GlobalData.curent_title)" class="example">
       <uni-forms ref="baseForm" :modelValue="baseFormData" label-position="left">
         <view class="container2">
           <uni-forms-item :label="dynamicTtile" required>
@@ -37,8 +45,10 @@
       </uni-forms>
     </view>
   </view>
-  <button class="server-btn" @click="handleItemClick">发布</button>
-  <view class="divider"></view>
+  <button v-if="includesZhu(GlobalData.curent_title)" class="server-btn" @click="handleItemClick">发布</button>
+  <button v-if="!includesZhu(GlobalData.curent_title)" class="server-btn1" @click="handleItemClick1">联系客服</button>
+
+<view class="divider"></view>
 </template>
   
   
@@ -48,6 +58,7 @@ import { RequestApi } from '@/public/request';
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 import { GlobalData, UserInfo } from '@/public/common';
+import { includesZhu } from "@/utils/string-utils";
 
 
 // 基础表单数据
@@ -137,6 +148,11 @@ const dynamicTtile = computed(() => {
     return '价格';
   }
 });
+const handleItemClick1 = (itemModel: any) => {
+  uni.navigateTo({
+    url: '/pages/mine/help-center'
+  })
+}
 const handleItemClick = (itemModel: any) => {
   if (!baseFormData.title) {
     uni.showToast({
@@ -296,6 +312,31 @@ const fail = (e: any) => {
   
   
 <style lang="scss">
+.center-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #FF6C00;
+  width: 60%; /* 设置宽度为元素包含块宽度的60% */
+  text-align: center; /* 让文本水平居中 */
+
+}
+.server-btn1 {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  line-height: 40px;
+  /* 等于按钮高度 */
+  background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
+  color: $uni-color-fff;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 22px;
+  margin-left: 22px;
+  margin-top: 40vh; /* 设置为屏幕高度的一半 */
+}
 .example-body {
   margin: 0px 10px;
 }
