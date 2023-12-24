@@ -139,18 +139,6 @@
 			}
 		},
 		{
-			"path": "pages/history/search-history",
-			"style": {
-				"navigationBarTitleText": "解析记录",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor":"#ffffff",
-				"enablePullDownRefresh": true,
-				"onReachBottonDistance": 150,
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的",
@@ -158,17 +146,6 @@
 				"navigationStyle": "custom",
 				"backgroundColor":"#F5F5F5"
 
-
-			}
-		},
-		{
-			"path": "pages/index/analysis-result",
-			"style": {
-				"navigationBarTitleText": "视频解析",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
 
 			}
 		},

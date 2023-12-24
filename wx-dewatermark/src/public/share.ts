@@ -8,6 +8,7 @@ const share = {
 		const currentPage = getCurrentPages().pop();
 		console.log(`route =: ${currentPage?.route}`);
 		switch (currentPage?.route) {
+			case 'pages/index/shops/shop-detail-page':
 			case 'pages/index/parking/parking-detail-page':
 				let img = 'https://qiniu.aimissu.top/common_img/xianzhijiao_shareicon.png';
 				let local_img = uni.getStorageSync(common_key.k_detail_img);
@@ -18,7 +19,7 @@ const share = {
 				console.log('------------------detail----onShareAppMessage');
 				return {
 					title: uni.getStorageSync(common_key.k_detail_title), // 分享标题
-					path: 'pages/index/parking/parking-detail-page?detail_id=' + uni.getStorageSync(common_key.k_detail_id), // 默认为当前页面路径
+					path: currentPage?.route + '?detail_id=' + uni.getStorageSync(common_key.k_detail_id), // 默认为当前页面路径
 					imageUrl: img// 默认为当前页面的截图
 				}
 			default:

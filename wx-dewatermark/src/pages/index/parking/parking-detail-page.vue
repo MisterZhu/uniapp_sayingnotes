@@ -39,14 +39,14 @@ onLoad(options => {
             images.value = arr;
             console.log("images  = " + images.value)
             inviter_detailid.value = parkModel.value?.ID ?? 0;
-
+            requestPostsDet(() => {
+            // TODO 下面执行刷新的方法
+        });
         } else {
             inviter_detailid.value = Number(options.detail_id)
             onlyGetUserInfo();
         }
-        requestPostsDet(() => {
-            // TODO 下面执行刷新的方法
-        });
+        
         // 处理逻辑
         // console.log(`index onLoad:`, options);
         // inviter_openid.value = options.open_id
@@ -65,7 +65,9 @@ async function requestUserInfo(code: string) {
     UserInfo.value = { ...UserInfo.value, ...res.data };
     console.log("UserInfo.value.state = " + UserInfo.value.state)
     console.log("UserInfo.value.user_id = " + UserInfo.value.user_id)
-
+    requestPostsDet(() => {
+            // TODO 下面执行刷新的方法
+        });
 }
 //获取openid
 function onlyGetUserInfo() {
@@ -299,7 +301,7 @@ async function deletePosts() {
         <swiper class="custom-swiper" autoplay="true" interval="5000" circular="true" indicator-dots="true"
             indicator-color="#ffffff" indicator-active-color="#FF6C00" style="height: 280px">
             <swiper-item v-for="(image, index) in images" :key="index" class="rounded-swiper-item">
-                <image :src="image" class="full-width-image" @error="imgError(index)" mode="aspectFill"></image>
+                <image :src="image" class="full-width-image" @error="imgError(index)"></image>
             </swiper-item>
         </swiper>
     </view>
@@ -411,6 +413,8 @@ async function deletePosts() {
 .full-width-image {
     width: 100%;
     height: 100%;
+    object-fit: cover; /* 或者使用 object-fit: contain; */
+
 }
 
 // ::v-deep .full-width-image {

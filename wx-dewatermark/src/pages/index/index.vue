@@ -105,7 +105,7 @@ async function requestUserInfoWithCode(code: string) {
 }
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.0' })
+    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.2' })
     if (typeof callback === 'function') {
       callback();
     }
@@ -153,7 +153,10 @@ async function requestAnalyList(callback: () => void) {
         optionIndex.value = firstModel.detail_name;
         GlobalData.select_community = firstModel.detail_name;
         GlobalData.select_community_id = firstModel.ID;
-        uni.showToast({ title: "左上角可以切换你所在的小区！", icon: 'none', duration: 3000 })
+        if (!GlobalData.is_show_toast){
+          uni.showToast({ title: "左上角可以切换你所在的小区！", icon: 'none', duration: 3000 })
+          GlobalData.is_show_toast = true;
+        }
 
         // 如果没有找到匹配的社区，弹出选择框或者执行其他操作
         // isNeedSelect.value = true;

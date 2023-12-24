@@ -39,7 +39,7 @@ async function requestPostsList(callback: () => void) {
   console.log('----------222--------');
 
   try {
-    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 5,})
+    const res: any = await RequestApi.PostsList({ "page": page, "size": size, "posts_type": 5, })
     if (typeof callback === 'function') {
       callback();
     }
@@ -76,10 +76,27 @@ onPullDownRefresh(() => {
   requestPostsList(() => uni.stopPullDownRefresh())
 });
 const handleButtonClick = () => {
+  if (UserInfo.value.state === 0) {
+    uni.showModal({
+      title: '温馨提示',
+      content: '您还没有进行房屋认证，房屋认证以后，您发布的物品会增加小区和楼栋标识',
+      cancelText: "继续发布",
+      confirmText: "先去认证", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          uni.navigateTo({
+            url: '/pages/mine/house/select-community'
+          })
+        } else if (res.cancel) {
+          uni.navigateTo({
+            url: '/pages/index/used/publish-used',
+          });
+        }
+      }
+    });
+  }
   // Assuming 'uni' is a valid object that can call 'navigateTo'
-  uni.navigateTo({
-    url: '/pages/index/used/publish-used',
-  });
+
 };
 
 // 触底的事件
@@ -134,11 +151,15 @@ watch(
   // margin: 10rpx;
   /* 按钮内边距 */
   border-radius: 120rpx;
-  flex-direction: column; /* 设置为垂直方向排列 */
-  justify-content: center; /* 设置垂直方向居中 */
+  flex-direction: column;
+  /* 设置为垂直方向排列 */
+  justify-content: center;
+  /* 设置垂直方向居中 */
 
-  width: 120rpx; /* 设置宽度 */
-  height: 120rpx; /* 设置高度 */
+  width: 120rpx;
+  /* 设置宽度 */
+  height: 120rpx;
+  /* 设置高度 */
   /* 圆角 */
   display: flex;
   align-items: center;
@@ -159,4 +180,5 @@ watch(
 .text {
   font-size: 14px;
   /* 文字大小 */
-}</style>
+}
+</style>

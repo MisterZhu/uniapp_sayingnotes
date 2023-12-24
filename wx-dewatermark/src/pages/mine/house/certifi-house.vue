@@ -1,31 +1,38 @@
 <template>
   <view class="container">
-    <view class="result-box">
+    <view v-show="includesZhu(GlobalData.curent_title)" class="result-box">
       <text>社区：{{ communityModel?.detail_name }}</text>
     </view>
-    <uni-card is-full :is-shadow="false">
+    <uni-card v-show="includesZhu(GlobalData.curent_title)" is-full :is-shadow="false">
       <text class="uni-h6">请选择正确的房号、并上传购房合同（房号页面）照片或其他证明信息证明是该小区业主，也可联系客服（我的->帮助中心->联系客服）说明情况</text>
     </uni-card>
-    <uni-section title="房屋信息" sub-title="请选择你购房合同中对应的房号" type="line" padding style="height: calc(100vh - 100px);">
+    <uni-card v-show="!includesZhu(GlobalData.curent_title)" is-full :is-shadow="false">
+      <text class="uni-h6">你好，暂不支持添加房屋，如有疑问，请咨询客服</text>
+    </uni-card>
+    <view v-show="!includesZhu(GlobalData.curent_title)" class="history_item">
+      <text class="center-text">你好，暂不支持添加房屋\n如有问题请咨询客服</text>
+    </view>
+    <uni-section v-show="includesZhu(GlobalData.curent_title)" title="房屋信息" sub-title="请选择你购房合同中对应的房号" type="line" padding style="height: calc(100vh - 100px);">
       <uni-data-picker placeholder="请选择房号" popup-title="请选择房屋信息" :localdata="classes" v-model="selectedClass"
         @change="onchange" @nodeclick="onnodeclick" @popupopened="onpopupopened"
         @popupclosed="onpopupclosed"></uni-data-picker>
     </uni-section>
-    <uni-section title="上传图片" sub-title="请上传合同(房号页面)照片或其他能证明你是业主身份的照片" type="line" padding
+    <uni-section v-show="includesZhu(GlobalData.curent_title)" title="上传图片" sub-title="请上传合同(房号页面)照片或其他能证明你是业主身份的照片" type="line" padding
       style="height: calc(100vh - 100px);">
       <view>
         <uni-file-picker file-mediatype="image" mode="grid" file-extname="png,jpg" :limit="1" @progress="progress"
           @success="success" @fail="fail" @select="select" />
       </view>
     </uni-section>
-    <uni-section title="手机号" subTitle="用于绑定该小程序" type="line" padding>
+    <uni-section v-show="includesZhu(GlobalData.curent_title)" title="手机号" subTitle="用于绑定该小程序" type="line" padding>
       <uni-easyinput class="uni-mt-5" trim="all" v-model="phoneNum" placeholder="请输入手机号"
         @input="inputAction"></uni-easyinput>
     </uni-section>
     <view class="divider"></view>
     <!-- 添加按钮 -->
     <!-- <button class="server-btn" open-type="contact" :bindcontact="handleItemClick">联系客服</button> -->
-    <button class="server-btn" @click="handleItemClick">新增</button>
+    <button v-show="includesZhu(GlobalData.curent_title)" class="server-btn" @click="handleItemClick">新增</button>
+    <button v-show="!includesZhu(GlobalData.curent_title)" class="server-btn1" @click="handleItemClick1">联系客服</button>
 
     <view class="divider"></view>
 
@@ -37,7 +44,8 @@ import { ref, onMounted } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import type { CommunityItem, UserInfoModel } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
-import { common_key } from '@/public/common';
+import { GlobalData } from '@/public/common';
+import { includesZhu } from "@/utils/string-utils";
 
 const selectedClass = ref(' ');
 const classes = ref<Array<any>>([]); // 用于存储本地JSON数据
@@ -87,6 +95,11 @@ onLoad(options => {
   generateData();
 
 });
+const handleItemClick1 = (itemModel: any) => {
+  uni.navigateTo({
+    url: '/pages/mine/help-center'
+  })
+}
 const handleItemClick = (itemModel: any) => {
   if (!selectedClass.value.trim()) { // 检查是否为空或者只包含空格
     uni.showToast({
@@ -270,6 +283,31 @@ const fail = (e: any) => {
 </script>
   
 <style lang="scss" scoped>
+.center-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #FF6C00;
+  width: 60%; /* 设置宽度为元素包含块宽度的60% */
+  text-align: center; /* 让文本水平居中 */
+
+}
+.server-btn1 {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  line-height: 40px;
+  /* 等于按钮高度 */
+  background-image: linear-gradient(to bottom, $uni-color-gradient0, $uni-color-gradient1);
+  color: $uni-color-fff;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 22px;
+  margin-left: 22px;
+  margin-top: 50vh; /* 设置为屏幕高度的一半 */
+}
 .result-box {
   text-align: start;
   padding: 10px 15px;

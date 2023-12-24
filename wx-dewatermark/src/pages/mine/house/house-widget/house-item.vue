@@ -24,38 +24,7 @@ const copyHandle = async () => {
         }
     })
 }
-// MARK: 解析链接
-async function requestAnalysisUrl(url: string) {
-    try {
-        const res: any = await RequestApi.HomeAnalysis({ "url": url })
-        console.log("res = " + res)
-        if (res.code === 200) {
-            // analyModel = res.data
-            // 跳转到二级页面并传递参数
-            uni.navigateTo({
-                url: '/pages/index/analysis-result?analyModel=' + encodeURIComponent(JSON.stringify(res.data))
-            })
-        } else {
-            uni.showToast({ title: res.msg, icon: 'none', duration: 2000 })
-        }
-    } catch (error) {
-        console.error(error)
-        uni.showToast({ title: '请求失败', icon: 'none', duration: 2000 })
-    }
-}
 
-const handleSubmit = async () => {
-    if (props.analyModel.img_url != '') {
-        const str = props.analyModel.img_url
-        if (str.includes('http://') || str.includes('https://')) {
-            requestAnalysisUrl(str ?? '')
-        } else {
-            uni.showToast({ title: '输入的链接格式不正确', icon: 'none', duration: 2000 })
-        }
-    } else {
-        uni.showToast({ title: '请输入要解析的链接', icon: 'none', duration: 2000 })
-    }
-}
 </script>
 
 <template>

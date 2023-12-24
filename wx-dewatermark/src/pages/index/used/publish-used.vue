@@ -130,6 +130,8 @@ const handleItemClick1 = (itemModel: any) => {
   })
 }
 const handleItemClick = (itemModel: any) => {
+  console.log("UserInfo.value.room e:", UserInfo.value.default_room);
+
   if (!baseFormData.title) {
     uni.showToast({
       title: '请输入介绍',
@@ -176,12 +178,17 @@ async function publishLeasePosts() {
 
   try {
     console.log("UserInfo.value.room e:", UserInfo.value.default_room);
-
-    const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
     let loudongStr = '';
-    if (loudongAry.length > 0) {
-      loudongStr = '-' + loudongAry[0] + '幢';
+
+    if (UserInfo.value.default_room.length > 0) {
+      const loudongAry = UserInfo.value.default_room.split('-'); // 使用空格作为分隔符
+      if (loudongAry.length > 0) {
+        loudongStr = '-' + loudongAry[0] + '幢';
+      }
+    } else {
+      loudongStr = GlobalData.select_community;
     }
+
     const requestData = {
       title: baseFormData.title,
       telephone: baseFormData.telephone,
@@ -286,10 +293,13 @@ const fail = (e: any) => {
   transform: translate(-50%, -50%);
   font-size: 16px;
   color: #FF6C00;
-  width: 60%; /* 设置宽度为元素包含块宽度的60% */
-  text-align: center; /* 让文本水平居中 */
+  width: 60%;
+  /* 设置宽度为元素包含块宽度的60% */
+  text-align: center;
+  /* 让文本水平居中 */
 
 }
+
 .server-btn1 {
   display: flex;
   justify-content: center;
@@ -302,7 +312,8 @@ const fail = (e: any) => {
   border-radius: 5px;
   margin-right: 22px;
   margin-left: 22px;
-  margin-top: 50vh; /* 设置为屏幕高度的一半 */
+  margin-top: 50vh;
+  /* 设置为屏幕高度的一半 */
 }
 
 .example-body {

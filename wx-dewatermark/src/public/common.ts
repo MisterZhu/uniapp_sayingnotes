@@ -69,5 +69,6 @@ export let GlobalData = {
   token: '',
   checking: true,
   curent_title: '',
+  is_show_toast: false,
 
 };
