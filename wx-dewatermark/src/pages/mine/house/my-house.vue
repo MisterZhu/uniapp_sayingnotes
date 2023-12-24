@@ -7,7 +7,7 @@ import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
 // import historyItem from '@/pages/history/history-widget/history-item.vue';
 import houseItem from "./house-widget/house-item.vue";
-import { GlobalData } from '@/public/common';
+import { GlobalData, UserInfo } from '@/public/common';
 import { includesZhu } from "@/utils/string-utils";
 
 // let analyAry = ref([] as Analysis[])
@@ -25,7 +25,7 @@ onShow(() => {
   uni.$off('isMyHouseRefresh');
   uni.$on('isMyHouseRefresh', function (data) {
     console.log('3监听到事件来自返回的参数：' + data);
-    if (data === 1){
+    if (data === 1) {
       console.log('3 requestPostsList' + data);
       requestApplyList(() => {
         // TODO 下面执行刷新的方法
@@ -39,7 +39,7 @@ onShow(() => {
 async function requestApplyList(callback: () => void) {
 
   try {
-    const res: any = await RequestApi.ApplyList({ "page": page, "size": size, 'user_id':userInfo.value?.user_id })
+    const res: any = await RequestApi.ApplyList({ "page": page, "size": size, 'user_id': userInfo.value?.user_id })
     if (typeof callback === 'function') {
       callback();
     }
@@ -63,14 +63,14 @@ async function requestApplyList(callback: () => void) {
   }
 }
 const getLocalUserInfo = () => {
-    var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
-    console.log("userInfo = " + `${uInfo}`)
-    if (uInfo) {
-        userInfo.value = uInfo;
-        requestApplyList(() => { })
-        console.log("GlobalData.checking:", GlobalData.checking);
+  var uInfo = JSON.parse(uni.getStorageSync('local_user_info'));
+  console.log("userInfo = " + `${uInfo}`)
+  if (uInfo) {
+    userInfo.value = uInfo;
+    requestApplyList(() => { })
+    console.log("GlobalData.checking:", GlobalData.checking);
 
-    }
+  }
 }
 getLocalUserInfo()
 
@@ -84,9 +84,40 @@ onPullDownRefresh(() => {
   requestApplyList(() => uni.stopPullDownRefresh())
 });
 const handleItemClick = (itemModel: any) => {
-  uni.navigateTo({
-    url: '/pages/mine/house/select-community'
-  })
+  if (UserInfo.value.state === 2) {
+    uni.showModal({
+      title: '温馨提示',
+      content: '您已经成功认证了房屋，不能再添加房屋，如需修改，请联系客服',
+      cancelText: "取消",
+      confirmText: "联系客服", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          uni.navigateTo({
+            url: '/pages/mine/help-center'
+          })
+        }
+      }
+    });
+  } else if (UserInfo.value.state === 1) {
+    uni.showModal({
+      title: '温馨提示',
+      content: '您已经申请了房屋认证，正在审核中，如需加急，请联系客服',
+      cancelText: "取消",
+      confirmText: "联系客服", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          uni.navigateTo({
+            url: '/pages/mine/help-center'
+          })
+        }
+      }
+    });
+  } else {
+    uni.navigateTo({
+      url: '/pages/mine/house/select-community'
+    })
+  }
+
 }
 // 触底的事件
 // onReachBottom(() => {

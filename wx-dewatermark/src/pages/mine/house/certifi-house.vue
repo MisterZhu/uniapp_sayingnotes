@@ -4,7 +4,7 @@
       <text>社区：{{ communityModel?.detail_name }}</text>
     </view>
     <uni-card v-show="includesZhu(GlobalData.curent_title)" is-full :is-shadow="false">
-      <text class="uni-h6">请选择正确的房号、并上传购房合同（房号页面）照片或其他证明信息证明是该小区业主，也可联系客服（我的->帮助中心->联系客服）说明情况</text>
+      <text class="uni-h6">请选择正确的房号、并上传购房合同（房号页面）照片或其他证明信息证明是该小区业主，如果暂无照片，也可先提交审核，然后联系客服（我的->帮助中心->联系客服）说一下情况即可</text>
     </uni-card>
     <uni-card v-show="!includesZhu(GlobalData.curent_title)" is-full :is-shadow="false">
       <text class="uni-h6">你好，暂不支持添加房屋，如有疑问，请咨询客服</text>
@@ -109,14 +109,14 @@ const handleItemClick = (itemModel: any) => {
     });
     return;
   }
-  if (!imageValue.value.trim()) { // 检查是否为空或者只包含空格
-    uni.showToast({
-      title: '请上传图片',
-      icon: 'none',
-      duration: 2000,
-    });
-    return;
-  }
+  // if (!imageValue.value.trim()) { // 检查是否为空或者只包含空格
+  //   uni.showToast({
+  //     title: '请上传图片',
+  //     icon: 'none',
+  //     duration: 2000,
+  //   });
+  //   return;
+  // }
 
   if (!phoneNum.value.trim()) { // 检查是否为空或者只包含空格
     uni.showToast({
