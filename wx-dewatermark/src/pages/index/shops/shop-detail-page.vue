@@ -195,6 +195,14 @@ const copyHandle = async () => {
     })
 }
 const handleDelete = async () => {
+    if (UserInfo.value.user_id.length <= 0 || (UserInfo.value.user_id.length != (parkModel?.value?.user_id ?? ''))) {
+    uni.showToast({
+      title: '暂无删除权限',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
     uni.showModal({
         title: '温馨提示',
         content: '确定要删除这篇帖子吗？',
@@ -246,6 +254,7 @@ const imgError = (e: any) => {
 }
 // MARK: 
 async function deletePosts() {
+
     try {
         console.log("UserInfo.value.room e:", UserInfo.value.default_room);
 
