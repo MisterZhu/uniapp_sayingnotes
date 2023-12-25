@@ -99,7 +99,7 @@ onReachBottom(() => {
 ></historyItem>
   </view>
   <view v-show="analyAry.data.length <= 0" class="history_item">
-    <text class="center-text">暂无出租信息~</text>
+    <text class="center-text">暂无发布任何信息~</text>
   </view>
 </template>
 

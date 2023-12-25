@@ -105,7 +105,7 @@ async function requestUserInfoWithCode(code: string) {
 }
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.2' })
+    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.3' })
     if (typeof callback === 'function') {
       callback();
     }

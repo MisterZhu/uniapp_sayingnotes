@@ -94,6 +94,28 @@ const handleButtonClick = () => {
         }
       }
     });
+  } else if (UserInfo.value.state === 1) {
+    uni.showModal({
+      title: '温馨提示',
+      content: '您房屋认证审核中，联系客服先通过审核？',
+      cancelText: "继续发布",
+      confirmText: "联系客服", // 确认按钮文字 
+      success: function (res) {
+        if (res.confirm) {
+          uni.navigateTo({
+            url: '/pages/mine/help-center'
+          })
+        } else if (res.cancel) {
+          uni.navigateTo({
+            url: '/pages/index/used/publish-used',
+          });
+        }
+      }
+    });
+  } else {
+    uni.navigateTo({
+      url: '/pages/index/used/publish-used',
+    });
   }
   // Assuming 'uni' is a valid object that can call 'navigateTo'
 
