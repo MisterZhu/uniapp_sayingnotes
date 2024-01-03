@@ -105,7 +105,7 @@ async function requestUserInfoWithCode(code: string) {
 }
 async function requestState(callback: () => void) {
   try {
-    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.3' })
+    const res: any = await RequestApi.GetConfigInfo({ "name": '2.1.4' })
     if (typeof callback === 'function') {
       callback();
     }
@@ -176,7 +176,7 @@ async function requestAnalyList(callback: () => void) {
 function getUserInfo() {
   uni.login({
     success: (res) => {
-      requestUserInfoWithCode(res.code)
+      requestUserInfo(res.code)
     }
   })
 }
@@ -219,7 +219,7 @@ async function requestUserInfo(code: string) {
 function onlyGetUserInfo() {
   uni.login({
     success: (res) => {
-      requestUserInfo(res.code)
+      requestUserInfoWithCode(res.code)
     }
   })
 }
