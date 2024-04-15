@@ -59,7 +59,7 @@ const imgError = () =>{
         <text class="left-text">{{ props.analyModel.title }}</text>
         <view class="right-custom-view-image">
           <image class="right-image"
-            :src="analyModel.posts_type === 4 ? common_url.home_park_buy_icon : common_url.home_park_sell_icon"
+            :src="analyModel.state === 1 ? common_url.home_park_sellout_icon : analyModel.posts_type === 4 ? common_url.home_park_buy_icon : common_url.home_park_sell_icon"
             mode="aspectFill"></image>
         </view>
       </view>

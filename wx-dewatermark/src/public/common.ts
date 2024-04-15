@@ -6,6 +6,7 @@ export const common_url = {
   home_renter_icon5: 'https://qiniu.aimissu.top/common_img/home_renter_icon5.png',
   home_lessor_icon5: 'https://qiniu.aimissu.top/common_img/home_lessor_icon5.png',
   home_park_sell_icon: 'https://qiniu.aimissu.top/common_img/home_park_sell_icon.png',
+  home_park_sellout_icon: 'https://qiniu.aimissu.top/common_img/home_park_sellout_icon.png',
   home_park_buy_icon: 'https://qiniu.aimissu.top/common_img/home_park_buy_icon.png',
   home_parking_head: 'https://qiniu.aimissu.top/common_img/home_parking_head.png',
   home_parking_chuzu: '/static/home/home_parking_chuzu.jpeg',
