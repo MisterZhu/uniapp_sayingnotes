@@ -18,6 +18,15 @@
 		}
 	  },
 	  {
+		"path": "pages/home/edit-page",
+		"style": {
+		  "navigationBarTitleText": "语录笔记",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "custom",
+		  "backgroundColor": "#ffffff"
+		}
+	  },
+	  {
 		"path": "pages/setting/setting",
 		"style": {
 		  "navigationBarTitleText": "语录笔记",

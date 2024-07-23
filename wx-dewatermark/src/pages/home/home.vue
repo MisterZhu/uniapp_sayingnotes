@@ -1,10 +1,11 @@
 <template>
-  <view class="home">
-    <HomeNavbar :backgroundColor="'rgba(0, 0, 0, 0)'" :leftIcon="'https://qiniu.aimissu.top/notes/menu_icon.png'"
+  <view :class="['home', hasAnalyAryData ? 'home-with-data' : 'home-no-data']">
+    <HomeNavbar :backgroundColor="navbarBackgroundColor" :leftIcon="'https://qiniu.aimissu.top/notes/menu_icon.png'"
       @leftIconClick="handleLeftIconClick">
     </HomeNavbar>
 
-    <view :style="contentStyle" class="content-view"></view>
+    <!-- 展示HomeScroll组件 -->
+    <HomeScroll v-if="hasAnalyAryData" />
 
     <!-- 添加一个悬浮按钮 -->
     <view class="custom-button" @click="onButtonTap">
@@ -13,7 +14,7 @@
     </view>
     <!-- 弹出框 -->
     <BottomPopup />
-    
+
   </view>
 </template>
 
@@ -21,28 +22,24 @@
 import { watch, ref, onMounted, computed } from 'vue';
 import HomeNavbar from '../common/home-navbar.vue';
 import BottomPopup from '../common/bottom-popup.vue';
-// import PopupMask from '../../components/BottomPopup.vue';
-// import { usePopupStore } from '../stores/popup-store';
+import HomeScroll from '../common/home-scroll.vue';
 
 import { common_key, GlobalData, UserInfo } from '@/public/common';
 import { RequestApi } from "@/public/request";
 import { usePopupStore } from "@/stores/popup-store";
-import { onPullDownRefresh, onReachBottom, onShow, onLoad } from '@dcloudio/uni-app';
-import shopItem from '@/pages/index/shops/widget/shop-item.vue';
+import { onShow, onLoad } from '@dcloudio/uni-app';
 import { useGlobalStore } from '../../stores/global'
 
 const popupStore = usePopupStore();
 const inviter_openid = ref < string > ('')
-var topIconDistance = ref < number > (89)
+var topIconDistance = ref < number > (87)
+const isRefreshing = ref(false);
 
 const contentStyle = computed(() => ({
   width: '100%',
-  height: `calc(100vh - ${topIconDistance.value}px - 10px)`,
-  marginLeft: '5px',
-  marginRight: '5px',
-  marginBottom: '10px',
-  paddingTop: '30px',
-  backgroundColor: 'blue'
+  height: `calc(100vh - ${topIconDistance.value}px)`,
+  marginTop: `${topIconDistance.value}px`,
+  backgroundColor: '#FFFFFF'
 }));
 
 const handleLeftIconClick = () => {
@@ -92,9 +89,9 @@ const onButtonTap = () => {
     telephone: '1234567890',
     wei_xin: 'weixin123',
     title: 'Example Park Item',
-    img_url: 'https://example.com/image.jpg',
-    annual_rent: '10000',
-    address: '123 Example St'
+    img_url: 'https://qiniu.aimissu.top/notes/menu_icon.png',
+    annual_rent: '我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改',
+    address: '地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修'
   });
 
   // let token = uni.getStorageSync(common_key.k_local_token)
@@ -116,7 +113,7 @@ onMounted(() => {
 //接收参数
 onLoad(options => {
   const globalStore = useGlobalStore()
-  topIconDistance = computed(() =>  globalStore.topIconDistance + globalStore.statusBarHeight)
+  topIconDistance = computed(() => globalStore.topIconDistance + globalStore.statusBarHeight)
   console.log(`topIconDistance:------`, topIconDistance.value);
 
   if (options) {
@@ -125,15 +122,24 @@ onLoad(options => {
     inviter_openid.value = options.open_id
   }
 });
-// 下拉刷新事件处理
-onPullDownRefresh(() => {
-  popupStore.onPullDownRefresh();
-});
+const handleRefresherRefresh = () => {
+  console.log('下拉刷新');
+  isRefreshing.value = true;
+  setTimeout(() => {
+    // items.value = [...Array(20)].map((_, i) => ({ id: i, text: `Item ${i + 1}` }));
+    isRefreshing.value = false;
+    uni.stopPullDownRefresh();
+  }, 2000);
+};
 
-// 触底事件处理
-onReachBottom(() => {
-  popupStore.onReachBottom();
-});
+const onReachBottom = () => {
+  console.log('触底加载更多');
+  setTimeout(() => {
+    // const lastId = items.value.length;
+    // items.value = [...items.value, ...[...Array(20)].map((_, i) => ({ id: lastId + i, text: `Item ${lastId + i + 1}` }))];
+  }, 2000);
+};
+
 // Watch for changes in the isVisible state
 watch(() => popupStore.isVisible, (newVal) => {
   if (!newVal) {
@@ -162,31 +168,38 @@ watch(() => popupStore.isFinished, (newVal) => {
 // Watch for changes in the analyAry.data state
 watch(() => popupStore.analyAry.data, (newVal) => {
   console.log('analyAry.data has changed:', newVal);
+
 });
 // Computed property to check if analyAry has data
 const hasAnalyAryData = computed(() => {
-  return popupStore.analyAry.length > 0;
+  return popupStore.analyAry.data.length > 0;
+});
+
+// Computed property for navbar background color
+const navbarBackgroundColor = computed(() => {
+  return hasAnalyAryData.value ? '#FFFFFF' : 'rgba(0, 0, 0, 0)';
 });
 
 </script>
 
 <style lang="scss">
-
 .home {
   width: 100%;
   height: 100vh;
-  background: url('https://qiniu.aimissu.top/temporary/bg_launch.png') no-repeat center center fixed;
-  background-size: cover;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.content-view {
-  width: 100%;
-  padding-top: 120rpx;
-  margin-top: 120rpx;
-  background-color: blue;
+
+.home-no-data {
+  background: url('https://qiniu.aimissu.top/temporary/bg_launch.png') no-repeat center center fixed;
+  background-size: cover;
 }
+
+.home-with-data {
+  background-color: #FFFFFF;
+}
+
 .bg-image {
   position: fixed;
   width: 100%;
