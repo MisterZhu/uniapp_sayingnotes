@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+import { useGlobalStore } from './stores/global'
+
 onLaunch(() => {
   console.log("111App Launch");
 
@@ -34,6 +36,13 @@ onLaunch(() => {
       // 打印顶部图标距离
       console.log('顶部图标距离:', topIconDistance);
       uni.setStorageSync('topIconDistance', topIconDistance)
+
+      const systemStore = useGlobalStore()
+      systemStore.setGlobalInfo(statusBarHeight, navBarHeight, topIconDistance,menuButtonInfo.top)
+      console.log('statusBarHeight', statusBarHeight)
+    console.log('navBarHeight', navBarHeight)
+    console.log('topIconDistance', topIconDistance)
+    console.log('menuButtonInfotop', menuButtonInfo.top)
     },
     fail: (err) => {
       console.error('获取系统信息失败:', err);

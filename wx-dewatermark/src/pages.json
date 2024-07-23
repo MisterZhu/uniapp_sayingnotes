@@ -1,289 +1,267 @@
 {
 	"easycom": {
-		"autoscan": true,
-		"custom": {
-			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
-		}
+	  "autoscan": true,
+	  "custom": {
+		"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+	  }
 	},
 	
 	"pages": [ 
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "院落闲置角",
-				"navigationBarBackgroundColor":"#ffffff",
-				"navigationStyle": "custom",
-				"backgroundColor":"#F5F5F5"
 
-			}
-		},
-		{
-			"path": "pages/index/parking/parking-page",
-			"style": {
-				"navigationBarTitleText": "车位出租",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/parking/parking-detail-page",
-			"style": {
-				"navigationBarTitleText": "帖子详情",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/parking/publish-lease",
-			"style": {
-				"navigationBarTitleText": "发布出租",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/parking/publish-require",
-			"style": {
-				"navigationBarTitleText": "发布求租",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/park-sell/park-business",
-			"style": {
-				"navigationBarTitleText": "车位买卖",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/park-sell/publish-park-sell",
-			"style": {
-				"navigationBarTitleText": "出售车位",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/used/used-page",
-			"style": {
-				"navigationBarTitleText": "二手闲置",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/used/publish-used",
-			"style": {
-				"navigationBarTitleText": "发布闲置",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/shops/shop-page",
-			"style": {
-				"navigationBarTitleText": "服务列表",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/shops/shop-detail-page",
-			"style": {
-				"navigationBarTitleText": "详情",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/index/shops/self-assembly-page",
-			"style": {
-				"navigationBarTitleText": "装修指南",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/mine",
-			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor":"#ffffff",
-				"navigationStyle": "custom",
-				"backgroundColor":"#F5F5F5"
-
-
-			}
-		},
-		{
-			"path": "pages/mine/task-center",
-			"style": {
-				"navigationBarTitleText": "任务中心",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/house/my-house",
-			"style": {
-				"navigationBarTitleText": "我的房屋",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/house/certifi-house",
-			"style": {
-				"navigationBarTitleText": "新增房屋",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/house/select-community",
-			"style": {
-				"navigationBarTitleText": "请选择小区",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/my-publish/my-publish-page",
-			"style": {
-				"navigationBarTitleText": "我的发布",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/setting",
-			"style": {
-				"navigationBarTitleText": "设置",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/help-center",
-			"style": {
-				"navigationBarTitleText": "帮助中心",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		
-		{
-			"path": "pages/mine/set-pages/user-privacy",
-			"style": {
-				"navigationBarTitleText": "隐私政策",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/set-pages/user-protocol",
-			"style": {
-				"navigationBarTitleText": "用户协议",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
-		},
-		{
-			"path": "pages/mine/set-pages/user-feedback",
-			"style": {
-				"navigationBarTitleText": "建议与反馈",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "default",
-				"backgroundColor":"#F5F5F5"
-
-			}
+	  {
+		"path": "pages/home/home",
+		"style": {
+		  "navigationBarTitleText": "语录笔记",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "custom",
+		  "backgroundColor": "#F5F5F5"
 		}
+	  },
+	  {
+		"path": "pages/setting/setting",
+		"style": {
+		  "navigationBarTitleText": "语录笔记",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "enablePullDownRefresh":true,
+		  "onReachBottomDistance": 100,
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/index",
+		"style": {
+		  "navigationBarTitleText": "院落闲置角",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "custom",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/parking/parking-page",
+		"style": {
+		  "navigationBarTitleText": "车位出租",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/parking/parking-detail-page",
+		"style": {
+		  "navigationBarTitleText": "帖子详情",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/parking/publish-lease",
+		"style": {
+		  "navigationBarTitleText": "发布出租",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/parking/publish-require",
+		"style": {
+		  "navigationBarTitleText": "发布求租",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/park-sell/park-business",
+		"style": {
+		  "navigationBarTitleText": "车位买卖",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/park-sell/publish-park-sell",
+		"style": {
+		  "navigationBarTitleText": "出售车位",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/used/used-page",
+		"style": {
+		  "navigationBarTitleText": "二手闲置",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/used/publish-used",
+		"style": {
+		  "navigationBarTitleText": "发布闲置",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/shops/shop-page",
+		"style": {
+		  "navigationBarTitleText": "服务列表",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/shops/shop-detail-page",
+		"style": {
+		  "navigationBarTitleText": "详情",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/index/shops/self-assembly-page",
+		"style": {
+		  "navigationBarTitleText": "装修指南",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/mine",
+		"style": {
+		  "navigationBarTitleText": "我的",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "custom",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/task-center",
+		"style": {
+		  "navigationBarTitleText": "任务中心",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/house/my-house",
+		"style": {
+		  "navigationBarTitleText": "我的房屋",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/house/certifi-house",
+		"style": {
+		  "navigationBarTitleText": "新增房屋",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/house/select-community",
+		"style": {
+		  "navigationBarTitleText": "请选择小区",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/my-publish/my-publish-page",
+		"style": {
+		  "navigationBarTitleText": "我的发布",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/setting",
+		"style": {
+		  "navigationBarTitleText": "设置",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/help-center",
+		"style": {
+		  "navigationBarTitleText": "帮助中心",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/set-pages/user-privacy",
+		"style": {
+		  "navigationBarTitleText": "隐私政策",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/set-pages/user-protocol",
+		"style": {
+		  "navigationBarTitleText": "用户协议",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  },
+	  {
+		"path": "pages/mine/set-pages/user-feedback",
+		"style": {
+		  "navigationBarTitleText": "建议与反馈",
+		  "navigationBarTextStyle": "black",
+		  "navigationBarBackgroundColor": "#ffffff",
+		  "navigationStyle": "default",
+		  "backgroundColor": "#F5F5F5"
+		}
+	  }
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#ffffff",
-		"backgroundColor": "#F5F5F5"
-	},
-	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#4E78FF",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [{
-			"pagePath": "pages/index/index",
-			"iconPath": "static/tab/tab_home_1.png",
-			"selectedIconPath": "static/tab/tab_home_2.png",
-			"text": "首页"
-		}, 
-		 {
-			"pagePath": "pages/mine/mine",
-			"iconPath": "static/tab/tab_mine_1.png",
-			"selectedIconPath": "static/tab/tab_mine_2.png",
-			"text": "我的"
-		}]
+	  "navigationBarTextStyle": "black",
+	  "navigationBarTitleText": "uni-app",
+	  "navigationBarBackgroundColor": "#ffffff",
+	  "backgroundColor": "#F5F5F5"
 	}
-	
-}
+  }
+  
