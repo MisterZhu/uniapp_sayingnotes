@@ -17,6 +17,16 @@ export const common_url = {
   home_shop_jiazheng: '/static/home/home_homemaking_icon1.jpeg',
   home_shop_zhuangxiu: '/static/home/home_decoration_icon1.jpeg',
   home_shop_huishou: '/static/home/home_recycle_icon1.jpeg',
+  home_bg: 'https://qiniu.aimissu.top/notes/bg_launch.png',
+  common_back: 'https://qiniu.aimissu.top/notes/common_back_icon.png',
+  copy_icon: 'https://qiniu.aimissu.top/notes/copy_icon.png',
+  delete_icon: 'https://qiniu.aimissu.top/notes/delete_icon.png',
+  menu_icon: 'https://qiniu.aimissu.top/notes/menu_icon.png',
+  pause_icon: 'https://qiniu.aimissu.top/notes/pause_icon.png',
+  play_icon: 'https://qiniu.aimissu.top/notes/play_icon.png',
+  voice_icon: 'https://qiniu.aimissu.top/notes/voice_icon.png',
+  share_icon: 'https://qiniu.aimissu.top/notes/share_icon.png',
+
 
 } as const;
 

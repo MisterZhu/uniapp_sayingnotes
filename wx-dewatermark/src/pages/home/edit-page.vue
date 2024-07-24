@@ -1,6 +1,6 @@
 <template>
     <BackNavbar :backgroundColor="'rgba(255, 255, 255, 1)'"
-        :leftIcon="'https://qiniu.aimissu.top/notes/common_back_icon.png'" :onLeftIconClick="customLeftIconClick">
+        :leftIcon="common_url.common_back" :onLeftIconClick="customLeftIconClick">
     </BackNavbar>
     <view class="container" :style="contentStyle">
         <!-- 第一排：标题输入框 -->
@@ -33,6 +33,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import type { ParkItem } from '@/public/decl-type';
 import BackNavbar from '@/pages/common/normal-navbar.vue';
 import { useGlobalStore } from '@/stores/global';
+import { common_url, timeDis } from '@/public/common';
 
 const title = ref<string>('');
 const content = ref<string>('');
@@ -108,7 +109,7 @@ const customLeftIconClick = () => {
 .container {
     display: flex;
     flex-direction: column;
-    padding: 20rpx;
+    padding: 40rpx;
     box-sizing: border-box;
 }
 
@@ -153,37 +154,34 @@ const customLeftIconClick = () => {
     height: 50rpx;
 
 }
-.byte-counter2 {
-    text-align: left; /* 修改对齐方式 */
-    margin-bottom: 20rpx;
-    font-size: 28rpx;
-    color: #999;
-    height: 50rpx;
 
-}
 .divider {
     height: 1px; /* 分割线的高度 */
     background-color: #efefef; /* 分割线的颜色 */
     margin: 10rpx 0rpx 20rpx 0rpx; /* 分割线上下的间距 */
 }
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    width: calc(100% - 40rpx); 
-
-    justify-content: space-between;
-    align-items: center;
-    padding: 20rpx;
-    background-color: #fff;
-    height: 100rpx;
-
-}
-
 .spacer {
     flex-grow: 1; /* 占用中间空余的空间 */
+}
+.footer {
+  position: fixed;
+  bottom: 40rpx;
+  left: 40rpx;
+  display: flex;
+  width: calc(100% - 80rpx);
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  height: 100rpx;
+  /* margin-bottom: 40rpx; */
+}
+
+.byte-counter2 {
+  font-size: 28rpx;
+  color: #999;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
 }
 
 .save-button {

@@ -1,6 +1,6 @@
 <template>
   <view :class="['home', hasAnalyAryData ? 'home-with-data' : 'home-no-data']">
-    <HomeNavbar :backgroundColor="navbarBackgroundColor" :leftIcon="'https://qiniu.aimissu.top/notes/menu_icon.png'"
+    <HomeNavbar :backgroundColor="navbarBackgroundColor" :leftIcon="common_url.menu_icon"
       @leftIconClick="handleLeftIconClick">
     </HomeNavbar>
 
@@ -9,7 +9,7 @@
 
     <!-- 添加一个悬浮按钮 -->
     <view class="custom-button" @click="onButtonTap">
-      <image class="button-icon" src="https://qiniu.aimissu.top/notes/voice_icon.png"></image>
+      <image class="button-icon" :src="common_url.voice_icon"></image>
       <text class="button-text">记录一下</text>
     </view>
     <!-- 弹出框 -->
@@ -29,6 +29,7 @@ import { RequestApi } from "@/public/request";
 import { usePopupStore } from "@/stores/popup-store";
 import { onShow, onLoad } from '@dcloudio/uni-app';
 import { useGlobalStore } from '../../stores/global'
+import { common_url, timeDis } from '@/public/common';
 
 const popupStore = usePopupStore();
 const inviter_openid = ref < string > ('')
@@ -76,23 +77,7 @@ function onlyGetUserInfo() {
 const onButtonTap = () => {
   console.log("onButtonTap:", 1);
 
-  popupStore.addParkItem({
-    ID: 1,
-    CreatedAt: '2024-07-22T00:00:00Z',
-    UpdatedAt: '2024-07-22T00:00:00Z',
-    DeletedAt: '',
-    in_maintenance: false,
-    negotiable: true,
-    state: 1,
-    posts_type: 1,
-    user_id: 'user123',
-    telephone: '1234567890',
-    wei_xin: 'weixin123',
-    title: 'Example Park Item',
-    img_url: 'https://qiniu.aimissu.top/notes/menu_icon.png',
-    annual_rent: '我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改',
-    address: '地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修'
-  });
+ 
 
   // let token = uni.getStorageSync(common_key.k_local_token)
   // if (token) {
@@ -127,6 +112,23 @@ const handleRefresherRefresh = () => {
   isRefreshing.value = true;
   setTimeout(() => {
     // items.value = [...Array(20)].map((_, i) => ({ id: i, text: `Item ${i + 1}` }));
+    popupStore.addParkItem({
+    ID: 1,
+    CreatedAt: '2024-07-22T00:00:00Z',
+    UpdatedAt: '2024-07-22T00:00:00Z',
+    DeletedAt: '',
+    in_maintenance: false,
+    negotiable: true,
+    state: 1,
+    posts_type: 1,
+    user_id: 'user123',
+    telephone: '1234567890',
+    wei_xin: 'weixin123',
+    title: 'Example Park Item',
+    img_url: 'https://qiniu.aimissu.top/notes/play_icon.png',
+    annual_rent: '我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改',
+    address: '地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修地址 我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修改我要求对这个组件布局进行修'
+  });
     isRefreshing.value = false;
     uni.stopPullDownRefresh();
   }, 2000);
@@ -192,7 +194,7 @@ const navbarBackgroundColor = computed(() => {
 }
 
 .home-no-data {
-  background: url('https://qiniu.aimissu.top/temporary/bg_launch.png') no-repeat center center fixed;
+  background: url('https://qiniu.aimissu.top/notes/bg_launch.png') no-repeat center center fixed;
   background-size: cover;
 }
 

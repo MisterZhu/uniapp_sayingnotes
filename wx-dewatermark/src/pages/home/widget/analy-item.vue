@@ -64,9 +64,9 @@ const handleIconClick = (iconType: number) => {
         <view class="right-row">
           <text class="right-date">{{ timeDis.formatDate(analyModel.CreatedAt) }}</text>
           <view class="icon-buttons">
-            <image class="icon" src="https://qiniu.aimissu.top/notes/menu_icon.png" @click="handleIconClick(1)"></image>
-            <image class="icon" src="https://qiniu.aimissu.top/notes/menu_icon.png" @click="handleIconClick(2)"></image>
-            <image class="icon" src="https://qiniu.aimissu.top/notes/menu_icon.png" @click="handleIconClick(3)"></image>
+            <image class="icon" :src="common_url.delete_icon" @click.stop="handleIconClick(1)"></image>
+            <image class="icon" :src="common_url.copy_icon" @click.stop="handleIconClick(2)"></image>
+            <image class="icon" :src="common_url.share_icon"  @click.stop="handleIconClick(3)"></image>
           </view>
         </view>
       </view>
@@ -114,7 +114,7 @@ const handleIconClick = (iconType: number) => {
 
 .left-vertical-line {
   width: 2rpx;
-  background-color: #999;
+  background-color: #a9a9a9;
   margin-right: 35rpx;
   margin-left: 35rpx;
   align-self: stretch; // 使竖线填充父元素的高度
@@ -130,7 +130,7 @@ const handleIconClick = (iconType: number) => {
 
 .right-address {
   font-size: 30rpx;
-  color: #111;
+  color: #222;
   margin-bottom: 20rpx;
 
   text-align: left; /* 确保文本居左 */
@@ -169,8 +169,8 @@ const handleIconClick = (iconType: number) => {
 }
 
 .icon {
-  width: 52rpx;
-  height: 52rpx;
-  padding-left: 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  padding: 20rpx;
 }
 </style>

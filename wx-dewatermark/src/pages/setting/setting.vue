@@ -3,7 +3,6 @@ import type { ParkItem } from '@/public/decl-type';
 import { RequestApi } from '@/public/request';
 import { onLoad, onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app';
 import { reactive, ref, watch } from 'vue';
-import shopItem from '@/pages/index/shops/widget/shop-item.vue';
 import BackNavbar from '../common/normal-navbar.vue';
 
 const props = defineProps({
@@ -178,7 +177,6 @@ onReachBottom(() => {
   >
   </BackNavbar> -->
   <view v-show="analyAry.data.length > 0" >
-    <shopItem v-for="(item, index) in analyAry.data" :key="index" :analy-model="item"></shopItem>
   </view>
   <view v-show="analyAry.data.length <= 0">
     <button @click="addNewItem" class="center-button">Add New Item</button>
