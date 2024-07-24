@@ -77,15 +77,13 @@ function onlyGetUserInfo() {
 const onButtonTap = () => {
   console.log("onButtonTap:", 1);
 
- 
-
-  // let token = uni.getStorageSync(common_key.k_local_token)
-  // if (token) {
-  //   console.log('Test click event triggered');
-  //   popupStore.showPopup();
-  // } else {
-  //   onlyGetUserInfo()
-  // }
+  let token = uni.getStorageSync(common_key.k_local_token)
+  if (token) {
+    console.log('Test click event triggered');
+    popupStore.showPopup();
+  } else {
+    onlyGetUserInfo()
+  }
 };
 onMounted(() => {
 
