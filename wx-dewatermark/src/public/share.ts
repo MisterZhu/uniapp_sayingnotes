@@ -10,7 +10,7 @@ const share = {
 		switch (currentPage?.route) {
 			case 'pages/index/shops/shop-detail-page':
 			case 'pages/index/parking/parking-detail-page':
-				let img = 'https://qiniu.aimissu.top/common_img/xianzhijiao_shareicon.png';
+				let img = 'https://qiniu.aimissu.top/notes/1024.png';
 				let local_img = uni.getStorageSync(common_key.k_detail_img);
 				if(isUrl(local_img)){
 					img = local_img;
@@ -25,9 +25,9 @@ const share = {
 			default:
 				console.log('------------------normal----onShareAppMessage');
 				return {
-					title: '院落闲置角--小区业主车位租售、闲置物品交易平台~', // 分享标题
+					title: '【语录笔记】AI录音新体验，抢先体验黑科技', // 分享标题
 					path: '/pages/index/index?open_id=' + uni.getStorageSync(common_key.k_local_open_id), // 默认为当前页面路径
-					imageUrl: 'https://qiniu.aimissu.top/common_img/xianzhijiao_shareicon.png' // 默认为当前页面的截图
+					imageUrl: 'https://qiniu.aimissu.top/notes/1024.png' // 默认为当前页面的截图
 				}
 		}
 	},
@@ -36,7 +36,7 @@ const share = {
 		const currentPage = getCurrentPages().pop();
 		switch (currentPage?.route) {
 			case 'pages/index/parking/parking-detail-page':
-				let img = 'https://qiniu.aimissu.top/common_img/xianzhijiao_shareicon.png';
+				let img = 'https://qiniu.aimissu.top/notes/1024.png';
 				let local_img = uni.getStorageSync(common_key.k_detail_img);
 				if(isUrl(local_img)){
 					img = local_img;
@@ -52,9 +52,9 @@ const share = {
 				console.log('-----------------normal-----onShareTimeline');
 
 				return {
-					title: '院落闲置角--小区业主车位租售、闲置物品交易平台~', // 分享标题
+					title: '【语录笔记】AI录音新体验，抢先体验黑科技', // 分享标题
 					path: '/pages/index/index?open_id=' + uni.getStorageSync(common_key.k_local_open_id), // 默认为当前页面路径
-					imageUrl: 'https://qiniu.aimissu.top/common_img/xianzhijiao_shareicon.png' // 默认为当前页面的截图
+					imageUrl: 'https://qiniu.aimissu.top/notes/1024.png' // 默认为当前页面的截图
 				}
 		}
 

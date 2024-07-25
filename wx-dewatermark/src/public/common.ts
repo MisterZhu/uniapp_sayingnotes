@@ -2,22 +2,7 @@ import { ref } from "vue";
 
 // common.ts
 export const common_url = {
-  home_head_bg: 'https://qiniu.aimissu.top/common_img/home_head_bg.png',
-  home_renter_icon5: 'https://qiniu.aimissu.top/common_img/home_renter_icon5.png',
-  home_lessor_icon5: 'https://qiniu.aimissu.top/common_img/home_lessor_icon5.png',
-  home_park_sell_icon: 'https://qiniu.aimissu.top/common_img/home_park_sell_icon.png',
-  home_park_sellout_icon: 'https://qiniu.aimissu.top/common_img/home_park_sellout_icon.png',
-  home_park_buy_icon: 'https://qiniu.aimissu.top/common_img/home_park_buy_icon.png',
-  home_parking_head: 'https://qiniu.aimissu.top/common_img/home_parking_head.png',
-  home_parking_chuzu: '/static/home/home_parking_chuzu.jpeg',
-  home_parking_qiuzu: '/static/home/home_parking_qiuzu.jpeg',
-  home_parking_chushou: '/static/home/home_parking_chushou.jpeg',
-  home_parking_qiugou: '/static/home/home_parking_qiugou.jpeg',
-  home_used_icon: '/static/home/home_used_icon.jpeg',
-  home_shop_jiazheng: '/static/home/home_homemaking_icon1.jpeg',
-  home_shop_zhuangxiu: '/static/home/home_decoration_icon1.jpeg',
-  home_shop_huishou: '/static/home/home_recycle_icon1.jpeg',
-  home_bg: 'https://qiniu.aimissu.top/notes/bg_launch.png',
+  home_bg: 'https://qiniu.aimissu.top/notes/bg_launch1.png',
   common_back: 'https://qiniu.aimissu.top/notes/common_back_icon.png',
   copy_icon: 'https://qiniu.aimissu.top/notes/copy_icon.png',
   delete_icon: 'https://qiniu.aimissu.top/notes/delete_icon.png',

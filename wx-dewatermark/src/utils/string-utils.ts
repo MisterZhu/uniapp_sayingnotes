@@ -40,36 +40,6 @@ export function setTitle(name: string) {
 }
 
 
-export function placeImgWithType(postType: number): string {
-    switch (postType) {
-        case 1:
-            return common_url.home_parking_chuzu;
-        case 2:
-            return common_url.home_parking_qiuzu;
-        case 3:
-            return common_url.home_parking_chushou;
-        case 4:
-            return common_url.home_parking_qiugou;
-        case 5:
-            return common_url.home_used_icon;
-        default:
-            return common_url.home_used_icon;
-    }
-}
-export function shopPlaceImg(postType: number): string {
-    switch (postType) {
-        case 1:
-            return common_url.home_shop_jiazheng;
-        case 2:
-            return common_url.home_shop_zhuangxiu;
-        case 3:
-            return common_url.home_shop_huishou;
- 
-        default:
-            return common_url.home_shop_jiazheng;
-    }
-}
-
 export function isUrl(str: string) {
     // 使用正则表达式判断是否是合法的URL
     const urlPattern = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/;

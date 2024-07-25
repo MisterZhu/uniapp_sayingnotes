@@ -54,8 +54,9 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-alpha-3090420231023001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3090420231023001",
     "@dcloudio/uni-ui": "^1.4.26",
-    "pinia": "^2.0.33",
+    "pinia": "^2.0.14",
     "vue": "3.3.7",
+    "vue-demi": "^0.13.11",
     "vue-i18n": "9.6.2"
   },
   "devDependencies": {

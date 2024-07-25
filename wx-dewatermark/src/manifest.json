@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx7e81fb1d9a169a9c",
+        "appid" : "wxa819297d4b36e6c5",
         "permissions": {
             "clipboard": {
               "desc": "获取粘贴板内容"

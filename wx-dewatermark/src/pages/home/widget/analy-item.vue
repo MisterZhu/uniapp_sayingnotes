@@ -2,7 +2,6 @@
 import type { ParkItem } from '@/public/decl-type';
 import type { PropType } from 'vue';
 import { common_url, timeDis } from '@/public/common';
-import { shopPlaceImg } from "@/utils/string-utils";
 
 const props = defineProps({
   analyModel: {
@@ -18,15 +17,6 @@ const handleItemClick = () => {
   });
 };
 
-const imgError = () => {
-  if (props.analyModel.posts_type === 1) {
-    props.analyModel.img_url = common_url.home_shop_jiazheng;
-  } else if (props.analyModel.posts_type === 2) {
-    props.analyModel.img_url = common_url.home_shop_zhuangxiu;
-  } else if (props.analyModel.posts_type === 3) {
-    props.analyModel.img_url = common_url.home_shop_huishou;
-  }
-};
 const handleTextClick = () => {
   console.log('展开按钮点击');
 };
@@ -51,7 +41,7 @@ const handleIconClick = (iconType: number) => {
   <view class="component-wrapper" @click="handleItemClick">
     <!-- 第一排：row布局 -->
     <view class="top-row">
-      <image class="top-icon" :src="analyModel.img_url ? analyModel.img_url : shopPlaceImg(analyModel.posts_type)" @error="imgError" mode="aspectFill"></image>
+      <image class="top-icon" :src="analyModel.img_url" mode="aspectFill"></image>
       <text class="top-title">{{ props.analyModel.title }}</text>
     </view>
 

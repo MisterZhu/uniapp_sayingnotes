@@ -29,11 +29,9 @@
 	  {
 		"path": "pages/setting/setting",
 		"style": {
-		  "navigationBarTitleText": "语录笔记",
+		  "navigationBarTitleText": "",
 		  "navigationBarBackgroundColor": "#ffffff",
-		  "navigationStyle": "default",
-		  "enablePullDownRefresh":true,
-		  "onReachBottomDistance": 100,
+		  "navigationStyle": "custom",
 		  "backgroundColor": "#F5F5F5"
 		}
 	  }
